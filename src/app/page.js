@@ -53,21 +53,17 @@ export default function Home() {
   return (
     <div>
       <main className='bg-youu-background flex items-center justify-center'>
-        <div className="flex items-center justify-center">
-          <div className="absolute sm:right-16 top-10 font-bold">
-              <div className='flex'>
-                  <div className='grid grid-cols-1 text-right pr-4'>
-                    <div className='text-4xl pt-8 text-white'>0_o</div>
-                    <div className='text-4xl -mt-8 text-white'> TheYouuProject </div>
-                  </div>
-                  <div className=''><Image src={logo} className="w-36"/></div>
-              </div>
-          </div>
-        </div> 
-        <div className="mt-56 px-10 py-16 bg-white rounded-lg shadow-xl sm:mx-0 sm:px-16 bg-clip-padding backgroup-filter bg-opacity-10 border border-none min-h-screen" style={{ minWidth: "90%" }}>
+        <div className="flex absolute right-2 sm:right-16 top-2 sm:top-10 font-bold">
+            <div className='grid grid-cols-1 text-right sm:pr-4'>
+              <div className='text-md pt-8 sm:text-4xl sm:pt-8 text-white'>0_o</div>
+              <div className='text-md -mt-4 sm:text-4xl sm:-mt-8 text-white'> TheYouuProject </div>
+            </div>
+            <div className=''><Image src={logo} className="w-24"/></div>
+        </div>
+        <div className="mt-28 sm:mt-56 px-10 py-8 sm:py-16 bg-white rounded-lg shadow-xl sm:mx-0 sm:px-16 bg-clip-padding backgroup-filter bg-opacity-10 border border-none min-h-screen" style={{ minWidth: "90%" }}>
           { !selectedId &&
             <>
-              <div className='text-center text-white py-4 font-extrabold text-xl'> Begin here if you're pumped and just want to start: </div>
+              <div className='text-center text-white py-4 font-extrabold text-xl'> Start here if you're pumped and just want to start: </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm m-2">    
                   <div className="py-4 px-6 rounded-3xl border-none bg-gradient-to-r from-youu-light-green to-youu-dark-green hover:from-youu-sky-pink hover:to-youu-sky-blue hover:font-extrabold cursor-pointer" onClick={() => { setSelectedId('quickwins'); }}>
                     <div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
+import Timer from "../UI/timer";
 
-const ColdWater = ({ setSelectedId }) => {
+const ColdWater = ({ setSelectedId, randomizeProtocol}) => {
     //results:
     // > rapid increase in norepinephrine
     // > increases epinepherine which is adrenaline
@@ -25,8 +26,9 @@ const ColdWater = ({ setSelectedId }) => {
     // study source: 
     // > reference: Human physiological responses to immersion into water of different temperatures: https://link.springer.com/article/10.1007/s004210050065
 
-    const [currentDiv, setCurrentDiv] = useState(1);
-    const [timer, setTimer] = useState(10)
+    const [currentDiv, setCurrentDiv] = useState(1)
+    const [time, setTime] = useState(10)
+    const [timerSelected, setTimerSelected] = useState(false)
 
     const handleClick = () => {
       setCurrentDiv(currentDiv === 1 ? 2 : 1);
@@ -38,25 +40,22 @@ const ColdWater = ({ setSelectedId }) => {
           <div className="font-bold text-center"> Let's Get Some Cold Exposure Today</div>
           <img src={`/images/icebathemoji.png`} alt={'icebath'} className="w-full h-auto mt-4 rounded-lg" />
           <div className="pt-2">
-            <div>
-              <div className="text-xl font-extrabold p-2">What you can expect to happen:</div>
-              <ul className="list-disc text-white text-lg">
-                <li className="mb-2">Increase in dopamine by as much as 200-250%</li>
-                <li className="mb-2">As opposed to other instantaneous sources of dopamine rises, cold water exposure results in a sustained increase in dopamine above baseline</li>
-                <li className="mb-2">Rapid increase in epinephrine which is adrenaline</li>
-                <li className="mb-2">Increase metabolism and fat loss</li>
-                <li className="mb-2">Improve wellbeing</li>
-                <li className="mb-2">Improve clarity of mind</li>
-                <li className="mb-2">Create a calm state of mind</li>
-              </ul>
-            </div>
+            <div className="text-xl font-extrabold p-2">What you can expect to happen:</div>
+            <ul className="list-disc text-white text-lg">
+              <li className="mb-2">Increase in dopamine by 200-250%</li>
+              <li className="mb-2">As opposed to other instantaneous sources of dopamine rises, cold water exposure results in a sustained increase in dopamine above baseline</li>
+              <li className="mb-2">Rapid increase in epinephrine which is adrenaline</li>
+              <li className="mb-2">Increase metabolism and fat loss</li>
+              <li className="mb-2">Improve wellbeing</li>
+              <li className="mb-2">Improve clarity of mind</li>
+              <li className="mb-2">Create a calm state of mind</li>
+            </ul>
           </div>
-          <button
-          className="bg-white rounded-full py-2 px-4 text-black hover:bg-gray-200"
-          onClick={handleClick}
-          >
-            Lets Go!
-          </button>
+          <div className="flex">
+            <div className="hover:cursor-pointer hover:animate-bounce text-white font-bold" onClick={() => setSelectedId(null)}>🏠 Go Home</div>
+            <div className="hover:cursor-pointer hover:animate-bounce text-white font-bold" onClick={() => randomizeProtocol()}>⏭️ Show me something else</div>
+            <div className="hover:cursor-pointer hover:animate-bounce text-white font-bold" onClick={handleClick}>✅ Lets Go!</div>
+          </div>
         </div>
         <div className={`flex flex-col items-center text-white ${currentDiv === 2 ? 'block' : 'hidden'}`}>
           <div className="text-xl font-extrabold">Do you have your own:</div>
@@ -87,13 +86,15 @@ const ColdWater = ({ setSelectedId }) => {
           </div>
           <div className="text-xl font-extrabold mt-4">Choose a length of time:</div>
           <div className="flex flex-col items-center">
-            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTimer(2)}>novice: 2mins</button>
-            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTimer(3)}>beginner: 3mins</button>
-            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTimer(5)}>intermediate: 5mins</button>
-            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTimer(10)}>advanced: 10mins</button>
-            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTimer(15)}>intermediate: 15mins</button>
+            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTime(2)}>novice: 2mins</button>
+            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTime(3)}>beginner: 3mins</button>
+            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTime(5)}>intermediate: 5mins</button>
+            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTime(10)}>advanced: 10mins</button>
+            <button className="bg-sky-800 rounded-full py-2 px-4 my-2 text-black hover:bg-gray-200 mx-2 w-full md:w-auto" onClick={()=> setTime(15)}>intermediate: 15mins</button>
           </div>
-        </div>     
+          <Timer minutes={time} seconds={0} />
+        </div>
+                
       </div>
     )
 }
