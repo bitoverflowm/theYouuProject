@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ColdWater from "./protocols/coldwater";
 import Stack1 from "./protocols/stack1";
 import SupCaffeineCoffee from "./protocols/supCaffeineCoffee";
@@ -22,9 +22,11 @@ import Stack4 from "./protocols/stack4";
 const QuickWins = ({ setSelectedId }) => {
 
   const [ quickWinsId, setQuickWinsId ] = useState()
+  const quickWinsView = useRef(null)
 
   useEffect(() => {
-    randomizeProtocol()
+    setQuickWinsId(0)
+    window.scrollTo(0, quickWinsView.current.offsetTop)
   }, []);
 
   const randomizeProtocol = () => {
@@ -51,27 +53,28 @@ const QuickWins = ({ setSelectedId }) => {
    */  
 
   return (
-    <div className="place-content-center flex flex-col">
-      <div className="text-center font-extrabold text-xl text-white">Quick Wins For Results Now</div>
-      <div className="p-4">
-        {quickWinsId === 0 && <ColdWater setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 1 && <SupCaffeineCoffee setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 2 && <SupCaffeineTea setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 3 && <SupCaffeineYerba setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 4 && <SpotLighting setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 5 && <BeliefReinforcement setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 6 && <SupMecuniPurines setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 7 && <SupLTyrosine setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 8 && <Stack0 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 9 && <SupHyperzineA setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 10 && <OxySocial setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 11 && <EarlyMorningSun setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 12 && <Stack1 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 13 && <Stack2 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 14 && <Stack3 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-        {quickWinsId === 15 && <Stack4 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-
-        
+    <div ref={quickWinsView}>
+      <div className="-mt-4 -ml-4 pb-2 hover:cursor-pointer hover:animate-bounce text-white font-bold" onClick={() => setSelectedId(null)}>🏠 Home</div>
+      <div className="place-content-center flex flex-col">
+        <div className="text-center font-extrabold text-xl text-white py-4">Quick Wins For Results Now</div>
+        <div className="p-4">
+          {quickWinsId === 0 && <ColdWater setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 1 && <SupCaffeineCoffee setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 2 && <SupCaffeineTea setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 3 && <SupCaffeineYerba setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 4 && <SpotLighting setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 5 && <BeliefReinforcement setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 6 && <SupMecuniPurines setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 7 && <SupLTyrosine setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 8 && <Stack0 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 9 && <SupHyperzineA setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 10 && <OxySocial setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 11 && <EarlyMorningSun setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 12 && <Stack1 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 13 && <Stack2 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 14 && <Stack3 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 15 && <Stack4 setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }       
+        </div>
       </div>
     </div>
   )

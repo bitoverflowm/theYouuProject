@@ -19,6 +19,15 @@ module.exports = {
         'youu-deep-red': '#FF0844',
         'youu-light-pink': '#FFB199',
       },
+      keyframes: {
+        shiver: {
+          '0%, 100%': { transform: 'rotate(-1deg) translateX(0.25%) translateY(0.25%)' },
+          '50%': { transform: 'rotate(1deg) translateX(-0.25%) translateY(-0.25%)' },
+        }
+      },
+      animation: {
+        shiver: 'shiver 0.25s linear infinite',
+      },
     },
   },
   plugins: [],

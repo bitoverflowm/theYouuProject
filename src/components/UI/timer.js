@@ -1,50 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { motion, useAnimation } from 'framer-motion'
-import { jsx, Global, ClassNames } from '@emotion/react'
-import { cx, css } from '@emotion/css'
-
-const circleVariants = {
-  start: {
-    background: '#0b3d91'
-  },
-  end: {
-    background: '#FFFFFF'
-  }
-};
-
-const circleTransition = {
-  duration: 1,
-  ease: [0.43, 0.13, 0.23, 0.96]
-};
-
-const ProgressCircle = () => {
-    const controls = useAnimation()
   
-    useEffect(() => {
-      controls.start('end')
-    }, [controls])
-  
-    return (
-      <motion.div
-        className={cx(
-          'rounded-full h-16 w-16',
-          css`
-            background: #0b3d91;
-          `
-        )}
-        variants={circleVariants}
-        animate={controls}
-        transition={{
-          duration: 1
-        }}
-      ></motion.div>
-    )
-  }
-  
-  
-  
-
-const Timer = ({ minutes, seconds }) => {
+const Timer = ({ minutes, seconds, setTimerSelected, setSessionComplete }) => {
   const [time, setTime] = useState({ minutes, seconds });
   const [isRunning, setIsRunning] = useState(false);
 
@@ -65,9 +21,21 @@ const Timer = ({ minutes, seconds }) => {
         });
       }, 1000);
     } else if (!isRunning && time.minutes === 0 && time.seconds === 0) {
-      clearInterval(interval);
+      if (interval !== null) {
+        clearInterval(interval);
+      }
+    } else if (time.minutes === 0 && time.seconds === 0 ){
+      if (interval !== null) {
+        clearInterval(interval);
+      }
+      setIsRunning(false);
+      setSessionComplete(true);
     }
-    return () => clearInterval(interval);
+    return () => {
+      if(interval !== null){
+        clearInterval(interval);
+      }
+    }
   }, [isRunning, time]);
 
   const handleStart = () => {
@@ -83,36 +51,48 @@ const Timer = ({ minutes, seconds }) => {
     setIsRunning(false);
   };
 
-  const totalSeconds = time.minutes * 60 + time.seconds;
-  const progress = (totalSeconds / (minutes * 60 + seconds)) * 100;
+  //const totalSeconds = time.minutes * 60 + time.seconds
+  //const progress = Math.round(((time.minutes * 60 + time.seconds) / (minutes * 60 + seconds)) * 1000 / 100) * 100
+
+  //const color = `bg-red-${progress}`;
+  //console.log(color)
+  //console.log(progress)
 
   return (
     <div className="flex flex-col items-center p-4">
-      <ProgressCircle progress={progress} />
-      <div className="text-center text-xl mt-4">
-        {time.minutes.toString().padStart(2, '0')}:
-        {time.seconds.toString().padStart(2, '0')}
+      <div className='flex'>
+        <div className='text-xl pt-8 -ml-10 pr-3' onClick={() => setTimerSelected(false)}>
+          ⬅️
         </div>
-    <div className="flex mt-6">
-      <button
-        className="px-4 py-2 rounded-full bg-blue-500 text-white mr-2"
-        onClick={handleStart}
-      >
-        Start
-      </button>
-      <button
-        className="px-4 py-2 rounded-full bg-gray-500 text-white mr-2"
-        onClick={handleStop}
-      >
-        Stop
-      </button>
-      <button
-        className="px-4 py-2 rounded-full bg-red-500 text-white"
-        onClick={handleReset}
-      >
-        Reset
-      </button>
-    </div>
+        <div className={`w-24 h-24 rounded-full bg-blue-400 border-2 border-white animate-pulse text-center text-xl p-4 pt-8`}>
+          <div>
+            {time.minutes.toString().padStart(2, '0')}:
+            {time.seconds.toString().padStart(2, '0')}
+          </div>
+        </div>
+      </div>
+      
+      
+      <div className="flex mt-6">
+        <button
+          className="px-4 py-2 rounded-full bg-blue-500 text-white mr-2"
+          onClick={handleStart}
+        >
+          Start
+        </button>
+        <button
+          className="px-4 py-2 rounded-full bg-gray-500 text-white mr-2"
+          onClick={handleStop}
+        >
+          Stop
+        </button>
+        <button
+          className="px-4 py-2 rounded-full bg-red-500 text-white"
+          onClick={handleReset}
+        >
+          Reset
+        </button>
+      </div>
   </div>
 );
 };
