@@ -108,28 +108,57 @@ const ColdWater = ({ setSelectedId, randomizeProtocol}) => {
         </div>
         {
             sessionComplete &&
-              <div>
-                <div>👏👏👏 </div>
-                <div>
-                  Congratulations you savage. 
-                  How good do you feel right now.
+              <div className="text-white">
+                <div className="text-center text-3xl">👏👏👏 </div>
+                <div className="font-extrabold text-center">
+                  Congratulations you savage! 
+                  How good do you feel right now?
                 </div>
-                <div>
-                  Click here to go back and explore more protocols.
+                <div className="text-center pt-4">
+                  <div className="text-lg font-extrabold">
+                    Streak Count
+                  </div>
+                  <div className="text-3xl font-extrabold">
+                    1
+                  </div>
+                  <div className="text-xl font-extrabold">
+                    day
+                  </div>
                 </div>
-                <div>
-                  Or Sign Up to earn tokens, connect with the community and track your progress!
-                  (ps: all you need is your email, we are passwordless!)
-                </div>
-                <div>
-                  We are just starting out as a platform, but we have a long way to go... we would love to have you grow with us and celebrate the journey towards self-improvement, mastering our mnid and neuroscience, and optimizing our health and wellbeing!
-                </div>
-                <div>
-                  If you feel particularly great, buy the devs (cough cough us 👀👀) a coffee/ a slice of pizza so we can continue to grind away and keep the platform free as can be.
-                </div>
-                <div>
-                  Pretty much every interaction (including buying us a coffee) warns you tokens. Tokens can be used (once we finish the implementation) to suggest new features, vote on Huberman, Rhonda Patrick, etc podcasts and protocols you would like to see integrated into the app. Anything goes, even scientists we have never heard of. And the community can vote. We prioritize based on your feedback
-                </div>
+                <div className="p-2">
+                  <div className="text-xl font-medium">Join the Community, Track Your Progress & Earn Tokens!</div>
+                  <div className="bg-blue-800 p-2 m-2 rounded-lg text-center font-extrabold">Sign Up For Free</div>
+                  <div className="text-base font-light p-2">
+                    <ul className="list-disc">
+                      <li>Just your email - we're passwordless!</li>
+                      <li>Everything will always be free</li>
+                      But this way
+                      <li>Track your progress</li>
+                      <li>Connect with like-minded, super supportive community of individuals</li>
+                      <li>Earn tokens and win rewards</li>
+                      <li>Get major perks and benefits</li>
+                      <li>Have a direct line of communication with us the devs!</li>
+                      <li>Good Vibes only!</li>
+                    </ul> 
+                    <div>Lets enbark on our journey towards self-improvement, self-mastery, and optimizing our health and wellbeing together!</div> 
+                  </div>
+                  <div className="bg-green-600 p-2 m-2 rounded-lg text-center font-extrabold" onClick={()=>buyUsACoffee()}>Buy Us a Coffee ☕ </div>
+                  <div className="mt-4 text-base font-light">
+                    <ul className="list-disc">
+                     <li>Or some pizza 🍕</li>
+                     <li>We are entierly self bootstrapped</li>
+                     <li>Your act of kindness, greatly fuels our development flow!</li>
+                     <li>And earns you tokens.</li>
+                     <li>Among other things, tokens can be used to suggest new features, vote on podcasts and protocols you'd like to see integrated into the app. This way we can prioritize the right features!</li> 
+                    </ul>
+                  </div>
+                  <div className="mt-4 text-base font-light">
+                    Let's grow and celebrate the journey together!
+                  </div>
+                  <div className="bg-blue-800 p-2 m-2 rounded-lg text-center font-extrabold">Sign Up For Free</div>
+                  <div className="text-center">OR</div>
+                  <div className="pt-2 font-bold text-center" onClick={() => setSelectedId(null)}>Explore more protocols.</div>
+                </div>                
               </div>
 
           }

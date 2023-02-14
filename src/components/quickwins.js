@@ -21,12 +21,21 @@ import Stack4 from "./protocols/stack4";
 
 const QuickWins = ({ setSelectedId }) => {
 
-  const [ quickWinsId, setQuickWinsId ] = useState()
+  const [ quickWinsId, setQuickWinsId ] = useState(null)
+  const [showHeader, setShowHeader] = useState(true);
   const quickWinsView = useRef(null)
+  
 
   useEffect(() => {
     setQuickWinsId(0)
     window.scrollTo(0, quickWinsView.current.offsetTop)
+
+    const timeoutId = setTimeout(() => {
+      setShowHeader(false)
+    }, 3000)
+    return ()  => {
+      clearTimeout(timeoutId)
+    }
   }, []);
 
   const randomizeProtocol = () => {
@@ -56,7 +65,7 @@ const QuickWins = ({ setSelectedId }) => {
     <div ref={quickWinsView}>
       <div className="-mt-4 -ml-4 pb-2 hover:cursor-pointer hover:animate-bounce text-white font-bold" onClick={() => setSelectedId(null)}>🏠 Home</div>
       <div className="place-content-center flex flex-col">
-        <div className="text-center font-extrabold text-xl text-white py-4">Quick Wins For Results Now</div>
+        {showHeader && <div className="text-center font-extrabold text-xl text-white py-4">Quick Wins For Results Now</div>}
         <div className="p-4">
           {quickWinsId === 0 && <ColdWater setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
           {quickWinsId === 1 && <SupCaffeineCoffee setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }

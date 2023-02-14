@@ -7,6 +7,15 @@ const Timer = ({ minutes, seconds, setTimerSelected, setSessionComplete }) => {
   useEffect(() => {
     let interval = null;
     if (isRunning) {
+      //timer is over
+      if (time.minutes <= 0 && time.seconds <= 0 ){
+        if (interval !== null) {
+          clearInterval(interval);
+        }
+        setIsRunning(false);
+        setSessionComplete(true);
+      }
+      //timer is running
       interval = setInterval(() => {
         setTime((prevTime) => {
           const newMinutes =
@@ -24,12 +33,6 @@ const Timer = ({ minutes, seconds, setTimerSelected, setSessionComplete }) => {
       if (interval !== null) {
         clearInterval(interval);
       }
-    } else if (time.minutes === 0 && time.seconds === 0 ){
-      if (interval !== null) {
-        clearInterval(interval);
-      }
-      setIsRunning(false);
-      setSessionComplete(true);
     }
     return () => {
       if(interval !== null){
