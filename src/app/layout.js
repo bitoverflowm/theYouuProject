@@ -8,7 +8,11 @@ export default function RootLayout({ children }) {
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>{children}</body>
+      <body>
+        <div className='bg-youu-background flex items-center justify-center'>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }

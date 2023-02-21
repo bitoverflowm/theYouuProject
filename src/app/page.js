@@ -1,13 +1,16 @@
 'use client';
 
 import React, { useState } from 'react'
+import Link from 'next/link'
 
 import Image from 'next/image'
 
 import logo from '../../public/logo.png'
 
+import { useUser } from "@/lib/hooks"
+
 import TagList from '../components/taglist'
-import QuickWins from '@/components/quickwins';
+import QuickWins from '@/components/quickwins'
 
 export default function Home() {
 
@@ -39,6 +42,8 @@ export default function Home() {
   const [selectedTag, setSelectedTag] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
 
+  const user = useUser()
+
   const handleTagClick = (tag) => {
     tag === selectedTag 
       ? setSelectedTag(null)
@@ -52,19 +57,35 @@ export default function Home() {
 
   return (
     <div>
+      <div className="flex absolute top-2 sm:top-10 font-bold w-full">
+          <div className='pl-2'><Image src={logo} className="w-24"/></div>
+          <div className='grid grid-cols-1 text-left sm:pr-4'>
+            <div className='text-md pt-8 sm:text-4xl sm:pt-8 text-white'>0_o</div>
+            <div className='text-md -mt-4 sm:text-4xl sm:-mt-8 text-white'> TheYouuProject </div>
+          </div>
+          <div className='right-0 pt-10 text-white ml-auto mr-4'>
+            {
+                user ? (
+                    <div className='flex place-items-center'>
+                        <div className=''>
+                            <Link href="/" as="/api/logout">Logout</Link>
+                        </div>
+                        <div className='mx-4'>
+                            Welcome {user.email}
+                        </div>                            
+                    </div>
+                ) : (
+                    <Link href="/signup">Sign-In/Up</Link>
+                )
+            }
+          </div>
+      </div>
       <main className='bg-youu-background flex items-center justify-center'>
-        <div className="flex absolute right-2 sm:right-16 top-2 sm:top-10 font-bold">
-            <div className='grid grid-cols-1 text-right sm:pr-4'>
-              <div className='text-md pt-8 sm:text-4xl sm:pt-8 text-white'>0_o</div>
-              <div className='text-md -mt-4 sm:text-4xl sm:-mt-8 text-white'> TheYouuProject </div>
-            </div>
-            <div className=''><Image src={logo} className="w-24"/></div>
-        </div>
         <div className="mt-28 sm:mt-56 px-10 py-8 sm:py-16 bg-white rounded-lg shadow-xl sm:mx-0 sm:px-16 bg-clip-padding backgroup-filter bg-opacity-10 border border-none min-h-screen" style={{ minWidth: "90%" }}>
           { !selectedId &&
             <>
               <div className='text-center text-white py-4 font-extrabold text-xl'> Start here if you're pumped and just want to start: </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm m-2">    
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 m-2 text-lg">    
                   <div className="py-4 px-6 rounded-3xl border-none bg-gradient-to-r from-youu-light-green to-youu-dark-green hover:from-youu-sky-pink hover:to-youu-sky-blue hover:font-extrabold cursor-pointer" onClick={() => { setSelectedId('quickwins'); }}>
                     <div>
                       <div className='font-bold'>Quick Wins</div>

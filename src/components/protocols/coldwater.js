@@ -1,5 +1,9 @@
+import Link from 'next/link';
+
 import { useState } from "react";
+
 import Timer from "../UI/timer";
+
 
 const ColdWater = ({ setSelectedId, randomizeProtocol}) => {
     //results:
@@ -127,12 +131,12 @@ const ColdWater = ({ setSelectedId, randomizeProtocol}) => {
                 </div>
                 <div className="p-2">
                   <div className="text-xl font-medium">Join the Community, Track Your Progress & Earn Tokens!</div>
-                  <div className="bg-blue-800 p-2 m-2 rounded-lg text-center font-extrabold">Sign Up For Free</div>
+                  <div className="bg-blue-800 p-2 m-2 rounded-lg text-center font-extrabold"><Link href="/signup">Sign Up For Free</Link></div>
                   <div className="text-base font-light p-2">
                     <ul className="list-disc">
                       <li>Just your email - we're passwordless!</li>
                       <li>Everything will always be free</li>
-                      But this way
+                      <div className="underline">But this way...</div>
                       <li>Track your progress</li>
                       <li>Connect with like-minded, super supportive community of individuals</li>
                       <li>Earn tokens and win rewards</li>
@@ -155,7 +159,7 @@ const ColdWater = ({ setSelectedId, randomizeProtocol}) => {
                   <div className="mt-4 text-base font-light">
                     Let's grow and celebrate the journey together!
                   </div>
-                  <div className="bg-blue-800 p-2 m-2 rounded-lg text-center font-extrabold">Sign Up For Free</div>
+                  <div className="bg-blue-800 p-2 m-2 rounded-lg text-center font-extrabold"><Link href="/signup">Sign Up For Free</Link></div>
                   <div className="text-center">OR</div>
                   <div className="pt-2 font-bold text-center" onClick={() => setSelectedId(null)}>Explore more protocols.</div>
                 </div>                
