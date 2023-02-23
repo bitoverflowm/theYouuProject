@@ -15,8 +15,7 @@ const SignUp = () => {
 
   
     async function handleSubmit(e) {
-      e.preventDefault()
-  
+      e.preventDefault()  
   
       const body = {
         email: e.currentTarget.email.value,
@@ -36,7 +35,7 @@ const SignUp = () => {
           body: JSON.stringify(body),
         })
         if (res.status === 200) {
-          router.push('/')
+          router.push('/buyUsCoffee')
         } else {
           throw new Error(await res.text())
         }
@@ -79,24 +78,18 @@ const SignUp = () => {
       </div>
     )*/
     return(
-      <div class="flex flex-col items-center justify-center">
-        <div class="text-xl font-light text-center p-4">
+      <div className="flex flex-col items-center justify-center text-white h-full p-8">
+        <div className="text-xl font-light text-center p-4">
           Let's sign you in.
         </div>
-        <div class="text-lg font-light text-center p-4">
-          At YouuProject, we believe in fostering a supportive community of individuals. Our platform is free and we aim to keep it that way. However, as developers, we always appreciate a ☕ coffee or a 🍕 pizza to help us sustain our work. If you gift us during our grind phase, we'll guarantee free lifetime access to all features, even if we start charging subscription fees in the future.
-        </div>
-        <div class="font-medium underline underline-offset-4 text-center p-4">
-          Gift us ☕🍕 and get access to surprise free gifts 🎁🎁 we'll be rolling out over the next few weeks/months!
-        </div>
-        <div class="mt-4">
+        <div className="mt-4">
           <SignupForm onSubmit={handleSubmit} />
         </div>
-        <div class="text-lg font-light text-left p-4">
-          <div class="pb-2">
+        <div className="text-lg font-light text-left p-4">
+          <div className="pb-2">
             We are just getting started and will continue to add new features. By signing up, you can:
           </div>
-          <ul class="list-disc list-inside">
+          <ul className="list-disc list-inside">
             <li>Track your progress ❤️</li>
             <li>Collect tokens 🔥</li>
             <li>Use tokens to vote on future integrations, features, and scientific protocols 🚀</li>

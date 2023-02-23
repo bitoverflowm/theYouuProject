@@ -60,8 +60,7 @@ export default function Home() {
       <div className="flex absolute top-2 sm:top-10 font-bold w-full">
           <div className='pl-2'><Image src={logo} className="w-24"/></div>
           <div className='grid grid-cols-1 text-left sm:pr-4'>
-            <div className='text-md pt-8 sm:text-4xl sm:pt-8 text-white'>0_o</div>
-            <div className='text-md -mt-4 sm:text-4xl sm:-mt-8 text-white'> TheYouuProject </div>
+            <div className='text-md sm:text-4xl pt-6 text-white'> TheYouuProject </div>
           </div>
           <div className='right-0 pt-10 text-white ml-auto mr-4'>
             {

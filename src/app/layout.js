@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
       */}
       <head />
       <body>
-        <div className='bg-youu-background flex items-center justify-center'>
+        <div className=' flex items-center justify-center'>
           {children}
         </div>
       </body>
