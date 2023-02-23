@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import Image from 'next/image'
 
@@ -11,6 +12,7 @@ import { useUser } from "@/lib/hooks"
 
 import TagList from '../components/taglist'
 import QuickWins from '@/components/quickwins'
+import MagicButton from '@/components/UI/magicButton'
 
 export default function Home() {
 
@@ -41,6 +43,7 @@ export default function Home() {
 
   const [selectedTag, setSelectedTag] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
+  const router = useRouter()
 
   const user = useUser()
 
@@ -48,6 +51,10 @@ export default function Home() {
     tag === selectedTag 
       ? setSelectedTag(null)
       : setSelectedTag(tag)
+  }
+
+  const handleSubmit = () => {
+    router.push('/buyUsCoffee/checkOut')
   }
 
   const filteredContent = selectedTag
@@ -69,9 +76,9 @@ export default function Home() {
                         <div className=''>
                             <Link href="/" as="/api/logout">Logout</Link>
                         </div>
-                        <div className='mx-4'>
-                            Welcome {user.email}
-                        </div>                            
+                        <div className="columns-1 items-center p-4">
+                          <MagicButton submitHandler={handleSubmit} label={'Buy us a coffee ☕ or pizza 🍕'}/>                            
+                        </div>                                
                     </div>
                 ) : (
                     <Link href="/signup">Sign-In/Up</Link>

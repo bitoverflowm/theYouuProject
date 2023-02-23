@@ -18,15 +18,32 @@ module.exports = {
         'youu-sky-pink': '#FED6E3',
         'youu-deep-red': '#FF0844',
         'youu-light-pink': '#FFB199',
+        'primary': '#6171fe',
+        'secondary': '#9f6afe',
+        'tertiary': '#b79dfe',
+        'highlight': '#ddd0fe',
+        'light': '#fefefe',
+        'dark': '#6658fe',
       },
       keyframes: {
         shiver: {
           '0%, 100%': { transform: 'rotate(-1deg) translateX(0.25%) translateY(0.25%)' },
           '50%': { transform: 'rotate(1deg) translateX(-0.25%) translateY(-0.25%)' },
-        }
+        },
+        border: {
+          '0%': { backgroundPosition: '10% 0%' },
+          '50%': { backgroundPosition: '91% 100%' },
+          '100%': { backgroundPosition: '10% 0%' }
+        },
+        background: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
       },
       animation: {
         shiver: 'shiver 0.25s linear infinite',
+        border: 'border 2s ease-in-out infinite',
+        background: 'background 2s ease-in-out infinite',
       },
     },
   },

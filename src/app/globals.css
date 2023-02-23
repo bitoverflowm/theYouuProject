@@ -104,3 +104,21 @@ a {
     color-scheme: dark;
   }
 }
+
+/*
+  Separate class. Can probably be done with arbitrary values, but better this way because it's clearer what is going on.
+*/
+.border-gradient {
+  background: linear-gradient(90deg, #18181b, #18181b),
+    linear-gradient(to bottom right, #6171fe, #9f6afe, #b79dfe);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+}
+
+/* 
+  This transitions does both the blur-x to blur-y and opacity-x to opacity-y 
+  Make sure both have the same duration.
+*/
+.before\:transition-animation:before {
+  transition: opacity 1s ease-in-out, filter 1s ease-in-out;
+}
