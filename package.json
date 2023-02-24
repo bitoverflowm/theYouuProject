@@ -13,6 +13,7 @@
     "@emotion/css": "^11.10.5",
     "@emotion/react": "^11.10.5",
     "@hapi/iron": "^7.0.1",
+    "@headlessui/react": "^1.7.11",
     "@magic-sdk/admin": "^1.8.0",
     "@next/font": "13.1.6",
     "@stripe/react-stripe-js": "^1.16.5",

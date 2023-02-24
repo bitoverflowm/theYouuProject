@@ -69,15 +69,15 @@ export default function Home() {
             <div className=''><Image src={logo} className="w-24"/></div>
             <div className='text-md sm:text-xl text-white'> TheYouuProject </div>
           </div>
-          <div className='right-0 text-white ml-auto mr-8 my-auto'>
+          <div className='right-0 text-white ml-auto sm:mr-8 my-auto'>
             {
                 user ? (
-                    <div className='flex place-items-center'>
-                        <div className='items-center'>
+                    <div className='flex place-items-center flex-col sm:flex-row'>
+                        <div className='text-xs sm:text-base'>
                             <Link href="/" as="/api/logout">Logout</Link>
                         </div>
-                        <div className="columns-1 items-center p-4">
-                          <MagicButton submitHandler={handleSubmit} label={'Buy us a coffee ☕ or pizza 🍕'}/>                            
+                        <div className="p-1 pt-2 sm:p-4">
+                          <MagicButton submitHandler={handleSubmit} label={'Gift Coffee ☕ or Pizza 🍕'}/>                            
                         </div>                                
                     </div>
                 ) : (
