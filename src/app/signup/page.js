@@ -13,14 +13,13 @@ const SignUp = () => {
     const router = useRouter()
     useUser({ redirectTo: '/', redirectIfFound: true })
 
-  
     async function handleSubmit(e) {
       e.preventDefault()  
-  
+      
       const body = {
         email: e.currentTarget.email.value,
       }
-  
+
       try {
         const magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY)
         const didToken = await magic.auth.loginWithMagicLink({
@@ -45,23 +44,23 @@ const SignUp = () => {
       }
     }
     return(
-      <div className="flex flex-col items-center justify-center text-white h-full p-8">
+      <div className="h-screen my-auto flex flex-col items-center justify-center text-white p-20 sm:p-40">
         <div className="text-xl font-light text-center p-4">
-          Let's sign you in.
+          Welcome! Let's get started.
         </div>
         <div className="mt-4">
           <SignupForm onSubmit={handleSubmit} />
         </div>
         <div className="text-lg font-light text-left p-4">
           <div className="pb-2">
-            We are just getting started and will continue to add new features. By signing up, you can:
+            Our platform is constantly growing and evolving. By signing up, you'll get access to exciting features such as:
           </div>
-          <ul className="list-disc list-inside">
-            <li>Track your progress ❤️</li>
-            <li>Collect tokens 🔥</li>
-            <li>Use tokens to vote on future integrations, features, and scientific protocols 🚀</li>
-            <li>Join our community and connect with other like-minded individuals 🦄</li>
-            <li>Much more, but we just haven't gotton around to fguring it all out yet 😎 </li>
+          <ul className="text-xs sm:text-sm list-disc list-inside">
+            <li>Track your progress 📈</li>
+            <li>Collect tokens to unlock rewards 🔑</li>
+            <li>Vote on future integrations, features, and scientific protocols 🚀</li>
+            <li>Join our community and connect with like-minded individuals 🌟</li>
+            <li>Plus many more exciting updates on the way! 😎</li>
           </ul>
         </div>
       </div>

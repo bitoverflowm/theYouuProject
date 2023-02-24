@@ -115,6 +115,14 @@ a {
   background-origin: padding-box, border-box;
 }
 
+.border-gradient-green {
+  background: linear-gradient(90deg, #ffffff, #FFB199),
+    linear-gradient(to bottom right, #6171fe, #9f6afe, #b79dfe);
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+
+}
+
 /* 
   This transitions does both the blur-x to blur-y and opacity-x to opacity-y 
   Make sure both have the same duration.

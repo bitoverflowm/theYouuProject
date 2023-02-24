@@ -64,16 +64,16 @@ export default function Home() {
 
   return (
     <div>
-      <div className="flex absolute top-2 sm:top-10 font-bold w-full">
-          <div className='pl-2'><Image src={logo} className="w-24"/></div>
-          <div className='grid grid-cols-1 text-left sm:pr-4'>
-            <div className='text-md sm:text-4xl pt-6 text-white'> TheYouuProject </div>
+      <div className="flex absolute top-2 sm:top-4 font-bold w-full px-8">
+          <div className='grid grid-cols-1 text-center place-items-center'>
+            <div className=''><Image src={logo} className="w-24"/></div>
+            <div className='text-md sm:text-xl text-white'> TheYouuProject </div>
           </div>
-          <div className='right-0 pt-10 text-white ml-auto mr-4'>
+          <div className='right-0 text-white ml-auto mr-8 my-auto'>
             {
                 user ? (
                     <div className='flex place-items-center'>
-                        <div className=''>
+                        <div className='items-center'>
                             <Link href="/" as="/api/logout">Logout</Link>
                         </div>
                         <div className="columns-1 items-center p-4">
@@ -87,7 +87,7 @@ export default function Home() {
           </div>
       </div>
       <main className='bg-youu-background flex items-center justify-center'>
-        <div className="mt-28 sm:mt-56 px-10 py-8 sm:py-16 bg-white rounded-lg shadow-xl sm:mx-0 sm:px-16 bg-clip-padding backgroup-filter bg-opacity-10 border border-none min-h-screen" style={{ minWidth: "90%" }}>
+        <div className="mt-36 sm:mt-44 px-10 py-8 sm:py-16 bg-white rounded-lg shadow-xl sm:mx-0 sm:px-16 bg-clip-padding backgroup-filter bg-opacity-10 border border-none min-h-screen" style={{ minWidth: "90%" }}>
           { !selectedId &&
             <>
               <div className='text-center text-white py-4 font-extrabold text-xl'> Start here if you're pumped and just want to start: </div>
