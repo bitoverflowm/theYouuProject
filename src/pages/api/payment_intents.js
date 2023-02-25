@@ -28,7 +28,7 @@ export default async function payment_intent(req, res){
                     }
                 )
                 res.status(200).json(updated_intent)
-                return
+                return res
             }
         } catch (e) {
             if(err instanceof Error){
@@ -48,8 +48,8 @@ export default async function payment_intent(req, res){
             },
         }
         const payment_intent = await stripe.paymentIntents.create(params)
-
         res.status(200).json(payment_intent)
+        return res
     } catch(err) {
         const errorMessage = err instanceof Error ? err.message : 'Internal server error'
         res.status(500).json({ statusCode: 500, message: errorMessage })

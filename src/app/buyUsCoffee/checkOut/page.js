@@ -14,7 +14,7 @@ import { Transition } from '@headlessui/react';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const CheckOut = () => {
-    const [errorMessage, setErrorMsg] = useState('')    
+    const [errorMessage, setErrorMessage] = useState('')    
     const [customer, setCustomer] = useState('')
     const [subscription, setSubscription] = useState('')
     const [clientSecret, setClientSecret] = useState('')
@@ -44,13 +44,12 @@ const CheckOut = () => {
             }
             catch (error){
                 console.error('An unexpected error happened occurred:', error)
-                setErrorMsg(error.message)
+                setErrorMessage(error.message)
             }
         }
     }
 
     const triggerCheckout = async (product) => {
-        setConfirmed(product)
         if(['coffee-monthly', 'pizza-monthly'].includes(product)){
             try {
                 const res  = await fetchPostJSON('/api/createSubscription', {
@@ -59,12 +58,26 @@ const CheckOut = () => {
                 }).then((data) => {
                     setSubscription(data.subscriptionId)
                     setClientSecret(data.clientSecret)
+                    setConfirmed(product)
                     console.log(data)
                 })
             }
             catch (error){
                 console.error('An unexpected error happened occurred:', error)
-                setErrorMsg(error.message)
+                setErrorMessage(error.message)
+            }
+        }else{
+            try{
+                await fetchPostJSON('/api/payment_intents', {
+                    amount: testPlans[selectedProduct].amount,
+                }).then((data) => {
+                    setClientSecret(data.client_secret)
+                    setConfirmed(product)                
+                })
+            }
+            catch (error){
+                setPayment({status: 'error'})
+                setErrorMessage(error.message ?? 'An unknown error orrcurred')
             }
         }        
     }
@@ -72,9 +85,10 @@ const CheckOut = () => {
 
 
     return (
-        <div className={`h-screen place-content-center pt-20 ${subscription ? 'w-auto px-20':'w-96'}`}>
-            <div className={`grid ${subscription ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        <div className={`h-screen place-content-center pt-20 ${confirmed ? 'w-auto px-20':'w-96'}`}>
+            <div className={`grid ${confirmed ? 'grid-cols-2' : 'grid-cols-1'}`}>
                 <div className='p-8'>
+                    {/*Coffee-monthly payment flow */}
                     <div><MagicButton submitHandler={selectProductHandler} arg={'coffee-monthly'} label={'Coffee Recurring Monthly'}/></div>
                     <Transition
                         show={selectedProduct === 'coffee-monthly'}
@@ -121,7 +135,8 @@ const CheckOut = () => {
                                 </Transition>
                             </div>                                 
                     </Transition>
-                    
+
+                    {/*Pizza-monthly payment flow */}
                     <div><MagicButton submitHandler={selectProductHandler} arg={'pizza-monthly'} label={'Pizza Recurring Monthly'}/></div>
                     <Transition
                         show={selectedProduct === 'pizza-monthly'}
@@ -132,22 +147,39 @@ const CheckOut = () => {
                         leaveFrom="opacity-100 max-h-screen"
                         leaveTo="opacity-0 max-h-0"
                         >
-                            <div
-                                className='bg-white rounded-lg shadow-lg p-4 m-2'
-                            >
-                                <div className="text-gray-700 mb-4">
-                                    Looks like someone's getting a pizza the action! 😂 Thank you so much for gifting us this tasty treat. We promise to use it to fuel our coding marathons and keep our creative juices flowing. We'll sneak in a slice or two for a quick coding break...
+                            <div className='grid grid-2'>
+                                <div
+                                    className='bg-white rounded-lg shadow-lg p-4 m-2'
+                                >
+                                    <div className="text-gray-700 mb-4">
+                                        Looks like someone's getting a pizza the action! 😂 Thank you so much for gifting us this tasty treat. We promise to use it to fuel our coding marathons and keep our creative juices flowing. We'll sneak in a slice or two for a quick coding break...
+                                    </div>
+                                    <div>
+                                        You will be charged $21/ month
+                                        If you would only like to gift us coffee once select the 'Coffee One Time' option
+                                    </div>
+                                    { 
+                                    (confirmed) !== 'pizza-monthly' &&
+                                        <button onClick={()=> triggerCheckout('pizza-monthly')} className='bg-purple-800 text-white hover:bg-green-300 hover:text-black rounded-md p-2'>Click to Confirm $21/month</button>
+                                    }
                                 </div>
-                                <div>
-                                    You will be charged $21/ month
-                                    If you would only like to gift us coffee once select the 'Coffee One Time' option
+                                <Transition 
+                                    show={confirmed === 'pizza-monthly'}   
+                                    enter="transition-all ease-in-out duration-1000"
+                                    enterFrom="opacity-0 max-h-0"
+                                    enterTo="opacity-100 max-h-screen"
+                                    leave="transition-all ease-in-out duration-300"
+                                    leaveFrom="opacity-100 max-h-screen"
+                                    leaveTo="opacity-0 max-h-0"
+                                    >
+                                <div className='bg-white rounded-lg shadow-lg p-4 m-2'>
+                                    testing child transisiton
                                 </div>
-                                { 
-                                (confirmed) !== 'pizza-monthly' &&
-                                    <button onClick={()=> triggerCheckout('pizza-monthly')} className='bg-purple-800 text-white hover:bg-green-300 hover:text-black rounded-md p-2'>Click to Confirm $21/month</button>
-                                }
-                            </div>                                    
+                                </Transition>
+
+                            </div>                           
                     </Transition>
+
                     <div><MagicButton submitHandler={selectProductHandler} arg={'coffee'} label={'Coffee One Time'}/></div>
                     <Transition
                         show={selectedProduct === 'coffee'}
@@ -158,20 +190,33 @@ const CheckOut = () => {
                         leaveFrom="opacity-100 max-h-screen"
                         leaveTo="opacity-0 max-h-0"
                         >
-                            <div
-                                className='bg-white rounded-lg shadow-lg p-4 m-2'
-                            >
-                                <div className="text-gray-700 mb-4">
-                                    Wow, this is brew-tiful! ☕️ Thank you for gifting us this delicious coffee, we'll drink it up and brew up some amazing new features and updates for our platform. We're not just buzzed, we're downright jittery with excitement! 😜
+                            <div className='grid grid-2'>
+                                <div className='bg-white rounded-lg shadow-lg p-4 m-2'>
+                                    <div className="text-gray-700 mb-4">
+                                        Wow, this is brew-tiful! ☕️ Thank you for gifting us this delicious coffee, we'll drink it up and brew up some amazing new features and updates for our platform. We're not just buzzed, we're downright jittery with excitement! 😜
+                                    </div>
+                                    <div>
+                                        You will be charged $8 once
+                                        If you would only like to gift us coffee every month select the 'Coffee Monthly' option
+                                    </div>
+                                    { confirmed !== 'coffee' &&
+                                        <button onClick={()=> triggerCheckout('coffee')} className='bg-purple-800 text-white hover:bg-green-300 hover:text-black rounded-md p-2'>Click to Confirm $8</button>
+                                    }
                                 </div>
-                                <div>
-                                    You will be charged $8 once
-                                    If you would only like to gift us coffee every month select the 'Coffee Monthly' option
-                                </div>
-                                { confirmed !== 'coffee' &&
-                                    <button onClick={()=> triggerCheckout('coffee')} className='bg-purple-800 text-white hover:bg-green-300 hover:text-black rounded-md p-2'>Click to Confirm $8</button>
-                                }
-                            </div>                                    
+                                <Transition 
+                                    show={confirmed === 'coffee'}   
+                                    enter="transition-all ease-in-out duration-1000"
+                                    enterFrom="opacity-0 max-h-0"
+                                    enterTo="opacity-100 max-h-screen"
+                                    leave="transition-all ease-in-out duration-300"
+                                    leaveFrom="opacity-100 max-h-screen"
+                                    leaveTo="opacity-0 max-h-0"
+                                    >        
+                                    <div className='bg-white rounded-lg shadow-lg p-4 m-2'>
+                                        testing child transisiton
+                                    </div>
+                                </Transition>
+                            </div>                                  
                     </Transition>                    
                     <div><MagicButton submitHandler={selectProductHandler} arg={'pizza'} label={'Pizza One Time'}/></div>
                     <Transition

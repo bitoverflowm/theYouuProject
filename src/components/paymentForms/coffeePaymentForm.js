@@ -37,14 +37,10 @@ const CoffeePaymentForm = (props) => {
         setPayment({status: 'processing'})
 
         if(props.single){
-            await fetchPostJSON('/api/payment_intents', {
-                amount: props.amount,
-            }).then((data) => setClientSecret(data.client_secret))
-
             const {error} = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: 'http://localhost:3000/',
+                    return_url: 'http://localhost:4000/',
                 }
             })
             if (error) {
@@ -55,25 +51,25 @@ const CoffeePaymentForm = (props) => {
             }
         }
         else {
-            const response = await fetchPostJSON('/api/payment_intents', {
-                amount: props.amount,
-                payment_intent_id: paymentIntent.id,
-                client_secret: client_secret,
-            }).then((data) => setClientSecret(data.client_secret))
-
-            console.log(response)
-            setPayment(response)
-
-            if(response.statusCode === 500){
+            try{
+                await fetchPostJSON('/api/payment_intents', {
+                    amount: props.amount,
+                    payment_intent_id: paymentIntent.id,
+                    client_secret: client_secret,
+                }).then((data) => {
+                    setClientSecret(data.client_secret)
+                    setPayment(data)
+                })
+            } catch (error) {
                 setPayment({status: 'error'})
                 setErrorMessage(response.message)
                 return
-            }
+            }               
     
             const {error} = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: 'http://localhost:3000/',
+                    return_url: 'http://localhost:4000/',
                     payment_method_data: {
                         billing_details: {
                             name: fullName,
