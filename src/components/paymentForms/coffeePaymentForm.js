@@ -40,7 +40,7 @@ const CoffeePaymentForm = (props) => {
             const {error} = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: 'http://localhost:4000/',
+                    return_url: 'http://localhost:3000/',
                 }
             })
             if (error) {
@@ -69,7 +69,7 @@ const CoffeePaymentForm = (props) => {
             const {error} = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: 'http://localhost:4000/',
+                    return_url: 'http://localhost:3000/',
                     payment_method_data: {
                         billing_details: {
                             name: fullName,

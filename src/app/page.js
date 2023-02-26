@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+
 
 import Image from 'next/image'
 
@@ -10,66 +11,52 @@ import logo from '../../public/logo.png'
 
 import { useUser } from "@/lib/hooks"
 
-import TagList from '../components/taglist'
-import QuickWins from '@/components/quickwins'
 import MagicButton from '@/components/UI/magicButton'
+import Catalogue from '@/components/catalogue/catalogue';
 
 export default function Home() {
-
-  const [featured, setFeatured] = useState([
-    { name: 'The Hard Reset', img: 'burntOutEmoji.png', desc: 'Sometimes in life we just need a reset. We have all been there, life is out of control and we are just burnt out...'},
-    { name: 'Increase Alertness and Attention', img: 'AlertAndAttentiveEmoji.png', desc: 'Stay attentive and alert for longer'},
-    { name: 'Cramming Session', img: 'studyingEmoji.png', desc: 'For when we need that extra boost to Cram a little harder - whether you are a student, interviewing for a job, have an upcoming test or need to perform specifically hard... '},
-  ])
-
-  const [content, setContent] = useState([
-    { name: 'Increase Focus', img: 'icebathemoji.png', desc: 'Stay on track and be more engaged in any task and in life. Improve Clarity of Mind', tags: ['Motivation', 'Energy'] },
-    { name: 'Suppliments and Stacks', img: 'suppliments.png', desc: '-', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Boost Your Energy', img: 'energyEmoji.png', desc: 'Sometimes we just want a little more fuel in the day to keep our fire going', tags: ['Energy', 'Motivation'] },
-    { name: 'Improve Your Mood', img: 'happyEmoji.png', desc: 'Stay on track and be more engaged in any task and in life. Improve Clarity of Mind', tags: ['Energy', 'Focus'] },
-    { name: 'Master Your Mind', img: 'focusedEmoji.png', desc: 'Stay on track and be more engaged in any task and in life. Improve Clarity of Mind', tags: ['Mastery: Permanent Change', 'Focus'] },
-    { name: 'Improve Brain Health', img: 'brainWorkout.png', desc: 'Boost mental performance, improve cognitive function, promote learning and memory', tags: ['Foods', 'Focus'] },
-    { name: 'Reduce Anxiety', img: 'anxietyEmoji.png', desc: 'Relieve symptoms of depression and stress', tags: ['Foods', 'Focus'] },
-    {name: 'Quick: Dopamine Boost', img: 'dopamineBoost.png', desc: 'Get a quick dopamine boost', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Burn More Fat', img: 'burningFatEmoji.png', desc: 'Increase metabolism and burn more calories and help with weight loss and fatloss', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Boost your Immune System', img: 'immuneSystemEmoji.png', desc: '-', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Get Better at Sex', img: 'sexualHealthEmoji.png', desc: '-', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Recover from a Workout', img: 'recovery.png', desc: 'Increase circulation and relieve muscle soreness', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Improve Performance', img: 'performance.png', desc: '-', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Fix Your Gut', img: 'guthealth.png', desc: '-', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Prevent Burnout', img: 'preventBurnOut.png', desc: '-', tags: ['Suppliments and Stacks', 'Motivation'] },
-    { name: 'Fix Your Diet', img: 'healthyFood.png', desc: '-', tags: ['Suppliments and Stacks', 'Motivation'] },
-  ])
-
-  const [selectedTag, setSelectedTag] = useState(null)
-  const [selectedId, setSelectedId] = useState(null)
   const router = useRouter()
-
   const user = useUser()
+  const mainContent = useRef()
 
-  const handleTagClick = (tag) => {
-    tag === selectedTag 
-      ? setSelectedTag(null)
-      : setSelectedTag(tag)
-  }
+  const [catalogueVisible, setCatalogueVisible] = useState(false)
+  const [ textIndex, setTextIndex ] = useState(0)
+  const [ selectedView, setSelectedView ] = useState('')
+
+  const textList = ['Unwavering Focus', 'More Motivation', 'Unparalleled Productivity', 'Improved Health']
 
   const handleSubmit = () => {
     router.push('/buyUsCoffee/checkOut')
   }
 
-  const filteredContent = selectedTag
-    ? content.filter((item) => item.tags.includes(selectedTag))
-    : content
+  const getNextIndex = () => {
+    return (textIndex + 1) % textList.length
+  }
 
+  useEffect(()=> {
+    const interval = setInterval(() => {
+      setTextIndex(getNextIndex)
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [textIndex])
+
+  const triggerViewActivation = (view) => {
+    setSelectedView(view)
+    setCatalogueVisible(true)
+    window.scrollTo({
+      behavior: "smooth",
+      top: mainContent.current.offsetTop
+    });
+  }
 
   return (
     <div>
-      <div className="flex absolute top-2 sm:top-4 font-bold w-full px-8">
+      <div className="flex relative top-2 sm:top-4 font-bold w-full px-8">
           <div className='grid grid-cols-1 text-center place-items-center'>
-            <div className=''><Image src={logo} className="w-24"/></div>
-            <div className='text-md sm:text-xl text-white'> TheYouuProject </div>
+            <div className=''><Image src={logo} className="w-12"/></div>
+            <div className='text-base sm:text-sm text-white'> TheYouuProject </div>
           </div>
-          <div className='right-0 text-white ml-auto sm:mr-8 my-auto'>
+          <div className='right-0 text-white ml-auto my-auto'>
             {
                 user ? (
                     <div className='flex place-items-center flex-col sm:flex-row'>
@@ -81,76 +68,101 @@ export default function Home() {
                         </div>                                
                     </div>
                 ) : (
+                  <div className='text-xs'>
                     <Link href="/signup">Sign-In/Up</Link>
+                  </div>
                 )
             }
           </div>
       </div>
-      <main className='bg-youu-background flex items-center justify-center'>
-        <div className="mt-36 sm:mt-44 px-10 py-8 sm:py-16 bg-white rounded-lg shadow-xl sm:mx-0 sm:px-16 bg-clip-padding backgroup-filter bg-opacity-10 border border-none min-h-screen" style={{ minWidth: "90%" }}>
-          { !selectedId &&
-            <>
-              <div className='text-center text-white py-4 font-extrabold text-xl'> Start here if you're pumped and just want to start: </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 m-2 text-lg">    
-                  <div className="py-4 px-6 rounded-3xl border-none bg-gradient-to-r from-youu-light-green to-youu-dark-green hover:from-youu-sky-pink hover:to-youu-sky-blue hover:font-extrabold cursor-pointer" onClick={() => { setSelectedId('quickwins'); }}>
-                    <div>
-                      <div className='font-bold'>Quick Wins</div>
-                      <div>Shart here if you only have 15 mins or less</div>
-                    </div>
-                  </div>
-                  <div className="py-4 px-6 rounded-3xl border-none bg-gradient-to-r from-youu-sky-blue to-youu-sky-pink hover:to-youu-deep-red hover:from-youu-light-pink hover:font-extrabold cursor-pointer" onClick={() => { setSelectedId('quickwins'); }}>
-                    <div>
-                      <div className='font-bold'>Building Blocks</div>
-                      <div>These take a little longer, but lead to more meaningful changes</div>
-                    </div>
-                  </div>
-                  <div className="py-4 px-6 rounded-3xl border-none bg-gradient-to-r from-youu-deep-red to-youu-light-pink hover:from-youu-light-green hover:to-youu-dark-green hover:font-extrabold cursor-pointer" onClick={() => { setSelectedId('quickwins'); }}>
-                    <div>
-                      <div className='font-bold'>Life Goals</div>
-                      <div>Lets make these changes permanent</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {featured.map((item, index) => (
-                    <div>
-                      <div key={index} className="rounded-lg shadow">
-                        <img src={`/images/${item.img}`} alt={item.name} className="w-full h-auto mt-4 rounded-lg" />
-                      </div>
-                      <div className='p-2 text-white text-sm'>
-                        <div className='font-bold'>{item.name}</div>
-                        <div className='font-thin'>{item.desc}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className='text-center text-white py-4 font-extrabold text-xl'> Start here if you have something specific you want to work on: </div>
-                <TagList
-                  tags={['Suppliments and Stacks', 'Foods', 'Focus', 'Motivation', 'Energy', 'Mastery: Permanent Change']}
-                  onTagClick={handleTagClick}
-                />            
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {filteredContent.map((item, index) => (
-                    <div>
-                      <div key={index} className="rounded-lg shadow">
-                        <img src={`/images/${item.img}`} alt={item.name} className="w-full h-auto mt-4 rounded-lg" />
-                      </div>
-                      <div className='p-2 text-white'>
-                        <div className='font-bold'>{item.name}</div>
-                        <div className='font-thin'>{item.desc}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-            </>
-          }
-          {
-          selectedId === 'quickwins' &&
-            <QuickWins  setSelectedId={setSelectedId}/>
-          }
+      {/*Jumbo/Hero Heading */}
+      <div className='mt-8 bg-white px-32 sm:pt-28 sm:pb-20 2xl:px-64'>
+        <div className='grid grid-cols-2'>
+          <div className='my-auto'>
+            <div className='font-extrabold text-8xl'>
+              Science Simplified
+            </div>
+            <div className='flex font-bold text-6xl text-gray-800'>
+              <div key={textIndex} className="py-2 text-4xl text-transparent bg-clip-text bg-gradient-to-br from-nft-sky to-nft-orange font-extrabold">
+                {textList[textIndex]}
+            </div>
+            </div>
+            <div className='flex flex-wrap text-lg text-gray-600 mt-2 max-w-3xl'>
+              <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>😃 Master Your Mood</div>
+              <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🧠 Enhance Brain Health</div>
+              <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🍎 Improve Gut Health</div>
+              <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🚀 Boost Energy Levels</div>
+              <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🏋️ Build the Perfect Workout Routine</div>
+            </div>
           </div>
-      </main>
+          <div className='m-auto max-w-sm'>
+            <img src={`/images/brainWorkout.png`} alt={'brainworkout'} className="rounded-lg" />
+          </div>
+        </div>        
+        <div className='mt-20 rounded-xl max-w-3xl mx-auto bg-gradient-to-br from-nft-orange to-nft-orange-light py-3'>
+          <div className='text-center text-xl font-extrabold text-black'>
+               Browse For <span className='underline'>Free</span> By:
+          </div>
+          <div className='m-2 flex-col font-extrabold place-content-center'>
+            <div className='flex place-content-center'>
+              <div className={`p-2 rounded-xl m-2 ${selectedView === 'Researcher' ? 'bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Researcher')}>
+                  The Science
+              </div>
+              <div className={`p-2 rounded-xl m-2 ${selectedView === 'Outcomes' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Outcomes')}>
+                  Specific Outcomes
+              </div>
+              <div className={`p-2 rounded-xl m-2 ${selectedView === 'Tools' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Tools')}>
+                    less than 1 minute
+              </div>
+              <div className={`p-2 rounded-xl m-2 ${selectedView === 'Tools' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Tools')}>
+                    less than 15 minutes
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {!catalogueVisible &&
+        <div className='mb-6'>
+          {/* Sub description */}
+          
+          <div className='bg-white rounded-lg mx-10 mt-4 p-10 px-32 bg-opacity-10 text-white'>
+            <div className='text-xl font-extrabold text-center'>
+              Welcome to TheYouuProject ...
+            </div>
+            <div className='text-center'>
+              where simplicity is key to science-backed health and wellness
+            </div>
+            <div className='p-10 grid grid-cols-2'>
+              <div className='px-10'>
+                <div className='p-2'>
+                  Our goal is to bring you the cutting-edge protocols and research from renown scientists like Dr. Andrew Huberman, Dr. Rhonda Patrick, Dr. David Sinclair, and many more.
+                </div>
+                <div className='p-2'>
+                  There is so much good science out there. But thats the problem. Information overload is a real thing...
+                </div>
+                <div className='p-2'>
+                  We barely have time for ourselves and our own work... How do we know what to do? How do we know what to focus on? How do we know what to prioritise?
+                </div>
+              </div>
+              <div className='px-10'>
+                  <div className='p-2'>
+                    @theYouuProject we have done the hard work for you. We have taken the scientific nuggets of wisdom from the world's leading experts and distilled them into simple, easy to follow, actionable steps.
+                  </div>
+                  <div className='p-2'>
+                  With The Youu Project, you can now say goodbye to overwhelming information and hello to tangible results. Our platform offers a variety of bite-sized protocols, designed to help optimize your health and well-being. You can now easily access and implement and track the latest in science-backed health and wellness practices into your daily life.
+                  </div>
+              </div>              
+            </div>
+          </div>
+        </div>
+      }
+      <div ref={mainContent}>
+      {catalogueVisible &&
+        <main className='bg-youu-background flex items-center justify-center w-screen'>
+          <Catalogue selectedView={selectedView} setSelectedView={setSelectedView}/>       
+        </main>
+      }
+      </div>  
     </div>
   )
 }

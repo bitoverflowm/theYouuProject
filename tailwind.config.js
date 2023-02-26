@@ -24,6 +24,18 @@ module.exports = {
         'highlight': '#ddd0fe',
         'light': '#fefefe',
         'dark': '#6658fe',
+        'nft-blue': '#2F80ED',
+        'nft-glow': '#B2FFDA',
+        'nft-purple': '#737DFE',
+        'nft-cotton': '#FFCAC9',
+        'nft-sky': '#9055FF',
+        'nft-aqua': '#13E2DA',
+        'nft-orange': '#F06966',
+        'nft-orange-light': '#FAD6A6',
+        'bito-white': '#EFF0F0',
+        'bito-grey': '#ACAFAE',
+        'onyx-black': '#1A1B1B',
+        'bito-blue': '#FDF5EB'
       },
       keyframes: {
         shiver: {
