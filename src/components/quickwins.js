@@ -63,7 +63,7 @@ const QuickWins = ({ setSelectedId }) => {
 
   return (
     <div ref={quickWinsView}>
-      <div className="-mt-4 -ml-4 pb-2 hover:cursor-pointer hover:animate-bounce text-white font-bold" onClick={() => setSelectedId(null)}>🏠 Home</div>
+      <div className="-mt-4 -ml-4 pb-2 hover:cursor-pointer text-white font-bold" onClick={() => setSelectedId(null)}> ⬅️ back</div>
       <div className="place-content-center flex flex-col">
         {showHeader && <div className="text-center font-extrabold text-xl text-white py-4">Quick Wins For Results Now</div>}
         <div className="p-4">
