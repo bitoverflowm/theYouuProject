@@ -5,6 +5,8 @@ import { Transition } from '@headlessui/react';
 import TagList from '@/components/taglist'
 import QuickWins from '@/components/quickwins'
 import YoutubeViewer from "@/components/videoPlayer/youtubeViewer";
+import SpotLighting from "@/app/theScience/spotLighting/page";
+import SpotLightingProtocol from "../protocols/spotLightingProtocol";
 
 const Catalogue = ({selectedView, setSelectedView, catalogueVisible, triggerViewActivation}) => {
     
@@ -41,6 +43,7 @@ const Catalogue = ({selectedView, setSelectedView, catalogueVisible, triggerView
         { chapter: 'Chapter 5', name: 'fitnessAndLongevity', episodeId: 'Huberman-', desc: 'Optimize training Program for Fitness and Longevity', videoURL: '', tags: ['Fitness', 'Longevity'] },
         { chapter: 'Chapter 6', name: 'performance', episodeId: 'Huberman-', desc: 'Maximize Recovery to Achieve Fitness and Performance Goals', videoURL: '', tags: ['Fitness', 'Sleep', 'Recovery'] },
         { chapter: 'Chapter 7', name: 'nutritionAndSupplimentationForFitness', episodeId: 'Huberman-', desc: 'Optimal Nutrition and Supplementation for Fitness', videoURL: '', tags: ['Fitness', 'Nutrition', 'Supplimentation'] },
+        { chapter: 'Chapter 8', name: 'spotlighting', episodeId: '-', desc: 'How to spotligh', videoURL: '', videoURL2: '', tags: ['focus'] },
     ])
     
     const [ selectedTag, setSelectedTag] = useState(null)
@@ -105,8 +108,11 @@ const Catalogue = ({selectedView, setSelectedView, catalogueVisible, triggerView
                 close 
                 </div>
                 <div
-                className="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-lg overflow-y-auto">
-                    {selectedChapter}
+                className="inset-y-0 w-full bg-white">
+                    {selectedChapter === 'spotlighting' 
+                        ? <SpotLightingProtocol />
+                        : <div className="text-black my-auto">{selectedChapter}</div>
+                    }
                 </div>
             </div>
             </Transition>
@@ -124,11 +130,17 @@ const Catalogue = ({selectedView, setSelectedView, catalogueVisible, triggerView
                 close
                 </div>
                 <div
-                className="w-full max-w-md">
-                    {selectedChapter}
-                    <div>Watch the Huberman podcast directly below!</div>
-                    {selectedChapterData &&
-                        <YoutubeViewer chapter={selectedChapterData.chapter} videoURL={selectedChapterURL}/>}
+                className="w-full">
+                    {selectedChapter === 'spotlighting' ?
+                        <div className=''>
+                            <SpotLighting />
+                        </div>
+                        : <div>
+                            <div>Watch the Huberman podcast directly below!</div>
+                                {selectedChapterData &&
+                                <YoutubeViewer chapter={selectedChapterData.chapter} videoURL={selectedChapterURL}/>}
+                        </div>
+                    }                    
                 </div>
             </div>
             </Transition>
@@ -157,7 +169,30 @@ const Catalogue = ({selectedView, setSelectedView, catalogueVisible, triggerView
                 }
                 {
                     selectedView === 'Researcher' &&
-                    <div className='grid grid-cols-1'>
+                    <div className='grid grid-cols-1 gap-3'>
+                        <div className='border-2 rounded-lg border-blue-500 grid grid-cols-3 bg-white max-h-64 overflow-hidden'>
+                            <div key={'dopamineMindsetDrive'} className="rounded-lg col-span-1 overflow-hidden">
+                                    <img src={`/images/spotLighting.png`} alt={'hubermanDopamineMindsetAndDrive'} className="-mt-24 -mb-24" />
+                            </div>
+                            <div className='bg-white col-span-2 my-auto'>
+                                <div className="">
+                                    <div className='font-extrabold px-4 pt-2'>
+                                    TheYouuProject Analysis: Spotlighting
+                                    </div>
+                                    <div className='p-2 text-sm px-4'>
+                                    What do elite athletes and students in China have in common? They're using the power of 'Spotlighting' to improve focus and concentration. Want to try it for yourself? Head over to theyouuproject.com/spotlighting to access the tool for free.
+                                    </div>
+                                    <div className='flex place-content-center mb-2'>
+                                        <div className='p-4 mx-2 bg-blue-100 text-black cursor-pointer hover:bg-blue-300 rounded-md' onClick={() => openScience('spotlighting')}>
+                                            Learn the Science
+                                        </div>
+                                        <div className='p-4 mx-2 bg-blue-700 text-white font-extrabold cursor-pointer hover:bg-blue-900 rounded-md' onClick={() => openTools('spotlighting')}>
+                                            View the Tools
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                  
+                        </div>
                         <div className='border-2 rounded-lg border-blue-500 grid grid-cols-3 bg-black'>
                             <div key={'dopamineMindsetDrive'} className="rounded-lg col-span-1 my-auto">
                                     <img src={`/episode/dopamineMindsetDrive.jpg`} alt={'hubermanDopamineMindsetAndDrive'} className="" />

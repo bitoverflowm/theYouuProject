@@ -6,7 +6,7 @@ import Stack1 from "./protocols/stack1";
 import SupCaffeineCoffee from "./protocols/supCaffeineCoffee";
 import SupCaffeineTea from "./protocols/supCaffeineTea";
 import SupCaffeineYerba from "./protocols/supCaffeineYerba";
-import SpotLighting from "./protocols/spotLighting";
+import SpotLightingProtocol from "./protocols/spotLightingProtocol";
 import BeliefReinforcement from "./protocols/beliefreinforcement";
 import SupMecuniPurines from "./protocols/supMecunapurines";
 import SupLTyrosine from "./protocols/supLTyrosine";
@@ -71,7 +71,7 @@ const QuickWins = ({ setSelectedId }) => {
           {quickWinsId === 1 && <SupCaffeineCoffee setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
           {quickWinsId === 2 && <SupCaffeineTea setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
           {quickWinsId === 3 && <SupCaffeineYerba setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
-          {quickWinsId === 4 && <SpotLighting setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
+          {quickWinsId === 4 && <SpotLightingProtocol setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
           {quickWinsId === 5 && <BeliefReinforcement setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
           {quickWinsId === 6 && <SupMecuniPurines setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }
           {quickWinsId === 7 && <SupLTyrosine setSelectedId={setSelectedId} randomizeProtocol={randomizeProtocol}/> }

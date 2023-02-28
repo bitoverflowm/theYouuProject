@@ -17,7 +17,7 @@ puts you into a state of readiness and clear focus
 
 import { useState } from "react";
 
-const SpotLighting = ({ setSelectedId, randomizeProtocol }) => {
+const SpotLightingProtocol = ({ setSelectedId, randomizeProtocol }) => {
     const [currentDiv, setCurrentDiv] = useState(1)
 
     const handleClick = () => {
@@ -37,4 +37,4 @@ const SpotLighting = ({ setSelectedId, randomizeProtocol }) => {
     )
 }
 
-export default SpotLighting
+export default SpotLightingProtocol
