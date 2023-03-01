@@ -8,6 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 export default async function createStripeCustomer(req, res) {
     try{
         if(req.method === 'POST'){
+            console.log(req)
             const customer = await stripe.customers.create({
                 email: req.body.email,
             });
