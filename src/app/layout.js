@@ -1,3 +1,5 @@
+import { AnalyticsWrapper } from './components/analytics';
+
 import './globals.css'
 
 export default function RootLayout({ children }) {
@@ -11,6 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <div className=' flex items-center justify-center'>
           {children}
+          <AnalyticsWrapper />
         </div>
       </body>
     </html>
