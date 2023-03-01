@@ -86,7 +86,7 @@ const CheckOut = () => {
 
     return (
         <div className={`h-screen place-content-center pt-20 ${confirmed ? 'w-auto px-20':'w-96'}`}>
-            <div className={`grid ${confirmed ? 'grid-cols-2' : 'grid-cols-1'}`}>
+            <div className={`grid ${confirmed ? 'sm:grid-cols-2' : 'sm:grid-cols-1'}`}>
                 <div className='p-8'>
                     {/*Coffee-monthly payment flow */}
                     <div><MagicButton submitHandler={selectProductHandler} arg={'coffee-monthly'} label={'Coffee Recurring Monthly'}/></div>
@@ -99,7 +99,7 @@ const CheckOut = () => {
                         leaveFrom="opacity-100 max-h-screen"
                         leaveTo="opacity-0 max-h-0"
                         >
-                            <div className='grid grid-2'>
+                            <div className='grid sm:grid-2'>
                                 <div
                                     className='bg-white rounded-lg shadow-lg p-4 m-2'
                                 >
@@ -147,7 +147,7 @@ const CheckOut = () => {
                         leaveFrom="opacity-100 max-h-screen"
                         leaveTo="opacity-0 max-h-0"
                         >
-                            <div className='grid grid-2'>
+                            <div className='grid sm:grid-2'>
                                 <div
                                     className='bg-white rounded-lg shadow-lg p-4 m-2'
                                 >
@@ -190,7 +190,7 @@ const CheckOut = () => {
                         leaveFrom="opacity-100 max-h-screen"
                         leaveTo="opacity-0 max-h-0"
                         >
-                            <div className='grid grid-2'>
+                            <div className='grid sm:grid-2'>
                                 <div className='bg-white rounded-lg shadow-lg p-4 m-2'>
                                     <div className="text-gray-700 mb-4">
                                         Wow, this is brew-tiful! ☕️ Thank you for gifting us this delicious coffee, we'll drink it up and brew up some amazing new features and updates for our platform. We're not just buzzed, we're downright jittery with excitement! 😜

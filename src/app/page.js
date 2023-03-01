@@ -3,8 +3,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-
-
 import Image from 'next/image'
 import { Transition } from '@headlessui/react';
 
@@ -54,11 +52,11 @@ export default function Home() {
   return (
     <div>
       <div className="relative top-2 sm:top-4 flex flex-row font-bold px-4 sm:px-24">
-          <div className='ml-14 sm:ml-0 flex justify-start items-center w-1/2 cursor-pointer' onClick={()=> triggerViewActivation(false)}>
+          <div className='ml-2 sm:ml-0 flex justify-start items-center w-1/2 cursor-pointer' onClick={()=> triggerViewActivation(false)}>
               <Image src={logo} className="w-16 sm:w-12"/>
               <div className='text-base sm:text-sm text-white my-auto sm:ml-2'> TheYouuProject </div>            
           </div>
-          <div className='relative sm:ml-auto text-white my-auto sm:w-auto'>
+          <div className='relative ml-auto sm:ml-auto text-white my-auto sm:w-auto'>
             {
                 user ? (
                     <div className='flex place-items-center flex-col sm:flex-row'>
@@ -98,7 +96,7 @@ export default function Home() {
                   {textList[textIndex]}
                 </div>
               </div>
-              <div className='flex flex-wrap place-content-center sm:place-content-start text-base text-sm xl:text-lg text-gray-600 mt-2 max-w-3xl px-4 pb-5 sm:p-0'>
+              <div className='flex flex-wrap place-content-center sm:place-content-start text-sm xl:text-lg text-gray-600 mt-2 max-w-3xl px-4 pb-5 sm:p-0'>
                 <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>😃 Master Your Mood</div>
                 <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🧠 Enhance Brain Health</div>
                 <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🍎 Improve Gut Health</div>
@@ -112,22 +110,23 @@ export default function Home() {
           </div>        
           <div className='mt-10 sm:mt-20 text-sm lg:text-base rounded-xl max-w-sm sm:max-w-3xl mx-auto bg-gradient-to-br from-nft-orange to-nft-orange-light py-3'>
             <div className='text-center  font-extrabold text-black'>
-                Browse By:
+                Browse:
             </div>
             <div className='m-2 flex-col font-extrabold place-content-center text-center'>
-              <div className='grid grid-cols-2 sm:flex sm:flex-row place-content-center'>
-                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Researcher' ? 'bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Researcher')}>
+              <div className='flex flex-row place-content-center'>
+                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Researcher' ? 'bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Researcher')}>
                     The Science
                 </div>
-                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Outcomes' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Outcomes')}>
-                    Specific Outcomes
+                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Outcomes' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Outcomes')}>
+                    The Results
+                </div>
+                {/*
+                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Tools' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Tools')}>
+                      Quick Results that take <span className='underline text-transparent bg-clip-text bg-gradient-to-br from-nft-blue to-nft-purple decoration-nft-orange font-black'>less than 1 minute</span>
                 </div>
                 <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Tools' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Tools')}>
-                      less than 1 minute
-                </div>
-                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Tools' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Tools')}>
-                      less than 15 minutes
-                </div>
+                      Quick Results that take less than 15 minutes
+          </div>*/}
               </div>
             </div>
           </div>
@@ -178,11 +177,13 @@ export default function Home() {
           </div>
         </div>
       }
+      {catalogueVisible &&
       <div ref={mainContent}>
           <main className='bg-youu-background items-center justify-center w-screen'>
             <Catalogue selectedView={selectedView} setSelectedView={setSelectedView} catalogueVisible={catalogueVisible} triggerViewActivation={triggerViewActivation}/>       
           </main>
       </div>  
+      }
     </div>
   )
 }

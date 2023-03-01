@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import Router from 'next/router'
+import { useRouter }  from 'next/navigation'
 import useSWR from 'swr'
 
 
@@ -12,6 +12,7 @@ const fetcher = (url) =>
 
 export function useUser({ redirectTo, redirectIfFound } = {}) {
   const { data, error } = useSWR('/api/user', fetcher)
+  const router = useRouter()
   const user = data?.user
   const finished = Boolean(data)
   const hasUser = Boolean(user)
@@ -24,7 +25,7 @@ export function useUser({ redirectTo, redirectIfFound } = {}) {
       // If redirectIfFound is also set, redirect if the user was found
       (redirectIfFound && hasUser)
     ) {
-      Router.push(redirectTo)
+      router.push(redirectTo)
     }
   }, [redirectTo, redirectIfFound, finished, hasUser])
 

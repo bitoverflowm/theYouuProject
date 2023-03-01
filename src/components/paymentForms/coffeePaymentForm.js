@@ -40,7 +40,12 @@ const CoffeePaymentForm = (props) => {
             const {error} = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: 'http://localhost:3000/',
+                    return_url: 'http://www.theyouuproject.com/',
+                    payment_method_data: {
+                        billing_details: {
+                            name: fullName,
+                        }
+                    },
                 }
             })
             if (error) {
@@ -69,7 +74,7 @@ const CoffeePaymentForm = (props) => {
             const {error} = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: 'http://localhost:3000/',
+                    return_url: 'http://www.theyouuproject.com/',
                     payment_method_data: {
                         billing_details: {
                             name: fullName,
@@ -83,9 +88,7 @@ const CoffeePaymentForm = (props) => {
             } else if (paymentIntent){
                 setPayment(paymentIntent)
             }
-        }
-
-        
+        }        
     }
 
     const handleInputChange = (e) => { setFullName(e.currentTarget.value)}

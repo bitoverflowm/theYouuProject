@@ -130,7 +130,7 @@ const ColdWater = ({ setSelectedId, randomizeProtocol}) => {
                   </div>
                 </div>
                 <div className="p-2">
-                  <div className="text-xl font-medium">Join the Community, Track Your Progress & Earn Tokens!</div>
+                  <div className="text-xl font-medium">Join the Community, Track Your Progress & Earn Tokens, completely <span className='underline'>Free!</span></div>
                   <div className="bg-blue-800 p-2 m-2 rounded-lg text-center font-extrabold"><Link href="/signup">Sign Up For Free</Link></div>
                   <div className="text-base font-light p-2">
                     <ul className="list-disc">
