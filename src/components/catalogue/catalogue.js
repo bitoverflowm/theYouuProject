@@ -91,7 +91,7 @@ const Catalogue = ({selectedView, setSelectedView, catalogueVisible, triggerView
     }   
 
     return(
-        <div className={`${selectedChapter ? 'p-2' : 'p-10'} min-h-screen`}>
+        <div className={`${selectedChapter ? 'p-2' : 'p-10'} min-h-screen text-black`}>
             <Transition
             show={toolsOpen}
             enter="transistion ease-out duration-300 transform"
