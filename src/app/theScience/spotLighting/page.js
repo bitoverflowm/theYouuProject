@@ -51,7 +51,7 @@ const SpotLighting = () => {
                         </p>
                         <p className="text-lg leading-7 mb-8 flex flex-wrap text-left">
                             Ready to give Spotlighting a try? Head over to{' '}
-                            <div><Link href="http://localhost:3000/theScience/spotLighting/protocol">
+                            <div><Link href="http://www.theyouuproject.com/theScience/spotLighting/protocol">
                                 <div className="text-blue-500 hover:underline">The Youu Project's SpotLighting tool</div>
                             </Link></div>
                             

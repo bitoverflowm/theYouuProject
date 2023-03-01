@@ -24,10 +24,10 @@ const CheckOut = () => {
 
     const user = useUser()
     const testPlans = {
-        'coffee': {'priceId': 'price_1MettqJZfOVbYKgs8ujvYdGK', 'amount': 800},
-        'pizza': {'priceId': 'price_1MetsVJZfOVbYKgszHrFOqZP', 'amount': 2100},
-        'coffee-monthly': {'priceId': 'price_1MeYrgJZfOVbYKgsyTj5vSVi', 'amount': 800},
-        'pizza-monthly': {'priceId': 'price_1MetqvJZfOVbYKgsfCgrLmAQ', 'amount': 2100},
+        'coffee': {'priceId': 'price_1Mgj34JZfOVbYKgsFaa4qOK3', 'amount': 800},
+        'pizza': {'priceId': 'price_1Mgj3nJZfOVbYKgswry80ulI', 'amount': 2100},
+        'coffee-monthly': {'priceId': 'price_1Mgj3vJZfOVbYKgsX5BwFvrJ', 'amount': 800},
+        'pizza-monthly': {'priceId': 'price_1Mgj3tJZfOVbYKgsL84bazFJ', 'amount': 2100},
     }
     
     const selectProductHandler = async (product) => {

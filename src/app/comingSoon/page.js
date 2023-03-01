@@ -26,7 +26,7 @@ const ComingSoon = () => {
         </div>
         <div className='text-center'>
             We have not built out this page yet, however please checkout another protocol such as: 
-            <Link href="http://localhost:3000/theScience/spotLighting/protocol">
+            <Link href="http://www.theyouuproject.com/theScience/spotLighting/protocol">
                 <div className="text-blue-500 hover:underline text-xl">Spotlighting</div>
             </Link>
         </div>
@@ -35,7 +35,7 @@ const ComingSoon = () => {
         </div>
         <div className='place-content-center text-center pb-10'>
             Please Signup to stay in the loop and get access to exclusive features: 
-            <Link href="http://localhost:3000/signup">
+            <Link href="http://www.theyouuproject.com/signup">
                 <div className="text-blue-500 hover:underline text-xl">SignUp</div>
             </Link>
         </div>
