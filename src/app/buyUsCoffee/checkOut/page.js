@@ -36,15 +36,12 @@ const CheckOut = () => {
         confirmed && setConfirmed('')
         subscription && setSubscription('')
         if(!customer){
-            try {
-                const res = await fetchPostJSON('/api/createStripeCustomer', {
-                    email: 'customer@bitoverflow.org',
-                }).then((data) => {
-                    setCustomer(data.customer)
-                    console.log(data.customer)
-                })
-            }
-            catch (error){
+            await fetchPostJSON('/api/createStripeCustomer', {
+                email: "customer@bitoverflow.org",
+            }).then((data) => {
+                setCustomer(data.customer)
+                console.log(data.customer)
+            }).catch((error) => {
                 console.error('An unexpected error happened occurred:', error)
                 setErrorMessage(error.message)
             }
