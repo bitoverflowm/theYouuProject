@@ -2,7 +2,7 @@
 
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from "@stripe/react-stripe-js"
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import MagicButton from '@/components/UI/magicButton';
 
 import { useUser } from "@/lib/hooks"
@@ -21,9 +21,17 @@ const CheckOut = () => {
     const [clientSecret, setClientSecret] = useState('')
     const [selectedProduct, setSelectedProduct] = useState('')
     const [confirmed, setConfirmed] = useState('')
+    const [emailVal, setEmailVal] = useState()
 
 
     const user = useUser()
+    
+    useEffect(() => {
+        if(user){
+            setEmailVal(String(user.email))
+        }
+    }, [user])
+
     const testPlans = {
         'coffee': {'priceId': 'price_1Mgj34JZfOVbYKgsFaa4qOK3', 'amount': 800},
         'pizza': {'priceId': 'price_1Mgj3nJZfOVbYKgswry80ulI', 'amount': 2100},
@@ -37,7 +45,7 @@ const CheckOut = () => {
         subscription && setSubscription('')
         if(!customer){
             await fetchPostJSON('/api/createStripeCustomer', {
-                "email": "customer@bitoverflow.org",
+                "email": emailVal,
             }).then((data) => {
                 setCustomer(data.customer)
                 console.log(data.customer)
