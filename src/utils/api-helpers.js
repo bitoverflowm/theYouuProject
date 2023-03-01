@@ -33,7 +33,6 @@ useEffect(() => {
 
 export async function fetchPostJSON(url, data = {}){
     try{
-        console.log(data)
         const response = await fetch(url, {
             method: 'POST',
             mode: 'cors',
@@ -46,6 +45,7 @@ export async function fetchPostJSON(url, data = {}){
             referrerPolicy: 'no-referrer',
             body: JSON.stringify(data || {})
         })
+        console.log(data)
         return await response.json()
     } catch (err) {
         if (err instanceof Error) {
