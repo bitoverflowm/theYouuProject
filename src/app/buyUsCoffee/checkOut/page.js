@@ -9,9 +9,10 @@ import { useUser } from "@/lib/hooks"
 import { fetchPostJSON } from '@/utils/api-helpers';
 import CoffeePaymentForm from '@/components/paymentForms/coffeePaymentForm';
 import { Transition } from '@headlessui/react';
+import getStripe from "@/utils/get-stripe"
 
 
-const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`);
+//const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`);
 
 const CheckOut = () => {
     const [errorMessage, setErrorMessage] = useState('')    
@@ -37,9 +38,10 @@ const CheckOut = () => {
         if(!customer){
             try {
                 const res = await fetchPostJSON('/api/createStripeCustomer', {
-                    email: user.email,
+                    email: 'customer@bitoverflow.org',
                 }).then((data) => {
                     setCustomer(data.customer)
+                    console.log(data.customer)
                 })
             }
             catch (error){
@@ -246,7 +248,7 @@ const CheckOut = () => {
                 </div>
                 {(subscription || ['coffee', 'pizza'].includes(confirmed)) && 
                     <div className='p-8'>
-                            <Elements stripe={stripePromise} options={{
+                            <Elements stripe={getStripe()} options={{
                                 clientSecret: clientSecret,
                             }}>
                                 <CoffeePaymentForm clientSecret={clientSecret} payment_id={testPlans[selectedProduct].priceId} amount={testPlans[selectedProduct].amount} single={confirmed === 'coffee'|| confirmed === 'pizza' && true}/>

@@ -88,7 +88,7 @@ export default function Home() {
         <div className='mt-6 sm:mt-8 bg-white py-10 sm:px-32 sm:pt-28 sm:pb-20 2xl:px-64'>
           <div className='grid grid-cols-1 sm:grid-cols-2 '>
             <div className='my-auto'>
-              <div className='text-center text-4xl sm:text-left font-extrabold sm:text-5xl lg:text-7xl xl:text-8xl'>
+              <div className='text-black text-center text-4xl sm:text-left font-extrabold sm:text-5xl lg:text-7xl xl:text-8xl'>
                 Science Simplified
               </div>
               <div className='flex font-bold text-gray-800 place-content-center sm:place-content-start'>
@@ -131,7 +131,7 @@ export default function Home() {
             </div>
           </div>
           <div className='text-center pt-5 sm:pt-10 cursor-pointer' onClick={()=> window.scrollTo({behavior: "smooth", top: aboutUs.current.offsetTop})}>
-            <div>
+            <div className='text-black'>
               Learn More
             </div>
             <div>
