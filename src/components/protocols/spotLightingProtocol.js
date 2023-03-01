@@ -41,13 +41,13 @@ const SpotLightingProtocol = ({ setSelectedId, randomizeProtocol }) => {
     }
 
     const toggleFullScreen = () => {
-        if(!document.fullscreenElement){
+        if(document && !document.fullscreenElement){
             setIsFullScreen(true)
             document.documentElement.requestFullscreen();
         }
         else{
             setIsFullScreen(false)
-            if(document.exitFullscreen){
+            if(document && document.exitFullscreen){
                 document.exitFullscreen();
             }
         }
@@ -138,7 +138,7 @@ const SpotLightingProtocol = ({ setSelectedId, randomizeProtocol }) => {
                 p-4 text-xl">
                     <div> On a computer?</div>
                     <div>Go full screen for best results</div>
-                    <div className="mx-auto mt-3 mb-3 flex place-content-center p-2 bg-bito-white text-black w-36 rounded" onClick={toggleFullScreen}> {document.fullscreenElement ? <div className="flex">Exit Full Screen <div className="pt-1 pl-1"><BiExpand /></div></div> : <div className="flex">Full Screen <div className="pt-1 pl-1"><BiExpand /></div></div>}</div>
+                    <div className="mx-auto mt-3 mb-3 flex place-content-center p-2 bg-bito-white text-black w-36 rounded" onClick={toggleFullScreen}> {document && document.fullscreenElement ? <div className="flex">Exit Full Screen <div className="pt-1 pl-1"><BiExpand /></div></div> : <div className="flex">Full Screen <div className="pt-1 pl-1"><BiExpand /></div></div>}</div>
                     <div className="text-left">
                         <div className="p-1"> Remember... </div>
                         <div className="p-1"> Don't worry about the time, it will run in the background</div>

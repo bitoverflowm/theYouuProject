@@ -7,7 +7,7 @@ import TagList from '@/components/taglist'
 import QuickWins from '@/components/quickwins'
 import YoutubeViewer from "@/components/videoPlayer/youtubeViewer";
 import SpotLighting from "@/app/theScience/spotLighting/page";
-import SpotLightingProtocol from "../protocols/spotLightingProtocol";
+import SpotLightingProtocol from "@/components/protocols/spotLightingProtocol";
 
 const Catalogue = ({selectedView, setSelectedView, catalogueVisible, triggerViewActivation}) => {
     
