@@ -1,8 +1,10 @@
 import Stripe from "stripe"
 
-const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`, {
-    apiVersion: "2020-08-27",
-})
+const stripe = process.env.NODE_ENV === 'production' 
+                ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+                    apiVersion: "2020-08-27",})
+                : new Stripe(process.env.STRIPE_SECRET_DEV_KEY, {
+                    apiVersion: "2020-08-27",})
 
 
 export default async function payment_intent(req, res){

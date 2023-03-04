@@ -8,7 +8,9 @@ let stripePromise
 
 const getStripe = () => {
     if (!stripePromise) {
-        stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+        process.env.NODE_ENV === 'production' 
+        ? stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+        : stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_DEV_PUBLISHABLE_KEY)
     }
 
     return stripePromise
