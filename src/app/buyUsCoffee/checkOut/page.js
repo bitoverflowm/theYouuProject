@@ -14,6 +14,20 @@ import getStripe from "@/utils/get-stripe"
 
 //const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`);
 
+const stripePrices = process.env.NODE_ENV === 'production' 
+    ? {
+        'coffee': {'priceId': process.env.NEXT_PUBLIC_STRIPE_PRICES_COFFEE_SINGLE_PROD, 'amount': 800},
+        'pizza': {'priceId': process.env.NEXT_PUBLIC_STRIPE_PRICES_PIZZA_SINGLE_PROD, 'amount': 2100},
+        'coffee-monthly': {'priceId': process.env.NEXT_PUBLIC_STRIPE_PRICES_COFFEE_MONTHLY_PROD, 'amount': 800},
+        'pizza-monthly': {'priceId': process.env.NEXT_PUBLIC_STRIPE_PRICES_PIZZA_MONTHLY_PROD, 'amount': 2100},
+    }
+    : {
+        'coffee': {'priceId': process.env.NEXT_PUBLIC_STRIPE_PRICES_COFFEE_SINGLE_DEV, 'amount': 800},
+        'pizza': {'priceId': process.env.NEXT_PUBLIC_STRIPE_PRICES_PIZZA_SINGLE_DEV, 'amount': 2100},
+        'coffee-monthly': {'priceId': process.env.NEXT_PUBLIC_STRIPE_PRICES_COFFEE_MONTHLY_DEV, 'amount': 800},
+        'pizza-monthly': {'priceId': process.env.NEXT_PUBLIC_STRIPE_PRICES_PIZZA_MONTHLY_DEV, 'amount': 2100},
+    }
+
 const CheckOut = () => {
     const [errorMessage, setErrorMessage] = useState('')    
     const [customer, setCustomer] = useState('')
@@ -31,13 +45,6 @@ const CheckOut = () => {
             setEmailVal(String(user.email))
         }
     }, [user])
-
-    const testPlans = {
-        'coffee': {'priceId': 'price_1Mgj34JZfOVbYKgsFaa4qOK3', 'amount': 800},
-        'pizza': {'priceId': 'price_1Mgj3nJZfOVbYKgswry80ulI', 'amount': 2100},
-        'coffee-monthly': {'priceId': 'price_1Mgj3vJZfOVbYKgsX5BwFvrJ', 'amount': 800},
-        'pizza-monthly': {'priceId': 'price_1Mgj3tJZfOVbYKgsL84bazFJ', 'amount': 2100},
-    }
     
     const selectProductHandler = async (product) => {
         selectedProduct === product ? setSelectedProduct('') : setSelectedProduct(product)
@@ -60,7 +67,7 @@ const CheckOut = () => {
         if(['coffee-monthly', 'pizza-monthly'].includes(product)){
             try {
                 const res  = await fetchPostJSON('/api/createSubscription', {
-                    priceId: testPlans[product].priceId,
+                    priceId: stripePrices[product].priceId,
                     customerId: customer.id,
                 }).then((data) => {
                     setSubscription(data.subscriptionId)
@@ -76,7 +83,7 @@ const CheckOut = () => {
         }else{
             try{
                 await fetchPostJSON('/api/payment_intents', {
-                    amount: testPlans[selectedProduct].amount,
+                    amount: stripePrices[selectedProduct].amount,
                 }).then((data) => {
                     setClientSecret(data.client_secret)
                     setConfirmed(product)                
@@ -256,7 +263,7 @@ const CheckOut = () => {
                             <Elements stripe={getStripe()} options={{
                                 clientSecret: clientSecret,
                             }}>
-                                <CoffeePaymentForm clientSecret={clientSecret} payment_id={testPlans[selectedProduct].priceId} amount={testPlans[selectedProduct].amount} single={confirmed === 'coffee'|| confirmed === 'pizza' && true}/>
+                                <CoffeePaymentForm clientSecret={clientSecret} payment_id={stripePrices[selectedProduct].priceId} amount={stripePrices[selectedProduct].amount} single={confirmed === 'coffee'|| confirmed === 'pizza' && true}/>
                             </Elements>
                     </div>
                 }
