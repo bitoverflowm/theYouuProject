@@ -5,13 +5,16 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { Transition } from '@headlessui/react';
+import dynamic from 'next/dynamic';
 
-import logo from '../../public/logo.png'
+import logo from '../../public/logo1.png'
 
 import { useUser } from "@/lib/hooks"
 
 import MagicButton from '@/components/UI/magicButton'
 import Catalogue from '@/components/catalogue/catalogue';
+
+const BackgroundVideo = dynamic(() => import('@/components/UI/backgroundVideo'), { ssr: false });
 
 export default function Home() {
   const router = useRouter()
@@ -19,9 +22,11 @@ export default function Home() {
   const mainContent = useRef()
   const aboutUs = useRef()
 
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [catalogueVisible, setCatalogueVisible] = useState(false)
   const [ textIndex, setTextIndex ] = useState(0)
   const [ selectedView, setSelectedView ] = useState('')
+  const [ headingTextColor, setHeadingTextColor ] = useState('text-white')
 
   const textList = ['Unwavering Focus', 'More Motivation', 'Unparalleled Productivity', 'Improved Health']
 
@@ -49,14 +54,28 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 900px)');
+    setIsSmallScreen(mediaQuery.matches);
+
+    const handleResize = () => {
+      setIsSmallScreen(mediaQuery.matches);
+    };
+    mediaQuery.addEventListener('change', handleResize);
+    return () => {
+      mediaQuery.removeEventListener('change', handleResize);
+    };
+    }, []);
+
   return (
     <div>
-      <div className="relative top-2 sm:top-4 flex flex-row font-bold px-4 sm:px-24">
+      <div className="relative flex flex-row font-bold py-2 px-4 sm:px-24">
           <div className='ml-2 sm:ml-0 flex justify-start items-center w-1/2 cursor-pointer' onClick={()=> triggerViewActivation(false)}>
-              <Image src={logo} className="w-16 sm:w-12"/>
-              <div className='text-base sm:text-sm text-white my-auto sm:ml-2'> TheYouuProject </div>            
+              <Image src={logo} className="w-16 sm:w-12"/>     
           </div>
-          <div className='relative ml-auto sm:ml-auto text-white my-auto sm:w-auto'>
+             
+          <div className='relative flex flex-wrap ml-auto sm:ml-auto text-white my-auto sm:w-auto'>
+            <div className='text-center cursor-pointer px-6 p-1' onClick={()=> window.scrollTo({behavior: "smooth", top: aboutUs.current.offsetTop})}> About </div> 
             {
                 user ? (
                     <div className='flex place-items-center flex-col sm:flex-row'>
@@ -68,7 +87,7 @@ export default function Home() {
                         </div>                                
                     </div>
                 ) : (
-                  <div className='text-xs'>
+                  <div className='text-xs bg-blue-600 p-2 rounded-md hover:bg-white hover:text-black'>
                     <Link href="/signup">Sign-In/Up</Link>
                   </div>
                 )
@@ -85,61 +104,163 @@ export default function Home() {
           leaveFrom='translate-y-0'
           leaveTo='-translate-y-full'
           >
-        <div className='mt-6 sm:mt-8 bg-white py-10 sm:px-32 sm:pt-28 sm:pb-20 2xl:px-64'>
-          <div className='grid grid-cols-1 sm:grid-cols-2 '>
-            <div className='my-auto'>
-              <div className='text-black text-center text-4xl sm:text-left font-extrabold sm:text-5xl lg:text-7xl xl:text-8xl'>
-                Science Simplified
+        <div className='relative h-screen overflow-hidden'>
+            <div className='relative overflow-hidden h-screen'>
+              <BackgroundVideo  setHeadingTextColor={setHeadingTextColor} isSmallScreen={isSmallScreen}/> 
+              <div className='relative z-10 flex flex-col items-center justify-center h-full'>
+                <div className='p-4'>
+                  <div className={`${headingTextColor} text-center font-extrabold text-8xl`}>
+                    The YOUU
+                  </div>
+                  <div className={`${headingTextColor} text-center font-extrabold text-8xl`}>
+                    Project
+                  </div>
+                </div>
+                <div className={`${headingTextColor} text-4xl`}>
+                    Unlock Your Inner Beast
+                </div>
+                <div className={`text-black p-6 text-center mt-10 rounded-xl max-w-sm sm:max-w-3xl mx-auto bg-gradient-to-br from-nft-orange to-nft-orange-light`}>
+                  <div>
+                    Pick an attribute you would like to work on:
+                  </div>
+                  <div className='flex flex-wrap gap-1 place-content-center py-1 sm:py-5'>
+                      <div className={`p-2 px-4 rounded-xl m-2 
+                          ${selectedView === 'Researcher' 
+                            ? 'bg-white text-black'
+                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
+                            } `} 
+                          onClick={()=> triggerViewActivation('Researcher')}>
+                        Focus
+                      </div>
+                      <div className={`p-2 px-4 rounded-xl m-2 
+                          ${selectedView === 'Outcomes' 
+                            ? ' bg-white text-black'
+                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
+                            } `} 
+                          onClick={()=> triggerViewActivation('Outcomes')}>
+                        Motivation
+                      </div>
+                      <div className={`p-2 px-4 rounded-xl m-2 
+                          ${selectedView === 'Outcomes' 
+                            ? ' bg-white text-black'
+                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
+                            } `} 
+                          onClick={()=> triggerViewActivation('Outcomes')}>
+                        Strength
+                      </div>
+                      <div className={`p-2 px-4 rounded-xl m-2 
+                          ${selectedView === 'Outcomes' 
+                            ? ' bg-white text-black'
+                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
+                            } `} 
+                          onClick={()=> triggerViewActivation('Outcomes')}>
+                        Health
+                      </div>
+                      <div className={`p-2 px-4 rounded-xl m-2 
+                          ${selectedView === 'Outcomes' 
+                            ? ' bg-white text-black'
+                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
+                            } `} 
+                          onClick={()=> triggerViewActivation('Outcomes')}>
+                        Anxiety
+                      </div>
+                      <div className={`p-2 px-4 rounded-xl m-2 
+                          ${selectedView === 'Outcomes' 
+                            ? ' bg-white text-black'
+                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
+                            } `} 
+                          onClick={()=> triggerViewActivation('Outcomes')}>
+                        Prevent Burnout
+                      </div>
+                  </div>
               </div>
-              <div className='flex font-bold text-gray-800 place-content-center sm:place-content-start'>
-                <div key={textIndex} className="text-center sm:text-left py-2 text-3xl lg:text-3xl xl:text-4xl text-transparent bg-clip-text bg-gradient-to-br from-nft-sky to-nft-orange font-extrabold">
-                  {textList[textIndex]}
+              <div className={`${headingTextColor} text-center  font-extrabold mt-5`}>
+                  Or:
+              </div>                
+              <div className='m-2 flex-col font-extrabold place-content-center text-center'>
+                <div className='flex flex-row place-content-center'>
+                  <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Researcher' ? 'bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Researcher')}>
+                      Learn The Science
+                  </div>
+                  <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Outcomes' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Outcomes')}>
+                      Browse The Tools
+                  </div>
                 </div>
               </div>
-              <div className='flex flex-wrap place-content-center sm:place-content-start text-sm xl:text-lg text-gray-600 mt-2 max-w-3xl px-4 pb-5 sm:p-0'>
-                <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>😃 Master Your Mood</div>
-                <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🧠 Enhance Brain Health</div>
-                <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🍎 Improve Gut Health</div>
-                <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🚀 Boost Energy Levels</div>
-                <div className='font-extrabold hover:font-extrabolder hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-nft-blue hover:to-nft-purple hover:underline hover:underline-offset-4 hover:decoration-nft-orange hover:decoration-4 cursor-pointer px-1'>🏋️ Build the Perfect Workout Routine</div>
+            </div>           
+          </div>            
+        </div>
+      </Transition>
+      {
+        <div className='p-8'>
+          <div className='grid grid-cols-4 gap-2'>
+            <div className='rounded-xl border-2 border-white'>
+              <div className='rounded-t-lg'>
+                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
+              </div>
+              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
+                Find a Cold Plunge Near You
               </div>
             </div>
-            <div className='m-auto w-72 sm:max-w-sm'>
-              <img src={`/images/brainWorkout.png`} alt={'brainworkout'} className="rounded-lg" />
+            <div className='rounded-xl border-2 border-white'>
+              <div className='rounded-t-lg'>
+                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
+              </div>
+              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
+                Find Hot Therapy Near You
+              </div>
             </div>
-          </div>        
-          <div className='mt-10 sm:mt-20 text-sm lg:text-base rounded-xl max-w-sm sm:max-w-3xl mx-auto bg-gradient-to-br from-nft-orange to-nft-orange-light py-3'>
-            <div className='text-center  font-extrabold text-black'>
-                Browse:
+            <div className='rounded-xl border-2 border-white'>
+              <div className='rounded-t-lg'>
+                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
+              </div>
+              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
+                Get All Your Micro Nutrients in One Go
+              </div>
             </div>
-            <div className='m-2 flex-col font-extrabold place-content-center text-center'>
-              <div className='flex flex-row place-content-center'>
-                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Researcher' ? 'bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Researcher')}>
-                    The Science
-                </div>
-                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Outcomes' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Outcomes')}>
-                    The Results
-                </div>
-                {/*
-                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Tools' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Tools')}>
-                      Quick Results that take <span className='underline text-transparent bg-clip-text bg-gradient-to-br from-nft-blue to-nft-purple decoration-nft-orange font-black'>less than 1 minute</span>
-                </div>
-                <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Tools' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer' } `} onClick={()=> triggerViewActivation('Tools')}>
-                      Quick Results that take less than 15 minutes
-          </div>*/}
+            <div className='rounded-xl border-2 border-white'>
+              <div className='rounded-t-lg'>
+                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
+              </div>
+              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
+                Use Spotlighting to Get Focused
+              </div>
+            </div>
+            <div className='rounded-xl border-2 border-white'>
+              <div className='rounded-t-lg'>
+                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
+              </div>
+              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
+                List Your Cold Plunge make $
+              </div>
+            </div>
+            <div className='rounded-xl border-2 border-white'>
+              <div className='rounded-t-lg'>
+                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
+              </div>
+              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
+                Build the Perfect Workout for your Goals
+              </div>
+            </div>
+            <div className='rounded-xl border-2 border-white'>
+              <div className='rounded-t-lg'>
+                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
+              </div>
+              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
+                The Suppliment Stack To Hit Ulitmate Focus
+              </div>
+            </div>
+            <div className='rounded-xl border-2 border-white'>
+              <div className='rounded-t-lg'>
+                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
+              </div>
+              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
+                Suppliment Stack For Ultimate Motivation
               </div>
             </div>
           </div>
-          <div className='text-center pt-5 sm:pt-10 cursor-pointer' onClick={()=> window.scrollTo({behavior: "smooth", top: aboutUs.current.offsetTop})}>
-            <div className='text-black'>
-              Learn More
-            </div>
-            <div>
-              ⬇️
-            </div>          
-          </div>          
         </div>
-      </Transition>
+      }
       {!catalogueVisible &&
         <div className='mb-6'>
           {/* Sub description */}
