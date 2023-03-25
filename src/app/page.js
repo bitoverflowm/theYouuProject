@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { Transition } from '@headlessui/react';
 import dynamic from 'next/dynamic';
 
+//import dbConnect from '@/lib/dbConnect';
+
 import logo from '../../public/logo1.png'
 
 import { useUser } from "@/lib/hooks"
@@ -78,7 +80,10 @@ export default function Home() {
             <div className='text-center cursor-pointer px-6 p-1' onClick={()=> window.scrollTo({behavior: "smooth", top: aboutUs.current.offsetTop})}> About </div> 
             {
                 user ? (
-                    <div className='flex place-items-center flex-col sm:flex-row'>
+                    <div className='flex gap-2 place-items-center flex-col sm:flex-row'>
+                        <div>
+                          <Link href="/dashboard" >Dashboard</Link>
+                        </div>
                         <div className='text-xs sm:text-base'>
                             <Link href="/" as="/api/logout">Logout</Link>
                         </div>
@@ -308,3 +313,26 @@ export default function Home() {
     </div>
   )
 }
+
+/*export async function getServerSideProps(context) {
+  try {
+    const client = await dbConnect
+    // `await clientPromise` will use the default database passed in the MONGODB_URI
+    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
+    //
+    // `const client = await clientPromise`
+    // `const db = client.db("myDatabase")`
+    //
+    // Then you can execute queries against your database like so:
+    // db.find({}) or any of the MongoDB Node Driver commands
+
+    return {
+      props: { isConnected: true },
+    }
+  } catch (e) {
+    console.error(e)
+    return {
+      props: { isConnected: false },
+    }
+  }
+}*/
