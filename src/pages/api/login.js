@@ -4,6 +4,7 @@ import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 
 async function checkIfUserExists(email) {
+  await dbConnect()
   const user = await User.findOne({ email })
   if(user){
     console.log('user exists', user._id)
