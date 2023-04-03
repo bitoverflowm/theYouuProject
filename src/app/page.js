@@ -15,6 +15,7 @@ import { useUser } from "@/lib/hooks"
 
 import MagicButton from '@/components/UI/magicButton'
 import Catalogue from '@/components/catalogue/catalogue';
+import FeaturedProtocols from '@/components/featuredProtocols/featuredProtocols';
 
 const BackgroundVideo = dynamic(() => import('@/components/UI/backgroundVideo'), { ssr: false });
 
@@ -197,73 +198,8 @@ export default function Home() {
         </div>
       </Transition>
       {
-        <div className='p-8'>
-          <div className='grid grid-cols-4 gap-2'>
-            <div className='rounded-xl border-2 border-white'>
-              <div className='rounded-t-lg'>
-                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
-              </div>
-              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
-                Find a Cold Plunge Near You
-              </div>
-            </div>
-            <div className='rounded-xl border-2 border-white'>
-              <div className='rounded-t-lg'>
-                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
-              </div>
-              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
-                Find Hot Therapy Near You
-              </div>
-            </div>
-            <div className='rounded-xl border-2 border-white'>
-              <div className='rounded-t-lg'>
-                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
-              </div>
-              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
-                Get All Your Micro Nutrients in One Go
-              </div>
-            </div>
-            <div className='rounded-xl border-2 border-white'>
-              <div className='rounded-t-lg'>
-                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
-              </div>
-              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
-                Use Spotlighting to Get Focused
-              </div>
-            </div>
-            <div className='rounded-xl border-2 border-white'>
-              <div className='rounded-t-lg'>
-                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
-              </div>
-              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
-                List Your Cold Plunge make $
-              </div>
-            </div>
-            <div className='rounded-xl border-2 border-white'>
-              <div className='rounded-t-lg'>
-                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
-              </div>
-              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
-                Build the Perfect Workout for your Goals
-              </div>
-            </div>
-            <div className='rounded-xl border-2 border-white'>
-              <div className='rounded-t-lg'>
-                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
-              </div>
-              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
-                The Suppliment Stack To Hit Ulitmate Focus
-              </div>
-            </div>
-            <div className='rounded-xl border-2 border-white'>
-              <div className='rounded-t-lg'>
-                <img src='/images/AlertAndAttentiveEmoji.png' className='w-64 h-40 mx-auto rounded-t-lg'/>
-              </div>
-              <div className='bg-onyx-black text-white rounded-b-lg p-2 px-6 text-center'>
-                Suppliment Stack For Ultimate Motivation
-              </div>
-            </div>
-          </div>
+        <div className='p-12'>
+          <FeaturedProtocols />
         </div>
       }
       {!catalogueVisible &&

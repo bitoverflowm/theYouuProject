@@ -35,7 +35,11 @@ module.exports = {
         'bito-white': '#EFF0F0',
         'bito-grey': '#ACAFAE',
         'onyx-black': '#1A1B1B',
-        'bito-blue': '#FDF5EB'
+        'bito-blue': '#FDF5EB',
+        'hotAndColdhot': '#EDA7FF',
+        'hotAndColdcold': '#9E9CFF',
+        'hotAndColdboth': '#F6BC55',
+        'hotAndColdNature': '#5DD669',
       },
       keyframes: {
         shiver: {
