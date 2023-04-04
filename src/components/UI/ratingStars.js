@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { AiFillStar } from "react-icons/ai";
-import { BsStarHalf } from "react-icons/bs";
-
+import { IoIosStar, IoIosStarHalf } from "react-icons/io";
 
 const RatingStars = ({rating}) => {
     const [stars, setStars] = useState([]);
@@ -12,11 +10,11 @@ const RatingStars = ({rating}) => {
         let starOut = []
 
         for (let i = 1; i < numrating; i++) {
-            starOut.push(<AiFillStar key={i} />);
+            starOut.push(<IoIosStar key={i} />);
         }
 
         if( numrating % 1 === 0.5){
-            starOut.push(<BsStarHalf key={numrating} />)
+            starOut.push(<IoIosStarHalf key={numrating} />)
         }
         setStars(starOut)
     }, [rating])

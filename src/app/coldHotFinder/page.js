@@ -13,7 +13,7 @@ import NaturalHotColdCard from "@/components/UI/hotColdCards/naturalHotColdCard"
 import NotNaturalHotColdCard from "@/components/UI/hotColdCards/notNaturalHotColdCard";
 
 const ColdHotFinder = () => {
-     const user = useUser({ redirectTo: '/', redirectIfFound: false})
+     const user = useUser()
 
      const coldHotdata = [
         {
@@ -180,7 +180,7 @@ const ColdHotFinder = () => {
             website: 'www.thezenden.com',
             description: 'Experience true relaxation with our range of spa services',
             image: '/images/theZenDen.jpg',
-            services: ['Massage', 'Facial'],
+            services: ['Cold Plunge', 'Hot Tub'],
             rating: 4.5,
             visits: 1000,
             hours: [
@@ -207,7 +207,7 @@ const ColdHotFinder = () => {
             website: 'www.blissfulspa.com',
             description: 'Relaxing spa with a wide range of services',
             image: '/images/blissfulspa.jpg',
-            services: ['Massage', 'Facial', 'Body Treatment'],
+            services: ['Cold Plunge', 'Hot Tub', 'Steam Room', 'Sauna'],
             rating: 4.2,
             visits: 200,
             hours: [{
@@ -333,7 +333,7 @@ const ColdHotFinder = () => {
                             <div className="px-2">🛀🏿</div><div>Ice Bath</div>
                         </div>  
                         <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">♨️</div><div>Steam</div>
+                            <div className="px-2">💨</div><div>Steam</div>
                         </div>  
                         <div className="grid grid-cols-1 p-2">
                             <div className="px-2">🥵</div><div>Sauna</div>
@@ -349,7 +349,7 @@ const ColdHotFinder = () => {
                         </div>                         
                     </div>
                 </div>
-                <div className="flex flex-wrap gap-10">
+                <div className="grid grid-cols-5 gap-4">
                     {
                         coldHotdata.map((d) => {
                             return(
