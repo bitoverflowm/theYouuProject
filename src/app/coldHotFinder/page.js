@@ -353,7 +353,7 @@ const ColdHotFinder = () => {
                     {
                         coldHotdata.map((d) => {
                             return(
-                                <div key={d.id} className="p-10 w-56">
+                                <div key={d.id} className="">
                                     {
                                     d.nature 
                                         ? <NaturalHotColdCard data={d}/>
