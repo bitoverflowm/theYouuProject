@@ -5,15 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
-import { BsPencil } from "react-icons/bs";
+import { BsPinMapFill } from "react-icons/bs";
+import { AiOutlineUnorderedList } from "react-icons/ai";
 
 import logo from '../../../public/logo1.png'
 
 import NaturalHotColdCard from "@/components/UI/hotColdCards/naturalHotColdCard";
 import NotNaturalHotColdCard from "@/components/UI/hotColdCards/notNaturalHotColdCard";
 
+import MapViewModal from "@/components/mapView/mapViewModal";
+
 const ColdHotFinder = () => {
      const user = useUser()
+     const [ mapView, setMapView ] = useState(false)
 
      const coldHotdata = [
         {
@@ -83,6 +87,33 @@ const ColdHotFinder = () => {
             promotionDescription: '',
         },
         {
+            id: 4,
+            nature: true,
+            name: 'Mountain Oasis',
+            city: 'Aspen',
+            state: 'CO',
+            address: '1234 Mountain Rd',
+            phone: '555-234-5678',
+            website: 'www.mountainoasis.com',
+            description: 'Spectacular natural hot springs surrounded by mountain views',
+            image: '/images/hotAndCold/nature/hotSpring/wildwilly.png',
+            services: ['Hot Spring'],
+            rating: 5,
+            visits: 500,
+            hours: [
+            { day: 'Monday', hours: '9am - 7pm' },
+            { day: 'Tuesday', hours: '9am - 7pm' },
+            { day: 'Wednesday', hours: '9am - 7pm' },
+            { day: 'Thursday', hours: '9am - 7pm' },
+            { day: 'Friday', hours: '9am - 10pm' },
+            { day: 'Saturday', hours: '8am - 10pm' },
+            { day: 'Sunday', hours: '8am - 7pm' }
+            ],
+            startingPrice: 50,
+            promotion: true,
+            promotionDescription: 'Spring into savings with our 20% off weekday promotion!'
+        },
+        {
             id: 2,
             nature: false,
             name: 'Spa Z',
@@ -141,33 +172,6 @@ const ColdHotFinder = () => {
             startingPrice: 25,
             promotion: false,
             promotionDescription: ''
-        },
-        {
-            id: 4,
-            nature: true,
-            name: 'Mountain Oasis',
-            city: 'Aspen',
-            state: 'CO',
-            address: '1234 Mountain Rd',
-            phone: '555-234-5678',
-            website: 'www.mountainoasis.com',
-            description: 'Spectacular natural hot springs surrounded by mountain views',
-            image: '/images/mountainOasis.jpg',
-            services: ['Hot Spring'],
-            rating: 5,
-            visits: 500,
-            hours: [
-            { day: 'Monday', hours: '9am - 7pm' },
-            { day: 'Tuesday', hours: '9am - 7pm' },
-            { day: 'Wednesday', hours: '9am - 7pm' },
-            { day: 'Thursday', hours: '9am - 7pm' },
-            { day: 'Friday', hours: '9am - 10pm' },
-            { day: 'Saturday', hours: '8am - 10pm' },
-            { day: 'Sunday', hours: '8am - 7pm' }
-            ],
-            startingPrice: 50,
-            promotion: true,
-            promotionDescription: 'Spring into savings with our 20% off weekday promotion!'
         },
         {
             id: 5,
@@ -239,7 +243,7 @@ const ColdHotFinder = () => {
             phone: '555-234-5678',
             website: 'www.wildernessoasis.com',
             description: 'Secluded natural hot springs surrounded by beautiful scenery',
-            image: '/images/wildernessoasis.jpg',
+            image: '/images/hotAndCold/nature/hotSpring/wildwilly.png',
             services: ['Hot Spring'],
             rating: 4.9,
             visits: 500,
@@ -264,6 +268,10 @@ const ColdHotFinder = () => {
         },
      ]
 
+     const toggleMap = () => {
+        setMapView(!mapView)
+     }
+
      return (
             <div className="w-screen h-full bg-white text-black">
                 <div className="bg-slate-100 text-center py-2 font-bold">
@@ -279,14 +287,6 @@ const ColdHotFinder = () => {
                             <div className="md:block border-2 rounded-full px-4 w-96 flex">
                                 <div className="text-xs text-left font-black">Where</div>
                                 <div className="text-center">Anywhere</div>
-                            </div>
-                            <div className="-mr-2 flex md:hidden">
-                                <button type="button" className="bg-gray-700 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-500 focus:outline-none focus:bg-gray-500 focus:text-white">
-                                <span className="sr-only">Details</span>
-                                    <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                                    </svg>
-                                </button>
                             </div>
                             <div className="hidden md:block">
                                 <div className="flex items-center">
@@ -349,24 +349,29 @@ const ColdHotFinder = () => {
                         </div>                         
                     </div>
                 </div>
-                <div className="grid grid-cols-5 gap-4">
-                    {
-                        coldHotdata.map((d) => {
-                            return(
-                                <div key={d.id} className="">
-                                    {
-                                    d.nature 
-                                        ? <NaturalHotColdCard data={d}/>
-                                        : <NotNaturalHotColdCard data={d}/> 
-                                        }
-                                </div>
-                            )
-                        })
+                { mapView ? 
+                    <div>
+                        <MapViewModal locations={coldHotdata}/>
+                    </div>
+                    :<div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+                        {
+                            coldHotdata.map((d) => {
+                                return(
+                                        d.nature 
+                                            ? <NaturalHotColdCard key={d.id} data={d}/>
+                                            : <NotNaturalHotColdCard key={d.id} data={d}/> 
+                                        
+                                )
+                            })
 
-                    }                        
+                        }                        
+                    </div>
+                }                
+                <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-10 p-3 bg-black rounded-full text-white font-black cursor-pointer hover:bg-white hover:text-black" onClick={() => toggleMap()}>
+                    { mapView ? <div className="flex">Show List <div className="p-1 pl-2"><AiOutlineUnorderedList/></div></div> : <div className="flex">Show Map <div className="p-1 pl-2"><BsPinMapFill/></div></div> }
                 </div>
             </div>
             )
     }
-
+    
 export default ColdHotFinder

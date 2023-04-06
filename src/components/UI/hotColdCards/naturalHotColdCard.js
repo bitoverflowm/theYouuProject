@@ -24,7 +24,7 @@ const NaturalHotColdCard = ({data}) => {
     const todayHours = data.hours.find(h => h.day === today)?.hours;
 
     return (
-        <div>
+        <div className="">
             <div className={`relative bg-hotAndColdNature h-36 w-80 rounded-t-md`}>
                 <div className="relative p-4">
                     <div className="grid grid-cols-2">
