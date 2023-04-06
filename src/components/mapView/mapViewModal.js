@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { GoogleMap, LoadScript, Marker, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, Marker, useLoadScript, InfoWindow } from "@react-google-maps/api";
 
 const containerStyle = {
   width: "100%",
@@ -15,6 +15,8 @@ const MapViewModal = ({locations}) => {
     const { isLoaded, loadError } = useLoadScript({
       googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_KEY, //"AIzaSyDVrXWPJVBZRBnyDsQow_8NZyEAct-88RA",
     });
+
+    const [selectedMarker, setSelectedMarker] = useState(null);
 
     const [addresses, setAddresses] = useState([]);
     const [markers, setMarkers] = useState([]);
@@ -76,8 +78,28 @@ const MapViewModal = ({locations}) => {
             <h1 className="text-2xl font-semibold mb-4">Addresses Map</h1>
             <GoogleMap mapContainerStyle={containerStyle} center={defaultCenter} zoom={10}>
               {markers.map((marker, index) => (
-                <Marker key={index} position={marker.position} title={marker.title} />
+                <Marker 
+                  key={index} 
+                  position={marker.position} 
+                  title={marker.title} 
+                  icon={{
+                    url: 'https://picsum.photos/200',
+                    scaledSize: new window.google.maps.Size(30, 30),
+                  }}
+                  onClick={()=> setSelectedMarker(marker)} />
               ))}
+              {
+                selectedMarker && (
+                  <InfoWindow 
+                    position={selectedMarker.position} 
+                    onCloseClick={()=> setSelectedMarker(null)}>
+                    <div>
+                      <h2>{selectedMarker.title}</h2>
+                      <p>Info location</p>
+                    </div>
+                  </InfoWindow>
+                )
+              }
             </GoogleMap>
           </div>
         </div>
