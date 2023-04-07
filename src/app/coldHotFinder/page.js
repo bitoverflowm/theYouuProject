@@ -3,7 +3,7 @@
 import { useUser } from "@/lib/hooks"
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState, useCallback  } from "react";
 
 import { BsPinMapFill } from "react-icons/bs";
 import { AiOutlineUnorderedList } from "react-icons/ai";
@@ -20,6 +20,8 @@ const ColdHotFinder = () => {
      const [ mapView, setMapView ] = useState(false)
      const [ searchView, setSearchView ] = useState(false)
      const [ searchAddress, setSearchAddress ] = useState('')
+     const [ serviceTypeFilter, setServiceTypeFilter ] = useState('')
+     const [ filteredData, setFilteredData ] = useState([])
 
      const coldHotdata = [
         {
@@ -33,7 +35,7 @@ const ColdHotFinder = () => {
             website: 'www.coldplungex.com',
             description: 'This is a description of the cold plunge',
             image: '/images/coldPlunge.jpg',
-            services: ['Cold Plunge'],
+            services: ['Cold Plunge', 'Cold'],
             rating: 4.5,
             visits: 100,
             hours: [{
@@ -66,7 +68,7 @@ const ColdHotFinder = () => {
             website: 'www.willies.com',
             description: 'One of the most easily accessible natural hot springs in California',
             image: '/images/hotAndCold/nature/hotSpring/wildwilly.png',
-            services: ['Hot Spring'],
+            services: ['Hot Spring', 'Hot', 'Nature'],
             rating: 5,
             visits: 1000,
             hours: [{
@@ -99,7 +101,7 @@ const ColdHotFinder = () => {
             website: 'www.mountainoasis.com',
             description: 'Spectacular natural hot springs surrounded by mountain views',
             image: '/images/hotAndCold/nature/hotSpring/wildwilly.png',
-            services: ['Hot Spring'],
+            services: ['Hot Spring', 'Hot', 'Nature'],
             rating: 5,
             visits: 500,
             hours: [
@@ -126,7 +128,7 @@ const ColdHotFinder = () => {
             website: 'www.spa.com',
             description: 'Asian Spa amazing',
             image: '/images/coldPlunge.jpg',
-            services: ['Hot Tub', 'Spa'],
+            services: ['Hot Tub', 'Pro Spa', 'Hot'],
             rating: 3,
             visits: 10,
             hours: [{
@@ -159,7 +161,7 @@ const ColdHotFinder = () => {
             website: 'www.relaxandsoak.com',
             description: 'A tranquil oasis in the heart of the city',
             image: '/images/relaxAndSoak.jpg',
-            services: ['Hot Tub', 'Sauna'],
+            services: ['Hot Tub', 'Sauna', 'Hot'],
             rating: 4,
             visits: 250,
             hours: [
@@ -186,7 +188,7 @@ const ColdHotFinder = () => {
             website: 'www.thezenden.com',
             description: 'Experience true relaxation with our range of spa services',
             image: '/images/theZenDen.jpg',
-            services: ['Cold Plunge', 'Hot Tub'],
+            services: ['Cold Plunge', 'Hot Tub', 'Cold', 'Hot', 'Pro Spa'],
             rating: 4.5,
             visits: 1000,
             hours: [
@@ -213,7 +215,7 @@ const ColdHotFinder = () => {
             website: 'www.blissfulspa.com',
             description: 'Relaxing spa with a wide range of services',
             image: '/images/blissfulspa.jpg',
-            services: ['Cold Plunge', 'Hot Tub', 'Steam Room', 'Sauna'],
+            services: ['Cold Plunge', 'Hot Tub', 'Steam Room', 'Sauna', 'Pro Spa', 'Hot', 'Cold'],
             rating: 4.2,
             visits: 200,
             hours: [{
@@ -246,7 +248,7 @@ const ColdHotFinder = () => {
             website: 'www.wildernessoasis.com',
             description: 'Secluded natural hot springs surrounded by beautiful scenery',
             image: '/images/hotAndCold/nature/hotSpring/wildwilly.png',
-            services: ['Hot Spring'],
+            services: ['Hot Spring', 'Hot', 'Nature'],
             rating: 4.9,
             visits: 500,
             hours: [{
@@ -289,6 +291,17 @@ const ColdHotFinder = () => {
         setSearchAddress('')        
      }
 
+     const handleFilterSelection = useCallback((serviceType) => {
+        setServiceTypeFilter(serviceType)
+     }, [])
+
+     useEffect(() => {
+        let filteredData = coldHotdata
+                                .filter((d) => !serviceTypeFilter || (serviceTypeFilter && d.services.includes(serviceTypeFilter)))
+                                .filter((d) => !searchAddress || (searchAddress && d.city === searchAddress))
+        setFilteredData(filteredData)
+     }, [searchAddress, serviceTypeFilter])
+
      return (
             <div className="w-screen h-full bg-white text-black">
                 <div className="bg-slate-100 text-center py-2 font-bold">
@@ -316,8 +329,7 @@ const ColdHotFinder = () => {
                                                     </div>
                                                 }
                                             </div>
-                                    }
-                                    
+                                    }                                    
                                 </div>
                                 {
                                     searchView && 
@@ -357,58 +369,58 @@ const ColdHotFinder = () => {
                 </div>
                 <div className="hidden md:block">
                     <div className="flex flex-wrap place-content-center text-center gap-5">
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">🚀</div><div>View All</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('')}>🚀</div><div>View All</div>
                         </div>
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">🔥</div><div>All Hot</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Hot')}>🔥</div><div>All Hot</div>
                         </div>
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">🧊</div><div>All Cold</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Cold' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Cold')}>🧊</div><div>All Cold</div>
                         </div>  
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">🌺</div><div>In Nature</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Nature' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Nature')}>🌺</div><div>In Nature</div>
                         </div>  
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">‍‍🧖🏻‍♀️</div><div>Pro. Spa</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Pro Spa' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Pro Spa')}>‍‍🧖🏻‍♀️</div><div>Pro. Spa</div>
                         </div>
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">❄️</div><div>Cryo</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Cryo' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Cryo')}>❄️</div><div>Cryo</div>
                         </div>  
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">🛀🏿</div><div>Ice Bath</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Ice Bath' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Ice Bath')}>🛀🏿</div><div>Ice Bath</div>
                         </div>  
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">💨</div><div>Steam</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Steam' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Steam')}>💨</div><div>Steam</div>
                         </div>  
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">🥵</div><div>Sauna</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Sauna' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Sauna')}>🥵</div><div>Sauna</div>
                         </div>  
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">⛲</div><div>Hot Tub</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot Tub' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Hot Tub')}>⛲</div><div>Hot Tub</div>
                         </div>
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">⛩️</div><div>Hot Springs</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot Spring' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Hot Spring')}>⛩️</div><div>Hot Springs</div>
                         </div> 
-                        <div className="grid grid-cols-1 p-2">
-                            <div className="px-2">👻</div><div>Other</div>
+                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Other' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                            <div className="px-2" onClick={()=>handleFilterSelection('Other')}>👻</div><div>Other</div>
                         </div>                         
                     </div>
                 </div>
                 { mapView ? 
                     <div>
-                        <MapViewModal locations={coldHotdata}/>
+                        <MapViewModal locations={filteredData}/>
                     </div>
                     :<div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
                         {
-                            coldHotdata.filter((d) => !searchAddress || (searchAddress && d.city === searchAddress)).map((d) => {
+                            filteredData
+                                .map((d) => {
                                 return(
                                         d.nature 
                                             ? <NaturalHotColdCard key={d.id} data={d}/>
-                                            : <NotNaturalHotColdCard key={d.id} data={d}/>                                        
+                                            : <NotNaturalHotColdCard key={d.id} data={d}/>   
                                 )
                             })
-
                         }                        
                     </div>
                 }                
