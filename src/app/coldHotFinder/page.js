@@ -18,13 +18,15 @@ import MapViewModal from "@/components/mapView/mapViewModal";
 const ColdHotFinder = () => {
      const user = useUser()
      const [ mapView, setMapView ] = useState(false)
+     const [ searchView, setSearchView ] = useState(false)
+     const [ searchAddress, setSearchAddress ] = useState('')
 
      const coldHotdata = [
         {
             id: 0,
             nature: false,
             name: 'Cold Plunge X',
-            city: 'San Diego',
+            city: 'SanDiego',
             state: 'CA',
             address: '1234 Main St',
             phone: '123-456-7890',
@@ -57,7 +59,7 @@ const ColdHotFinder = () => {
             id: 1,
             nature: true,
             name: 'Wild Willys',
-            city: 'Mammoth Lakes',
+            city: 'MammothLakes',
             state: 'CA',
             address: 'Hwy 395 Benton Crossing Rd',
             phone: '123-456-7890',
@@ -117,7 +119,7 @@ const ColdHotFinder = () => {
             id: 2,
             nature: false,
             name: 'Spa Z',
-            city: 'San Diego',
+            city: 'SanDiego',
             state: 'CA',
             address: '1234 Main St',
             phone: '123-456-7890',
@@ -150,7 +152,7 @@ const ColdHotFinder = () => {
             id: 3,
             nature: false,
             name: 'Relax and Soak',
-            city: 'Los Angeles',
+            city: 'LosAngeles',
             state: 'CA',
             address: '5678 Oak St',
             phone: '555-123-4567',
@@ -177,7 +179,7 @@ const ColdHotFinder = () => {
             id: 5,
             nature: false,
             name: 'The Zen Den',
-            city: 'San Francisco',
+            city: 'SanFrancisco',
             state: 'CA',
             address: '4321 Pine St',
             phone: '555-345-6789',
@@ -204,7 +206,7 @@ const ColdHotFinder = () => {
             id: 6,
             nature: false,
             name: 'Blissful Spa',
-            city: 'San Francisco',
+            city: 'SanFrancisco',
             state: 'CA',
             address: '456 Main St',
             phone: '555-987-6543',
@@ -272,6 +274,21 @@ const ColdHotFinder = () => {
         setMapView(!mapView)
      }
 
+     const toggleSearch = () => {
+        setSearchView(!searchView)
+     }
+
+     const handleSearchAddress = (city) => {
+        setSearchView(false)
+        setSearchAddress(city)        
+     }
+
+     const handleClearSearchAddress = (event) => {
+        event.stopPropagation()
+        setSearchView(false)
+        setSearchAddress('')        
+     }
+
      return (
             <div className="w-screen h-full bg-white text-black">
                 <div className="bg-slate-100 text-center py-2 font-bold">
@@ -284,9 +301,38 @@ const ColdHotFinder = () => {
                                 <Image src={logo} className="w-16 sm:w-12 px-2"/>  
                                 <span className="font-black text-lg">TheYouuProject</span>
                             </div>
-                            <div className="md:block border-2 rounded-full px-4 w-96 flex">
-                                <div className="text-xs text-left font-black">Where</div>
-                                <div className="text-center">Anywhere</div>
+                            <div className="relative">
+                                <div className="md:block border-2 border-black rounded-full px-4 w-96 flex cursor-pointer" onClick={()=> toggleSearch()}>
+                                    {
+                                        searchAddress ?
+                                            <div className="flex"><div className="p-2 text-center">{searchAddress}</div><div className="absolute right-0 py-2 px-4 rounded-full bg-black text-white hover:bg-white hover:text-black" onClick={(e)=>handleClearSearchAddress(e)}>X</div></div>
+                                            :
+                                            <div> 
+                                                { searchView ? 
+                                                    <div className="p-2">Select a City form the list below!</div>
+                                                    : <div>
+                                                        <div className="text-xs text-left font-black">Where</div>
+                                                        <div className="text-center">Anywhere</div>
+                                                    </div>
+                                                }
+                                            </div>
+                                    }
+                                    
+                                </div>
+                                {
+                                    searchView && 
+                                        <div className="absolute left-0 mt-1 w-full bg-white shadow-lg rounded-md z-10 p-4">
+                                            <div className="flex flex-col">
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('NewYork')}>New York</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('SanDiego')}>San Diego</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('LosAngeles')}>Los Angeles</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('SanFransisco')}>San Francisco</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('Chicago')}>Chicago</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('Denver')}>Denver</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('Miami')}>Miami</div>
+                                            </div>
+                                        </div>
+                                }
                             </div>
                             <div className="hidden md:block">
                                 <div className="flex items-center">
@@ -355,12 +401,11 @@ const ColdHotFinder = () => {
                     </div>
                     :<div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
                         {
-                            coldHotdata.map((d) => {
+                            coldHotdata.filter((d) => !searchAddress || (searchAddress && d.city === searchAddress)).map((d) => {
                                 return(
                                         d.nature 
                                             ? <NaturalHotColdCard key={d.id} data={d}/>
-                                            : <NotNaturalHotColdCard key={d.id} data={d}/> 
-                                        
+                                            : <NotNaturalHotColdCard key={d.id} data={d}/>                                        
                                 )
                             })
 

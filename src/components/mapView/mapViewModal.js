@@ -18,17 +18,12 @@ const MapViewModal = ({locations}) => {
 
     const [selectedMarker, setSelectedMarker] = useState(null);
 
-    const [addresses, setAddresses] = useState([]);
+    const [coldHotLocations, setColdHotLocations] = useState([]);
     const [markers, setMarkers] = useState([]);
     useEffect(() => {
         // Replace this with your list of addresses
-        const sampleAddresses = [
-          "1600 Amphitheatre Parkway, Mountain View, CA",
-          "1355 Market St, San Francisco, CA 94103",
-          "1 Infinite Loop, Cupertino, CA 95014",
-        ];
-        setAddresses(sampleAddresses);
-      }, []);
+        setColdHotLocations(locations);
+      }, [locations]);
 
       useEffect(() => {
         async function geocodeAddresses() {
@@ -36,13 +31,16 @@ const MapViewModal = ({locations}) => {
           const geocoder = new window.google.maps.Geocoder();
           const newMarkers = [];
 
-          async function geocodeAddress(address) {
+          async function geocodeAddress(location) {
             return new Promise((resolve, reject) => {
+              let address = location.address;
               geocoder.geocode({ address }, (results, status) => {
                 if (status === "OK") {
                   resolve({
                     position: results[0].geometry.location,
-                    title: address,
+                    title: location.name,
+                    phone: location.phone,
+                    website: location.website,
                   });
                 } else {
                   reject(status);
@@ -51,21 +49,21 @@ const MapViewModal = ({locations}) => {
             });
           }
     
-          for (const address of addresses) {
+          for (const location of coldHotLocations) {
             try {
-              const marker = await geocodeAddress(address);
+              const marker = await geocodeAddress(location);
               newMarkers.push(marker);
             } catch (error) {
-              console.error(`Failed to geocode address: ${address}`, error);
+              console.error(`Failed to geocode address: ${location.address}`, error);
             }
           }
           setMarkers(newMarkers);
         }
     
-        if (addresses.length) {
+        if (coldHotLocations.length) {
           geocodeAddresses();
         }
-      }, [addresses, isLoaded]);
+      }, [coldHotLocations, isLoaded]);
 
       if (loadError) return <div>Error loading maps</div>;
       if (!isLoaded) return <div>Loading maps...</div>;
@@ -81,11 +79,11 @@ const MapViewModal = ({locations}) => {
                 <Marker 
                   key={index} 
                   position={marker.position} 
-                  title={marker.title} 
-                  icon={{
+                  title={marker.name} 
+                  /*icon={{
                     url: 'https://picsum.photos/200',
                     scaledSize: new window.google.maps.Size(30, 30),
-                  }}
+                  }}*/
                   onClick={()=> setSelectedMarker(marker)} />
               ))}
               {
@@ -95,7 +93,8 @@ const MapViewModal = ({locations}) => {
                     onCloseClick={()=> setSelectedMarker(null)}>
                     <div>
                       <h2>{selectedMarker.title}</h2>
-                      <p>Info location</p>
+                      <p>{selectedMarker.phone}</p>
+                      <p>{selectedMarker.website}</p>
                     </div>
                   </InfoWindow>
                 )
