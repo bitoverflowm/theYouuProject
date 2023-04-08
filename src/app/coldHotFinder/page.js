@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useCallback  } from "react";
 
+
 import { BsPinMapFill } from "react-icons/bs";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 
@@ -15,262 +16,14 @@ import NotNaturalHotColdCard from "@/components/UI/hotColdCards/notNaturalHotCol
 
 import MapViewModal from "@/components/mapView/mapViewModal";
 
-const ColdHotFinder = () => {
+const Page = () => {
      const user = useUser()
      const [ mapView, setMapView ] = useState(false)
      const [ searchView, setSearchView ] = useState(false)
      const [ searchAddress, setSearchAddress ] = useState('')
      const [ serviceTypeFilter, setServiceTypeFilter ] = useState('')
      const [ filteredData, setFilteredData ] = useState([])
-
-     const coldHotdata = [
-        {
-            id: 0,
-            nature: false,
-            name: 'Cold Plunge X',
-            city: 'SanDiego',
-            state: 'CA',
-            address: '1234 Main St',
-            phone: '123-456-7890',
-            website: 'www.coldplungex.com',
-            description: 'This is a description of the cold plunge',
-            image: '/images/coldPlunge.jpg',
-            services: ['Cold Plunge', 'Cold'],
-            rating: 4.5,
-            visits: 100,
-            hours: [{
-                day: 'Monday', hours: '9am - 5pm'
-                }, {
-                    day: 'Tuesday', hours: '9am - 5pm'
-                }, {
-                    day: 'Wednesday', hours: '9am - 5pm'
-                }, {
-                    day: 'Thursday', hours: '9am - 5pm'
-                }, {
-                    day: 'Friday', hours: '9am - 5pm'
-                }, {
-                    day: 'Saturday', hours: '9am - 5pm'
-                }, {
-                    day: 'Sunday', hours: '9am - 5pm'
-                }],
-            startingPrice: 20,
-            promotion: true,
-            promotionDescription: 'This is a promotion',
-        },
-        {
-            id: 1,
-            nature: true,
-            name: 'Wild Willys',
-            city: 'MammothLakes',
-            state: 'CA',
-            address: 'Hwy 395 Benton Crossing Rd',
-            phone: '123-456-7890',
-            website: 'www.willies.com',
-            description: 'One of the most easily accessible natural hot springs in California',
-            image: '/images/hotAndCold/nature/hotSpring/wildwilly.png',
-            services: ['Hot Spring', 'Hot', 'Nature'],
-            rating: 5,
-            visits: 1000,
-            hours: [{
-                day: 'Monday', hours: '9am - 5pm'
-                }, {
-                    day: 'Tuesday', hours: '9am - 5pm'
-                }, {
-                    day: 'Wednesday', hours: '9am - 5pm'
-                }, {
-                    day: 'Thursday', hours: '9am - 5pm'
-                }, {
-                    day: 'Friday', hours: '9am - 5pm'
-                }, {
-                    day: 'Saturday', hours: '9am - 5pm'
-                }, {
-                    day: 'Sunday', hours: '9am - 5pm'
-                }],
-            startingPrice: 0,
-            promotion: false,
-            promotionDescription: '',
-        },
-        {
-            id: 4,
-            nature: true,
-            name: 'Mountain Oasis',
-            city: 'Aspen',
-            state: 'CO',
-            address: '1234 Mountain Rd',
-            phone: '555-234-5678',
-            website: 'www.mountainoasis.com',
-            description: 'Spectacular natural hot springs surrounded by mountain views',
-            image: '/images/hotAndCold/nature/hotSpring/wildwilly.png',
-            services: ['Hot Spring', 'Hot', 'Nature'],
-            rating: 5,
-            visits: 500,
-            hours: [
-            { day: 'Monday', hours: '9am - 7pm' },
-            { day: 'Tuesday', hours: '9am - 7pm' },
-            { day: 'Wednesday', hours: '9am - 7pm' },
-            { day: 'Thursday', hours: '9am - 7pm' },
-            { day: 'Friday', hours: '9am - 10pm' },
-            { day: 'Saturday', hours: '8am - 10pm' },
-            { day: 'Sunday', hours: '8am - 7pm' }
-            ],
-            startingPrice: 50,
-            promotion: true,
-            promotionDescription: 'Spring into savings with our 20% off weekday promotion!'
-        },
-        {
-            id: 2,
-            nature: false,
-            name: 'Spa Z',
-            city: 'SanDiego',
-            state: 'CA',
-            address: '1234 Main St',
-            phone: '123-456-7890',
-            website: 'www.spa.com',
-            description: 'Asian Spa amazing',
-            image: '/images/coldPlunge.jpg',
-            services: ['Hot Tub', 'Pro Spa', 'Hot'],
-            rating: 3,
-            visits: 10,
-            hours: [{
-                day: 'Monday', hours: '9am - 5pm'
-                }, {
-                    day: 'Tuesday', hours: '9am - 5pm'
-                }, {
-                    day: 'Wednesday', hours: '9am - 5pm'
-                }, {
-                    day: 'Thursday', hours: '9am - 5pm'
-                }, {
-                    day: 'Friday', hours: '9am - 5pm'
-                }, {
-                    day: 'Saturday', hours: '9am - 5pm'
-                }, {
-                    day: 'Sunday', hours: '9am - 5pm'
-                }],
-            startingPrice: 0,
-            promotion: false,
-            promotionDescription: '',
-        },
-        {
-            id: 3,
-            nature: false,
-            name: 'Relax and Soak',
-            city: 'LosAngeles',
-            state: 'CA',
-            address: '5678 Oak St',
-            phone: '555-123-4567',
-            website: 'www.relaxandsoak.com',
-            description: 'A tranquil oasis in the heart of the city',
-            image: '/images/relaxAndSoak.jpg',
-            services: ['Hot Tub', 'Sauna', 'Hot'],
-            rating: 4,
-            visits: 250,
-            hours: [
-            { day: 'Monday', hours: '10am - 8pm' },
-            { day: 'Tuesday', hours: '10am - 8pm' },
-            { day: 'Wednesday', hours: '10am - 8pm' },
-            { day: 'Thursday', hours: '10am - 8pm' },
-            { day: 'Friday', hours: '10am - 10pm' },
-            { day: 'Saturday', hours: '9am - 10pm' },
-            { day: 'Sunday', hours: '9am - 8pm' }
-            ],
-            startingPrice: 25,
-            promotion: false,
-            promotionDescription: ''
-        },
-        {
-            id: 5,
-            nature: false,
-            name: 'The Zen Den',
-            city: 'SanFrancisco',
-            state: 'CA',
-            address: '4321 Pine St',
-            phone: '555-345-6789',
-            website: 'www.thezenden.com',
-            description: 'Experience true relaxation with our range of spa services',
-            image: '/images/theZenDen.jpg',
-            services: ['Cold Plunge', 'Hot Tub', 'Cold', 'Hot', 'Pro Spa'],
-            rating: 4.5,
-            visits: 1000,
-            hours: [
-            { day: 'Monday', hours: '11am - 8pm' },
-            { day: 'Tuesday', hours: '11am - 8pm' },
-            { day: 'Wednesday', hours: '11am - 8pm' },
-            { day: 'Thursday', hours: '11am - 8pm' },
-            { day: 'Friday', hours: '11am - 10pm' },
-            { day: 'Saturday', hourshours: '8am - 10pm' },
-            { day: 'Sunday', hours: '8am - 7pm' }
-            ],
-            startingPrice: 50,
-            promotion: true,
-            promotionDescription: 'Spring into savings with our 20% off weekday promotion!'
-        },
-        {
-            id: 6,
-            nature: false,
-            name: 'Blissful Spa',
-            city: 'SanFrancisco',
-            state: 'CA',
-            address: '456 Main St',
-            phone: '555-987-6543',
-            website: 'www.blissfulspa.com',
-            description: 'Relaxing spa with a wide range of services',
-            image: '/images/blissfulspa.jpg',
-            services: ['Cold Plunge', 'Hot Tub', 'Steam Room', 'Sauna', 'Pro Spa', 'Hot', 'Cold'],
-            rating: 4.2,
-            visits: 200,
-            hours: [{
-            day: 'Monday', hours: '10am - 8pm'
-            }, {
-            day: 'Tuesday', hours: '10am - 8pm'
-            }, {
-            day: 'Wednesday', hours: '10am - 8pm'
-            }, {
-            day: 'Thursday', hours: '10am - 8pm'
-            }, {
-            day: 'Friday', hours: '10am - 8pm'
-            }, {
-            day: 'Saturday', hours: '9am - 9pm'
-            }, {
-            day: 'Sunday', hours: '9am - 9pm'
-            }],
-            startingPrice: 50,
-            promotion: true,
-            promotionDescription: '50% off for first-time customers',
-        },
-        {
-            id: 7,
-            nature: true,
-            name: 'Wilderness Oasis',
-            city: 'Aspen',
-            state: 'CO',
-            address: '789 Main St',
-            phone: '555-234-5678',
-            website: 'www.wildernessoasis.com',
-            description: 'Secluded natural hot springs surrounded by beautiful scenery',
-            image: '/images/hotAndCold/nature/hotSpring/wildwilly.png',
-            services: ['Hot Spring', 'Hot', 'Nature'],
-            rating: 4.9,
-            visits: 500,
-            hours: [{
-            day: 'Monday', hours: '9am - 6pm'
-            }, {
-            day: 'Tuesday', hours: '9am - 6pm'
-            }, {
-            day: 'Wednesday', hours: '9am - 6pm'
-            }, {
-            day: 'Thursday', hours: '9am - 6pm'
-            }, {
-            day: 'Friday', hours: '9am - 6pm'
-            }, {
-            day: 'Saturday', hours: '9am - 6pm'
-            }, {
-            day: 'Sunday', hours: '9am - 6pm'
-            }],
-            startingPrice: 30,
-            promotion: true,
-            promotionDescription: 'Free admission on your birthday',
-        },
-     ]
+     const [fireIceData, setFireIceData] = useState(null);
 
      const toggleMap = () => {
         setMapView(!mapView)
@@ -296,11 +49,27 @@ const ColdHotFinder = () => {
      }, [])
 
      useEffect(() => {
-        let filteredData = coldHotdata
+        const fetchData = async() => {
+            const fireices = fetchFireIces()
+            const [fireIceData] = await Promise.all([fireices])
+            console.log(fireIceData)
+            setFireIceData(fireIceData)
+        }
+
+        fetchData()
+        //const fireices = fetchFireIces()
+        //const [fireIceData] = await Promise.all([fireices])
+
+        //console.log('fireIceData', fireIceData)
+     }, [])
+
+     useEffect(() => {
+        if(fireIceData){
+            let filteredData = fireIceData.data
                                 .filter((d) => !serviceTypeFilter || (serviceTypeFilter && d.services.includes(serviceTypeFilter)))
                                 .filter((d) => !searchAddress || (searchAddress && d.city === searchAddress))
-        setFilteredData(filteredData)
-     }, [searchAddress, serviceTypeFilter])
+            setFilteredData(filteredData)}
+     }, [searchAddress, serviceTypeFilter, fireIceData])
 
      return (
             <div className="w-screen h-full bg-white text-black">
@@ -335,10 +104,10 @@ const ColdHotFinder = () => {
                                     searchView && 
                                         <div className="absolute left-0 mt-1 w-full bg-white shadow-lg rounded-md z-10 p-4">
                                             <div className="flex flex-col">
-                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('NewYork')}>New York</div>
-                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('SanDiego')}>San Diego</div>
-                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('LosAngeles')}>Los Angeles</div>
-                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('SanFransisco')}>San Francisco</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('New York')}>New York</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('San Diego')}>San Diego</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('Los Angeles')}>Los Angeles</div>
+                                                <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('San Fransisco')}>San Francisco</div>
                                                 <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('Chicago')}>Chicago</div>
                                                 <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('Denver')}>Denver</div>
                                                 <div className="p-2 rounded-full hover:bg-black hover:text-white cursor-pointer" onClick={()=>handleSearchAddress('Miami')}>Miami</div>
@@ -407,13 +176,13 @@ const ColdHotFinder = () => {
                         </div>                         
                     </div>
                 </div>
-                { mapView ? 
+                { filteredData && mapView ? 
                     <div>
                         <MapViewModal locations={filteredData}/>
                     </div>
                     :<div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
                         {
-                            filteredData
+                            filteredData && filteredData
                                 .map((d) => {
                                 return(
                                         d.nature 
@@ -430,5 +199,20 @@ const ColdHotFinder = () => {
             </div>
             )
     }
+
+export const fetchFireIces = async () => {
+    let url;
+
+    if (process.env.NODE_ENV === 'development') {
+        url = 'http://localhost:3000/api/fireices/'
+    } else if (process.env.NODE_ENV === 'production') {
+        url = 'https://www.theyouuproject.com/api/fireices/'
+    }
     
-export default ColdHotFinder
+    const res = await fetch(url)
+    const fireIceData = await res.json()
+
+    return  fireIceData;
+}
+
+export default Page;

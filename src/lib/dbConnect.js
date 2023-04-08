@@ -8,7 +8,7 @@ if (!MONGODB_URI) {
     'Please define the MONGODB_URI environment variable inside .env.local'
   )
 }else{
-  console.log('MONGODB_URI', MONGODB_URI)
+  console.log('Found mongodb_uri. Connecting now.')
 }
 
 /**
