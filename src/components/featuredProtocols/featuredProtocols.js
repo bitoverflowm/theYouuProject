@@ -1,10 +1,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import useIsClient from "@/lib/useIsClient"
 
 import MovingVideoCard from "../UI/Cards/movingVideoCard"
 
 const FeaturedProtocols = () => {
+    const isClient = useIsClient()
     
     const [protocols] = useState([
         { id: 0, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation', 'Health', 'Anxiety', 'Prevent Burnout']},
@@ -21,7 +23,7 @@ const FeaturedProtocols = () => {
                         <div className="cursor-pointer w-96 h-96" key={p.id + 'featuredProtocols'}>
                             <Link href={p.link}>
                                 <div className="rounded-lg">
-                                    <MovingVideoCard videoUrl={p.video} />
+                                    {isClient && <MovingVideoCard videoUrl={p.video} />}
                                 </div>
                                 <div>
                                     {p.desc}

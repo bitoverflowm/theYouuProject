@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic';
 import logo from '../../public/logo1.png'
 
 import { useUser } from "@/lib/hooks"
+import useIsClient from '@/lib/useIsClient';
 
 import MagicButton from '@/components/UI/magicButton'
 import Catalogue from '@/components/catalogue/catalogue';
@@ -24,12 +25,12 @@ export default function Home() {
   const user = useUser()
   const mainContent = useRef()
   const aboutUs = useRef()
+  const isClient = useIsClient()
 
   const [ isSmallScreen, setIsSmallScreen ] = useState(false);
   const [ catalogueVisible, setCatalogueVisible ] = useState(false)
   const [ selectedView, setSelectedView ] = useState('')
   const [ headingTextColor, setHeadingTextColor ] = useState('text-white')
-  const [isMounted, setIsMounted] = useState(false)
 
   const handleSubmit = () => {
     router.push('/buyUsCoffee/checkOut')
@@ -45,10 +46,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if(typeof window === 'undefined') return;
-
-    setIsMounted(true);
-
     const mediaQuery = window.matchMedia('(max-width: 900px)');
     setIsSmallScreen(mediaQuery.matches);
 
@@ -103,7 +100,7 @@ export default function Home() {
           >
         <div className='relative h-screen overflow-hidden'>
             <div className='relative overflow-hidden h-screen'>
-              { isMounted && <BackgroundVideo  setHeadingTextColor={setHeadingTextColor} isSmallScreen={isSmallScreen}/> }
+              <BackgroundVideo key={isClient} setHeadingTextColor={setHeadingTextColor} isSmallScreen={isSmallScreen} isClient={isClient}/>
               <div className='relative z-10 flex flex-col items-center justify-center h-full'>
                 <div className='p-4'>
                   <div className={`${headingTextColor} text-center font-extrabold text-8xl`}>

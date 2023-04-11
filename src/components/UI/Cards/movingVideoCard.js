@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import ReactPlayer from 'react-player'
 
 
-
 const MovingVideoCard = ({videoUrl}) => {
     const [playing, setPlaying] = useState(false)
     
