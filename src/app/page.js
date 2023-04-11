@@ -25,28 +25,15 @@ export default function Home() {
   const mainContent = useRef()
   const aboutUs = useRef()
 
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [catalogueVisible, setCatalogueVisible] = useState(false)
-  const [ textIndex, setTextIndex ] = useState(0)
+  const [ isSmallScreen, setIsSmallScreen ] = useState(false);
+  const [ catalogueVisible, setCatalogueVisible ] = useState(false)
   const [ selectedView, setSelectedView ] = useState('')
   const [ headingTextColor, setHeadingTextColor ] = useState('text-white')
-
-  const textList = ['Unwavering Focus', 'More Motivation', 'Unparalleled Productivity', 'Improved Health']
+  const [isMounted, setIsMounted] = useState(false)
 
   const handleSubmit = () => {
     router.push('/buyUsCoffee/checkOut')
   }
-
-  const getNextIndex = () => {
-    return (textIndex + 1) % textList.length
-  }
-
-  useEffect(()=> {
-    const interval = setInterval(() => {
-      setTextIndex(getNextIndex)
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [textIndex])
 
   const triggerViewActivation = (view) => {
     setSelectedView(view)
@@ -58,6 +45,10 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if(typeof window === 'undefined') return;
+
+    setIsMounted(true);
+
     const mediaQuery = window.matchMedia('(max-width: 900px)');
     setIsSmallScreen(mediaQuery.matches);
 
@@ -112,7 +103,7 @@ export default function Home() {
           >
         <div className='relative h-screen overflow-hidden'>
             <div className='relative overflow-hidden h-screen'>
-              <BackgroundVideo  setHeadingTextColor={setHeadingTextColor} isSmallScreen={isSmallScreen}/> 
+              { isMounted && <BackgroundVideo  setHeadingTextColor={setHeadingTextColor} isSmallScreen={isSmallScreen}/> }
               <div className='relative z-10 flex flex-col items-center justify-center h-full'>
                 <div className='p-4'>
                   <div className={`${headingTextColor} text-center font-extrabold text-8xl`}>

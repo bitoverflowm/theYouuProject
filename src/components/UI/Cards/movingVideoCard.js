@@ -23,6 +23,9 @@ const MovingVideoCard = ({videoUrl}) => {
                 width="100%"
                 height="100%"
                 loop
+                onError={(e) => {
+                    console.error("Video playback error:", e);
+                  }}
             />
         </div>
     )

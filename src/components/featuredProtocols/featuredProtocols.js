@@ -18,7 +18,7 @@ const FeaturedProtocols = () => {
             {
                 protocols.map((p) => {
                     return(
-                        <div className="cursor-pointer w-96 h-96">
+                        <div className="cursor-pointer w-96 h-96" key={p.id + 'featuredProtocols'}>
                             <Link href={p.link}>
                                 <div className="rounded-lg">
                                     <MovingVideoCard videoUrl={p.video} />

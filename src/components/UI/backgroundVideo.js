@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 
 const BackgroundVideo = ({setHeadingTextColor, isSmallScreen}) => {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(Math.floor(Math.random() * 9))
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(Math.floor(Math.random() * 24))
 
   const handleVideoEnded = () => {
     // Increment the current video index to rotate to the next video
@@ -108,11 +108,11 @@ const BackgroundVideo = ({setHeadingTextColor, isSmallScreen}) => {
         textColor: 'text-black'
       },
       {
-        url: 'video/bg25.m4v',
+        url: 'video/bg24.m4v',
         textColor: 'text-white'
       },
       {
-        url: 'video/bg27.m4v',
+        url: 'video/bg25.m4v',
         textColor: 'text-white'
       }
   ];
@@ -128,6 +128,9 @@ const BackgroundVideo = ({setHeadingTextColor, isSmallScreen}) => {
             height="90vh"
             style={{position: "absolute", left: "-70vw"}}
             onEnded={handleVideoEnded}
+            onError={(e) => {
+              console.error("Video playback error:", e);
+            }}
           />
           :
           <ReactPlayer
@@ -138,6 +141,9 @@ const BackgroundVideo = ({setHeadingTextColor, isSmallScreen}) => {
             height="100vh"
             style={{position: "absolute", zIndex: "0"}}
             onEnded={handleVideoEnded}
+            onError={(e) => {
+              console.error("Video playback error:", e);
+            }}
           />
         }
     </div>
