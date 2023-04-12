@@ -1,38 +1,52 @@
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import useIsClient from "@/lib/useIsClient"
 
 import MovingVideoCard from "../UI/Cards/movingVideoCard"
 
-const FeaturedProtocols = () => {
+const FeaturedProtocols = ({filter}) => {
     const isClient = useIsClient()
+    const [ filteredProtocols, setFilteredProtocols ] = useState([])
     
     const [protocols] = useState([
-        { id: 0, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation', 'Health', 'Anxiety', 'Prevent Burnout']},
-        { id: 1, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation', 'Health', 'Anxiety', 'Prevent Burnout']}
+        { id: 0, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus']},
+        { id: 1, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation']},
+        { id: 2, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation', 'Health', 'Anxiety', 'Prevent Burnout']}
         //{ id: 'hot', video: '/videos/small/hot1.mp4'}
     ])
     
+    useEffect(() => {
+      if(protocols){
+        if(filter === 'All'){
+          setFilteredProtocols(protocols)
+        }
+        else{
+          let filteredProtocols = protocols.filter((d) => !filter || (filter && d.tags.includes(filter)))
+          setFilteredProtocols(filteredProtocols)}
+        }          
+   }, [filter])
 
     return (
         <div className="flex flex-wrap gap-6">
             {
-                protocols.map((p) => {
+                filteredProtocols.map((p) => {
                     return(
-                        <div className="cursor-pointer w-96 h-96" key={p.id + 'featuredProtocols'}>
+                      <div className="w-full max-w-md mx-auto" key={p.id + 'featuredProtocols'}>
+                        <div className="cursor-pointer">
                             <Link href={p.link}>
                                 <div className="rounded-lg">
                                     {isClient && <MovingVideoCard videoUrl={p.video} />}
                                 </div>
-                                <div>
+                                <div className="bg-bito-grey">
                                     {p.desc}
                                 </div>
                             </Link>
-                            <div className="flex">
+                            <div className="flex bg-bito-grey">
                                 {p.saves} {p.shares}
                             </div>
                         </div>
+                      </div>
                         )
                 })
             }

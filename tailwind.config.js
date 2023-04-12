@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      aspectRatio: {
+        '9/16': '56.25%',
+      },
       colors: {
         'youu-background': '#221D26',
         'youu-light-green': '#D4FC79',
@@ -63,5 +66,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }

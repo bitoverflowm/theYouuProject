@@ -15,8 +15,9 @@ const MovingVideoCard = ({videoUrl}) => {
     }
 
     return (
-        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className='relative aspect-w-9 aspect-h-16 bg-gray-200 overflow-hidden'>
             <ReactPlayer
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full object-cover"
                 url={videoUrl}
                 playing = {playing}
                 width="100%"

@@ -15,34 +15,37 @@ import { useUser } from "@/lib/hooks"
 import useIsClient from '@/lib/useIsClient';
 
 import MagicButton from '@/components/UI/magicButton'
-import Catalogue from '@/components/catalogue/catalogue';
 import FeaturedProtocols from '@/components/featuredProtocols/featuredProtocols';
+import ProtocolFilter from '@/components/UI/filter/protocolFilter'; 
 
 const BackgroundVideo = dynamic(() => import('@/components/UI/backgroundVideo'), { ssr: false });
 
 export default function Home() {
   const router = useRouter()
   const user = useUser()
-  const mainContent = useRef()
   const aboutUs = useRef()
   const isClient = useIsClient()
 
   const [ isSmallScreen, setIsSmallScreen ] = useState(false);
-  const [ catalogueVisible, setCatalogueVisible ] = useState(false)
   const [ selectedView, setSelectedView ] = useState('')
   const [ headingTextColor, setHeadingTextColor ] = useState('text-white')
+  const [ filter, setFilter ] = useState('All')
+  const [ videoOn, setVideoOn ] = useState(true)
 
   const handleSubmit = () => {
     router.push('/buyUsCoffee/checkOut')
   }
 
-  const triggerViewActivation = (view) => {
-    setSelectedView(view)
-    if(view){
-      setCatalogueVisible(true)
-    }else{
-      setCatalogueVisible(false)
-    }
+  const triggerBrowseFilter = (val) => {
+    setFilter(val)
+    setVideoOn(false)
+  }
+
+  const getFilterButtonClass = (val) => {
+    const baseClasses = 'p-2 px-4 rounded-xl m-2'
+    const selectedClasses = 'bg-white text-black'
+    const unselectedClasses = 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto'
+    return val === filter && !(videoOn) ? `${baseClasses} ${selectedClasses}` : `${baseClasses} ${unselectedClasses}`
   }
 
   useEffect(() => {
@@ -61,10 +64,9 @@ export default function Home() {
   return (
     <div>
       <div className="relative flex flex-row font-bold py-2 px-4 sm:px-24">
-          <div className='ml-2 sm:ml-0 flex justify-start items-center w-1/2 cursor-pointer' onClick={()=> triggerViewActivation(false)}>
-              <Image src={logo} className="w-16 sm:w-12"/>     
-          </div>
-             
+          <div className='ml-2 sm:ml-0 flex justify-start items-center w-1/2 cursor-pointer' onClick={()=> setVideoOn(true)}>
+              <Image src={logo} className="w-16 sm:w-12" alt='logo'/>     
+          </div>             
           <div className='relative flex flex-wrap ml-auto sm:ml-auto text-white my-auto sm:w-auto'>
             <div className='text-center cursor-pointer px-6 p-1' onClick={()=> window.scrollTo({behavior: "smooth", top: aboutUs.current.offsetTop})}> About </div> 
             {
@@ -90,7 +92,7 @@ export default function Home() {
       </div>
       {/*Jumbo/Hero Heading */}
       <Transition
-          show={!catalogueVisible}
+          show={videoOn}
           enter="transition ease-out duration-300 transform"
           enterFrom='-translate-y-full'
           enterTo='translate-y-0'
@@ -114,126 +116,58 @@ export default function Home() {
                     Unlock Your Inner Beast
                 </div>
                 <div className={`text-black p-6 text-center mt-10 rounded-xl max-w-sm sm:max-w-3xl mx-auto bg-gradient-to-br from-nft-orange to-nft-orange-light`}>
-                  <div>
-                    Pick an attribute you would like to work on:
-                  </div>
-                  <div className='flex flex-wrap gap-1 place-content-center py-1 sm:py-5'>
-                      <div className={`p-2 px-4 rounded-xl m-2 
-                          ${selectedView === 'Researcher' 
-                            ? 'bg-white text-black'
-                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
-                            } `} 
-                          onClick={()=> triggerViewActivation('Researcher')}>
-                        Focus
-                      </div>
-                      <div className={`p-2 px-4 rounded-xl m-2 
-                          ${selectedView === 'Outcomes' 
-                            ? ' bg-white text-black'
-                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
-                            } `} 
-                          onClick={()=> triggerViewActivation('Outcomes')}>
-                        Motivation
-                      </div>
-                      <div className={`p-2 px-4 rounded-xl m-2 
-                          ${selectedView === 'Outcomes' 
-                            ? ' bg-white text-black'
-                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
-                            } `} 
-                          onClick={()=> triggerViewActivation('Outcomes')}>
-                        Strength
-                      </div>
-                      <div className={`p-2 px-4 rounded-xl m-2 
-                          ${selectedView === 'Outcomes' 
-                            ? ' bg-white text-black'
-                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
-                            } `} 
-                          onClick={()=> triggerViewActivation('Outcomes')}>
-                        Health
-                      </div>
-                      <div className={`p-2 px-4 rounded-xl m-2 
-                          ${selectedView === 'Outcomes' 
-                            ? ' bg-white text-black'
-                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
-                            } `} 
-                          onClick={()=> triggerViewActivation('Outcomes')}>
-                        Anxiety
-                      </div>
-                      <div className={`p-2 px-4 rounded-xl m-2 
-                          ${selectedView === 'Outcomes' 
-                            ? ' bg-white text-black'
-                            : 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' 
-                            } `} 
-                          onClick={()=> triggerViewActivation('Outcomes')}>
-                        Prevent Burnout
-                      </div>
-                  </div>
-              </div>
-              <div className={`${headingTextColor} text-center  font-extrabold mt-5`}>
-                  Or:
-              </div>                
-              <div className='m-2 flex-col font-extrabold place-content-center text-center'>
-                <div className='flex flex-row place-content-center'>
-                  <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Researcher' ? 'bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Researcher')}>
-                      Learn The Science
-                  </div>
-                  <div className={`p-2 px-4 rounded-xl m-2 ${selectedView === 'Outcomes' ? ' bg-white text-black': 'bg-black text-white hover:bg-white hover:text-black cursor-pointer my-auto' } `} onClick={()=> triggerViewActivation('Outcomes')}>
-                      Browse The Tools
-                  </div>
+                  <ProtocolFilter getFilterButtonClass={getFilterButtonClass} triggerBrowseFilter={triggerBrowseFilter}/>
                 </div>
-              </div>
             </div>           
           </div>            
         </div>
       </Transition>
       {
         <div className='p-12'>
-          <FeaturedProtocols />
-        </div>
-      }
-      {!catalogueVisible &&
-        <div className='mb-6'>
-          {/* Sub description */}
-          <div className='bg-white rounded-lg mx-10 mt-4 p-4 pt-8 sm:p-10 lg:px-32 bg-opacity-10 text-white' ref={aboutUs}>
-            <div className='text-2xl font-extrabold text-center'>
-              Welcome to TheYouuProject
-            </div>
-            <div className='font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-br from-nft-blue to-nft-purple text-xl'>
-              <span className=" underline underline-offset-8 decoration-nft-orange decoration-4">simplicity is key</span> to science-backed health and wellness
-            </div>
-            <div className='pt-4 sm:py-4 lg:p-8 sm:grid sm:grid-cols-2'>
-              <div className='px-2 text-justify'>
-                <div className='p-2'>
-                  Our goal is to bring you the cutting-edge protocols and research from renown scientists like Dr. Andrew Huberman, Dr. Rhonda Patrick, Dr. David Sinclair, and many more.
-                </div>
-                <div className='p-2'>
-                  There is so much good science out there. But that's the problem. Information overload is a real thing...
-                </div>
-                <div className='p-2'>
-                  We barely have time for ourselves and our own work... How do we know what to do? How do we know what to focus on? How do we know what to prioritise?
-                </div>
-              </div>
-              <div className='px-2 text-justify'>
-                  <div className='p-2'>
-                    @theYouuProject we have done the hard work for you. We have taken the scientific nuggets of wisdom from the world's leading experts and distilled them into simple, easy to follow, actionable steps, games, procedures and protocols
-                  </div>
-                  <div className='p-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-nft-blue to-nft-purple underline underline-offset-4 decoration-nft-orange decoration-4'>
-                    We simplified the science and made it fun!
-                  </div>
-                  <div className='p-2'>
-                  With The Youu Project, you can now say goodbye to overwhelming information and hello to tangible results. Our platform offers a variety of bite-sized protocols, designed to help optimize your health and well-being. You can now easily access, implement and track the latest in science-backed health and wellness practices into your daily life.
-                  </div>
-              </div>              
-            </div>
+          {!(videoOn) && 
+            <div className={`text-black p-6 text-center mt-10 rounded-xl max-w-sm sm:max-w-3xl mx-auto bg-gradient-to-br from-nft-purple to-nft-cotton`}>
+                <ProtocolFilter getFilterButtonClass={getFilterButtonClass} triggerBrowseFilter={triggerBrowseFilter}/>
+            </div>}
+          <div className='py-6'>
+            <FeaturedProtocols  filter={filter}/>
           </div>
         </div>
       }
-      {catalogueVisible &&
-      <div ref={mainContent}>
-          <main className='bg-youu-background items-center justify-center w-screen'>
-            <Catalogue selectedView={selectedView} setSelectedView={setSelectedView} catalogueVisible={catalogueVisible} triggerViewActivation={triggerViewActivation}/>       
-          </main>
-      </div>  
-      }
+      <div className='mb-6'>
+        {/* Sub description */}
+        <div className='bg-white rounded-lg mx-10 mt-4 p-4 pt-8 sm:p-10 lg:px-32 bg-opacity-10 text-white' ref={aboutUs}>
+          <div className='text-2xl font-extrabold text-center'>
+            Welcome to TheYouuProject
+          </div>
+          <div className='font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-br from-nft-blue to-nft-purple text-xl'>
+            <span className=" underline underline-offset-8 decoration-nft-orange decoration-4">simplicity is key</span> to science-backed health and wellness
+          </div>
+          <div className='pt-4 sm:py-4 lg:p-8 sm:grid sm:grid-cols-2'>
+            <div className='px-2 text-justify'>
+              <div className='p-2'>
+                Our goal is to bring you the cutting-edge protocols and research from renown scientists like Dr. Andrew Huberman, Dr. Rhonda Patrick, Dr. David Sinclair, and many more.
+              </div>
+              <div className='p-2'>
+                There is so much good science out there. But that's the problem. Information overload is a real thing...
+              </div>
+              <div className='p-2'>
+                We barely have time for ourselves and our own work... How do we know what to do? How do we know what to focus on? How do we know what to prioritise?
+              </div>
+            </div>
+            <div className='px-2 text-justify'>
+                <div className='p-2'>
+                  @theYouuProject we have done the hard work for you. We have taken the scientific nuggets of wisdom from the world's leading experts and distilled them into simple, easy to follow, actionable steps, games, procedures and protocols
+                </div>
+                <div className='p-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-nft-blue to-nft-purple underline underline-offset-4 decoration-nft-orange decoration-4'>
+                  We simplified the science and made it fun!
+                </div>
+                <div className='p-2'>
+                With The Youu Project, you can now say goodbye to overwhelming information and hello to tangible results. Our platform offers a variety of bite-sized protocols, designed to help optimize your health and well-being. You can now easily access, implement and track the latest in science-backed health and wellness practices into your daily life.
+                </div>
+            </div>              
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -10,7 +10,6 @@ const BackgroundVideo = ({setHeadingTextColor, isSmallScreen, isClient }) => {
     // Increment the current video index to rotate to the next video
     setCurrentVideoIndex(Math.floor(Math.random() * (videos.length-1)))
     setHeadingTextColor(videos[currentVideoIndex].textColor)
-    console.log('video index ', currentVideoIndex)
   }
 
   const handleVideoError = () => {
