@@ -27,7 +27,6 @@ const Page = () => {
      const [ fireIceData, setFireIceData ] = useState([])
      const [ page, setPage ] = useState(1)
      const [ hasMore, setHasMore ] = useState(true)
-     
 
      const toggleMap = () => {
         setMapView(!mapView)
@@ -53,8 +52,19 @@ const Page = () => {
      }, [])
 
      useEffect(() => {
-
-        fetchData()
+        //fetchData()
+        const firstFetch = async () => {
+            try {
+                const fireices = fetchFireIces(page, 20)
+                const [fireIceData] = await Promise.all([fireices])
+                setFireIceData(fireIceData.data)
+                setPage((prevPage) => prevPage + 1)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        
+        firstFetch()     
         //const fireices = fetchFireIces()
         //const [fireIceData] = await Promise.all([fireices])
 
@@ -192,28 +202,29 @@ const Page = () => {
                     <div>
                         <MapViewModal locations={filteredData}/>
                     </div>
-                    :<div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
-                        <InfiniteScroll
-                            dataLength={filteredData.length}
-                            next={fetchData}
-                            hasMore={hasMore}
-                            loader={<h4 className="animate-pulse">Loading...</h4>}
-                            endMessage={
-                                <p>Yay! You have seen it all</p>
-                            }
-                            >
-                        {
-                            filteredData && filteredData
-                                .map((d) => {
-                                return(
-                                        d.nature 
-                                            ? <NaturalHotColdCard key={d.id} data={d}/>
-                                            : <NotNaturalHotColdCard key={d.id} data={d}/>   
-                                )
-                            })
+                    :
+                    <InfiniteScroll
+                        dataLength={filteredData.length}
+                        next={fetchData}
+                        hasMore={hasMore}
+                        loader={<h4 className="animate-pulse">Loading...</h4>}
+                        endMessage={
+                            <p>Yay! You have seen it all</p>
                         }
-                        </InfiniteScroll>                    
-                    </div>
+                        >
+                            <div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+                                {
+                                    filteredData && filteredData
+                                        .map((d) => {
+                                            return(
+                                                    d.nature 
+                                                        ? <NaturalHotColdCard key={d.id} data={d}/>
+                                                        : <NotNaturalHotColdCard key={d.id} data={d}/>   
+                                            )
+                                    })
+                                }
+                            </div>
+                    </InfiniteScroll>
                 }                
                 <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-10 p-3 bg-black rounded-full text-white font-black cursor-pointer hover:bg-white hover:text-black" onClick={() => toggleMap()}>
                     { mapView ? <div className="flex">Show List <div className="p-1 pl-2"><AiOutlineUnorderedList/></div></div> : <div className="flex">Show Map <div className="p-1 pl-2"><BsPinMapFill/></div></div> }
