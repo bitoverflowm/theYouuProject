@@ -4,6 +4,7 @@ import { useUser } from "@/lib/hooks"
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useCallback  } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 import { BsPinMapFill } from "react-icons/bs";
@@ -23,7 +24,10 @@ const Page = () => {
      const [ searchAddress, setSearchAddress ] = useState('')
      const [ serviceTypeFilter, setServiceTypeFilter ] = useState('')
      const [ filteredData, setFilteredData ] = useState([])
-     const [fireIceData, setFireIceData] = useState(null);
+     const [ fireIceData, setFireIceData ] = useState([])
+     const [ page, setPage ] = useState(1)
+     const [ hasMore, setHasMore ] = useState(true)
+     
 
      const toggleMap = () => {
         setMapView(!mapView)
@@ -49,12 +53,6 @@ const Page = () => {
      }, [])
 
      useEffect(() => {
-        const fetchData = async() => {
-            const fireices = fetchFireIces()
-            const [fireIceData] = await Promise.all([fireices])
-            console.log(fireIceData)
-            setFireIceData(fireIceData)
-        }
 
         fetchData()
         //const fireices = fetchFireIces()
@@ -63,9 +61,23 @@ const Page = () => {
         //console.log('fireIceData', fireIceData)
      }, [])
 
+     const fetchData = async() => {
+        const fireices = fetchFireIces(page, 20)
+        const [fireIceData] = await Promise.all([fireices])
+        if(fireIceData.data.length === 0){
+            setHasMore(false)
+        } else {
+            //console.log(fireIceData)
+            setFireIceData((prevData) => [...prevData, ...fireIceData.data])
+            setPage((prevPage) => prevPage + 1)
+        }
+        //console.log(fireIceData)
+        //setFireIceData(fireIceData)
+    }
+
      useEffect(() => {
-        if(fireIceData){
-            let filteredData = fireIceData.data
+        if(fireIceData.length > 0){
+            let filteredData = fireIceData
                                 .filter((d) => !serviceTypeFilter || (serviceTypeFilter && d.services.includes(serviceTypeFilter)))
                                 .filter((d) => !searchAddress || (searchAddress && d.city === searchAddress))
             setFilteredData(filteredData)}
@@ -181,6 +193,15 @@ const Page = () => {
                         <MapViewModal locations={filteredData}/>
                     </div>
                     :<div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+                        <InfiniteScroll
+                            dataLength={filteredData.length}
+                            next={fetchData}
+                            hasMore={hasMore}
+                            loader={<h4 className="animate-pulse">Loading...</h4>}
+                            endMessage={
+                                <p>Yay! You have seen it all</p>
+                            }
+                            >
                         {
                             filteredData && filteredData
                                 .map((d) => {
@@ -190,7 +211,8 @@ const Page = () => {
                                             : <NotNaturalHotColdCard key={d.id} data={d}/>   
                                 )
                             })
-                        }                        
+                        }
+                        </InfiniteScroll>                    
                     </div>
                 }                
                 <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-10 p-3 bg-black rounded-full text-white font-black cursor-pointer hover:bg-white hover:text-black" onClick={() => toggleMap()}>
@@ -200,13 +222,13 @@ const Page = () => {
             )
     }
 
-export const fetchFireIces = async () => {
+export const fetchFireIces = async (pageNumber = 1, itemsPerPage = 20) => {
     let url;
 
     if (process.env.NODE_ENV === 'development') {
-        url = 'http://localhost:3000/api/fireices/'
+        url = `http://localhost:3000/api/fireices/?page=${pageNumber}&itemsPerPage=${itemsPerPage}`
     } else if (process.env.NODE_ENV === 'production') {
-        url = 'https://www.theyouuproject.com/api/fireices/'
+        url = `https://www.theyouuproject.com/api/fireices/?page=${pageNumber}&itemsPerPage=${itemsPerPage}`
     }
     
     const res = await fetch(url)

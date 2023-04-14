@@ -10,8 +10,8 @@ const NotNaturalHotColdCard = ({data}) => {
     const [serviceIcons, setServiceIcons] = useState([]);
     
     useEffect(() => {
-        let serviceIncludesCold = data.services.some(service => ['Cold Plunge', 'Cryo', 'Ice Bath'].includes(service));
-        let serviceIncludesHot = data.services.some(service => ['Hot Tub', 'Sauna', 'Steam'].includes(service));
+        let serviceIncludesCold = data.services.some(service => ['Cold'].includes(service));
+        let serviceIncludesHot = data.services.some(service => ['Hot'].includes(service));
         
         if (serviceIncludesCold && serviceIncludesHot) {
             setTypeOfService('both');
@@ -37,11 +37,12 @@ const NotNaturalHotColdCard = ({data}) => {
     } , [data.services])
 
     const categories = {
-        'Cryo': '❄️',
+        'Cryotherapy': '❄️',
         'Ice Bath': '🛀🏿',
         'Cold Plunge': '🛀🏿',
         'Hot Tub': '⛲',
         'Sauna': '🥵',
+        'IR Sauna': '🥵',
         'Steam Room': '💨',
         'ProSpa': '🧖‍♂️',
         'Other': '👻'
