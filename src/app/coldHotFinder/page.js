@@ -1,6 +1,7 @@
 'use client';
 
 import { useUser } from "@/lib/hooks"
+import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useCallback  } from "react";
@@ -27,6 +28,7 @@ const Page = () => {
      const [ fireIceData, setFireIceData ] = useState([])
      const [ page, setPage ] = useState(1)
      const [ hasMore, setHasMore ] = useState(true)
+     const router = useRouter()
 
      const toggleMap = () => {
         setMapView(!mapView)
@@ -93,10 +95,14 @@ const Page = () => {
             setFilteredData(filteredData)}
      }, [searchAddress, serviceTypeFilter, fireIceData])
 
+     const handleWaitlistClick = () => {
+        router.push('/coldHotFinder/coldHotWaitlist')
+     }
+
      return (
             <div className="w-screen h-full bg-white text-black">
                 <div className="bg-slate-100 text-center py-2 font-bold">
-                    Want to register your cold plunge/ sauna and make $? <span className="underline"> Learn More </span>
+                    Want to register your cold plunge/ sauna and make $? <span className="underline cursor-pointer hover:text-blue-500 hover:font-black" onClick={handleWaitlistClick}> Learn More</span>
                 </div>
                 <div className="w-full">
                     <div className="w-full mx-auto px-2 sm:px-6 lg:px-8">
