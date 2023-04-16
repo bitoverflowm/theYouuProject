@@ -2,55 +2,72 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import useIsClient from "@/lib/useIsClient"
+import InfiniteScroll from "react-infinite-scroll-component"
 
 import MovingVideoCard from "../UI/Cards/movingVideoCard"
 import VideoComponent from "../mediaAssets/videoComponent"
 
-const FeaturedProtocols = ({filter}) => {
+const FeaturedProtocols = ({protocolCatalogueData, fetchData, hasMore, filter}) => {
     const isClient = useIsClient()
     const [ filteredProtocols, setFilteredProtocols ] = useState([])
     
-    const [protocols] = useState([
+    /*const [protocols] = useState([
         { id: 0, label: 'cold', video: 'Ice.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus']},
         { id: 1, label: 'cold', video: 'Fire.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation']},
         { id: 2, label: 'cold', video: 'NaturalFIre.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation', 'Health', 'Anxiety', 'Prevent Burnout']}
         //{ id: 'hot', video: '/videos/small/hot1.mp4'}
-    ])
+    ])*/
     
     useEffect(() => {
-      if(protocols){
+      if(protocolCatalogueData){
         if(filter === 'All'){
-          setFilteredProtocols(protocols)
+          console.log(protocolCatalogueData)
+          setFilteredProtocols(protocolCatalogueData)
         }
         else{
-          let filteredProtocols = protocols.filter((d) => !filter || (filter && d.tags.includes(filter)))
-          setFilteredProtocols(filteredProtocols)}
+          let protocols = protocolCatalogueData.filter((d) => !filter || (filter && d.attributes.includes(filter)))
+          setFilteredProtocols(protocols)}
         }          
-   }, [filter])
+   }, [protocolCatalogueData, filter])
 
     return (
-        <div className="flex flex-wrap gap-6">
-            {
-                filteredProtocols.map((p) => {
-                    return(
-                      <div className="w-full max-w-md mx-auto" key={p.id + 'featuredProtocols'}>
-                        <div className="cursor-pointer">
-                            <Link href={p.link}>
-                                <div className="rounded-lg">
-                                    {isClient && <VideoComponent videoKey={p.video} />}
-                                </div>
-                                <div className="bg-bito-grey">
-                                    {p.desc}
-                                </div>
-                            </Link>
-                            <div className="flex bg-bito-grey">
-                                {p.saves} {p.shares}
-                            </div>
-                        </div>
-                      </div>
-                        )
-                })
-            }
+      <div>
+        {filteredProtocols && filteredProtocols.length > 0 &&
+          <InfiniteScroll
+                            dataLength={protocolCatalogueData.length}
+                            next={fetchData}
+                            hasMore={hasMore}
+                            loader={<h4 className="animate-pulse">Loading...</h4>}
+                            endMessage={
+                                <p>Yay! You have seen it all</p>
+                            }
+                            >
+                <div className="flex flex-wrap gap-6">
+                    {
+                        protocolCatalogueData.map((p) => {
+                            return(
+                              
+                                  <div className="w-full max-w-md mx-auto" key={p._id}>
+                                    <div className="cursor-pointer">
+                                        <Link href={p.protocolLink}>
+                                            <div className="rounded-lg">
+                                                {isClient && <VideoComponent videoKey={p.video} />}
+                                            </div>
+                                            <div className="bg-bito-grey">
+                                                {p.description}
+                                            </div>
+                                        </Link>
+                                        <div className="flex bg-bito-grey">
+                                            {p.totalSaves} {p.totalShares}
+                                        </div>
+                                    </div>
+                                  </div>
+                                )
+                        })
+                    }
+                </div>
+            </InfiniteScroll>
+          }
         </div>
         
 

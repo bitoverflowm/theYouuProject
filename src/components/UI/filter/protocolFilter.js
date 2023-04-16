@@ -21,36 +21,36 @@ const ProtocolFilter = ({getFilterButtonClass, triggerBrowseFilter}) => {
                     onClick={()=> triggerBrowseFilter('Strength')}>
                 🏋🏿 Strength
                 </div>
-                <div className={getFilterButtonClass('GutHealth')}
-                    onClick={()=> triggerBrowseFilter('GutHealth')}>
+                <div className={getFilterButtonClass('Gut Health')}
+                    onClick={()=> triggerBrowseFilter('Gut Health')}>
                 👅 Gut Health
                 </div>
                 <div className={getFilterButtonClass('Anxiety')}
                     onClick={()=> triggerBrowseFilter('Anxiety')}>
                 🧛 Anxiety
                 </div>
-                <div className={getFilterButtonClass('PreventBurnout')}
-                    onClick={()=> triggerBrowseFilter('PreventBurnout')}>
+                <div className={getFilterButtonClass('Prevent Burnout')}
+                    onClick={()=> triggerBrowseFilter('Prevent Burnout')}>
                 🧟 Prevent Burnout
                 </div>
-                <div className={getFilterButtonClass('HormonesForMen')}
-                    onClick={()=> triggerBrowseFilter('HormonesForMen')}>
+                <div className={getFilterButtonClass('Hormones For Men')}
+                    onClick={()=> triggerBrowseFilter('Hormones For Men')}>
                 🦍 Hormones for Men
                 </div>
-                <div className={getFilterButtonClass('HormonesForWomen')}
-                    onClick={()=> triggerBrowseFilter('HormonesForWomen')}>
+                <div className={getFilterButtonClass('Hormones For Women')}
+                    onClick={()=> triggerBrowseFilter('Hormones For Women')}>
                 🌸 Hormones for Women
                 </div>
-                <div className={getFilterButtonClass('HairLoss')}
-                    onClick={()=> triggerBrowseFilter('HairLoss')}>
+                <div className={getFilterButtonClass('Hair Loss')}
+                    onClick={()=> triggerBrowseFilter('Hair Loss')}>
                 💈 Hair loss
                 </div>
-                <div className={getFilterButtonClass('StudyingForExams')}
-                    onClick={()=> triggerBrowseFilter('StudyingForExams')}>
+                <div className={getFilterButtonClass('Studying For Exams')}
+                    onClick={()=> triggerBrowseFilter('Studying For Exams')}>
                 🎓 Studying for Exams
                 </div>
-                <div className={getFilterButtonClass('CombatADHD')}
-                    onClick={()=> triggerBrowseFilter('CombatADHD')}>
+                <div className={getFilterButtonClass('Combat ADHD')}
+                    onClick={()=> triggerBrowseFilter('Combat ADHD')}>
                 🤹🏾 Combat ADHD
                 </div>
                 <div className={getFilterButtonClass('All')}

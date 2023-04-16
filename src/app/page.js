@@ -32,6 +32,10 @@ export default function Home() {
   const [ filter, setFilter ] = useState('All')
   const [ videoOn, setVideoOn ] = useState(true)
 
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(true)
+  const [protocolCatalogueData, setProtocolCatalogueData] = useState([])
+
   const handleSubmit = () => {
     router.push('/buyUsCoffee/checkOut')
   }
@@ -59,7 +63,43 @@ export default function Home() {
     return () => {
       mediaQuery.removeEventListener('change', handleResize);
     };
-    }, []);
+  }, []);
+
+  useEffect(() => {
+    //fetchData()
+    const firstFetch = async () => {
+        try {
+            const protocolCatalogue = fetchProtocolCatalogues(page, 10)
+            const [protocolCatalogueData] = await Promise.all([protocolCatalogue])
+            setProtocolCatalogueData(protocolCatalogueData.data)
+            setPage((prevPage) => prevPage + 1)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    firstFetch()     
+    //const fireices = fetchFireIces()
+    //const [fireIceData] = await Promise.all([fireices])
+
+    //console.log('fireIceData', fireIceData)
+  }, [])
+
+  const fetchData = async() => {
+    const protocolCatalogue = fetchProtocolCatalogues(page, 10)
+    const [protocolCatalogueData] = await Promise.all([protocolCatalogue])
+    if(protocolCatalogueData.data.length === 0){
+        setHasMore(false)
+    } else {
+        //console.log(fireIceData)
+        setProtocolCatalogueData((prevData) => [...prevData, ...protocolCatalogueData.data])
+        setPage((prevPage) => prevPage + 1)
+    }
+    //console.log(fireIceData)
+    //setFireIceData(fireIceData)
+}
+
+
 
   return (
     <div>
@@ -129,7 +169,7 @@ export default function Home() {
                 <ProtocolFilter getFilterButtonClass={getFilterButtonClass} triggerBrowseFilter={triggerBrowseFilter}/>
             </div>}
           <div className='py-6'>
-            <FeaturedProtocols  filter={filter}/>
+            <FeaturedProtocols  protocolCatalogueData={protocolCatalogueData} fetchData={fetchData} hasMore={hasMore}  filter={filter}/>
           </div>
         </div>
       }
@@ -170,6 +210,21 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+export const fetchProtocolCatalogues = async (pageNumber = 1, itemsPerPage = 10) => {
+  let url;
+
+  if (process.env.NODE_ENV === 'development') {
+      url = `http://localhost:3000/api/protocolCatalogue/?page=${pageNumber}&itemsPerPage=${itemsPerPage}`
+  } else if (process.env.NODE_ENV === 'production') {
+      url = `https://www.theyouuproject.com/api/protocolCatalogue/?page=${pageNumber}&itemsPerPage=${itemsPerPage}`
+  }
+  
+  const res = await fetch(url)
+  const protocolCatalogueData = await res.json()
+
+  return  protocolCatalogueData;
 }
 
 /*export async function getServerSideProps(context) {
