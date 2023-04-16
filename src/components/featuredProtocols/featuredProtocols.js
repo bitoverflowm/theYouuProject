@@ -4,15 +4,16 @@ import Link from "next/link"
 import useIsClient from "@/lib/useIsClient"
 
 import MovingVideoCard from "../UI/Cards/movingVideoCard"
+import VideoComponent from "../mediaAssets/videoComponent"
 
 const FeaturedProtocols = ({filter}) => {
     const isClient = useIsClient()
     const [ filteredProtocols, setFilteredProtocols ] = useState([])
     
     const [protocols] = useState([
-        { id: 0, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus']},
-        { id: 1, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation']},
-        { id: 2, label: 'cold', video: '/video/small/cold0.mp4', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation', 'Health', 'Anxiety', 'Prevent Burnout']}
+        { id: 0, label: 'cold', video: 'Ice.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus']},
+        { id: 1, label: 'cold', video: 'Fire.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation']},
+        { id: 2, label: 'cold', video: 'NaturalFIre.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation', 'Health', 'Anxiety', 'Prevent Burnout']}
         //{ id: 'hot', video: '/videos/small/hot1.mp4'}
     ])
     
@@ -36,7 +37,7 @@ const FeaturedProtocols = ({filter}) => {
                         <div className="cursor-pointer">
                             <Link href={p.link}>
                                 <div className="rounded-lg">
-                                    {isClient && <MovingVideoCard videoUrl={p.video} />}
+                                    {isClient && <VideoComponent videoKey={p.video} />}
                                 </div>
                                 <div className="bg-bito-grey">
                                     {p.desc}
