@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import ReactPlayer from 'react-player'
 
 
-const MovingVideoCard = ({videoUrl}) => {
+const MovingVideoCard = ({videoUrl, media}) => {
     const [playing, setPlaying] = useState(false)
     
     const handleMouseEnter = () => {
@@ -23,7 +23,7 @@ const MovingVideoCard = ({videoUrl}) => {
                 width="100%"
                 height="100%"
                 loop
-                muted
+                muted = {media ? false : true}
                 onError={(e) => {
                     console.error("Video playback error:", e);
                   }}

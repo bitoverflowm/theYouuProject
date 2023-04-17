@@ -32,9 +32,14 @@ export default function Home() {
   const [ filter, setFilter ] = useState('All')
   const [ videoOn, setVideoOn ] = useState(true)
 
+  //protocol catalogue pagination and data collection
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [protocolCatalogueData, setProtocolCatalogueData] = useState([])
+  
+  //media catalogye pagination and data collection
+  const [mediaPage, setMediaPage] = useState(1)
+  const [mediaCatalogueData, setMediaCatalogueData] = useState([])
 
   const handleSubmit = () => {
     router.push('/buyUsCoffee/checkOut')
@@ -65,41 +70,55 @@ export default function Home() {
     };
   }, []);
 
+  //protocol catalogue fetching
   useEffect(() => {
-    //fetchData()
     const firstFetch = async () => {
         try {
             const protocolCatalogue = fetchProtocolCatalogues(page, 10)
             const [protocolCatalogueData] = await Promise.all([protocolCatalogue])
             setProtocolCatalogueData(protocolCatalogueData.data)
-            setPage((prevPage) => prevPage + 1)
+            setPage((prevPage) => prevPage + 1)            
         } catch (error) {
             console.log(error)
         }
-    }
-    
-    firstFetch()     
-    //const fireices = fetchFireIces()
-    //const [fireIceData] = await Promise.all([fireices])
-
-    //console.log('fireIceData', fireIceData)
+    }    
+    firstFetch()
   }, [])
 
+  //media catalogue fetching
+  useEffect(() => {
+    const firstFetch = async () => {
+        try {
+            const mediaCatalogue = fetchMedia(mediaPage, 10)
+            const [mediaCatalogueData] = await Promise.all([mediaCatalogue])
+            setMediaCatalogueData(mediaCatalogueData.data)
+            setMediaPage((prevPage) => prevPage + 1)            
+        } catch (error) {
+            console.log(error)
+        }
+    }    
+    firstFetch()
+  }, [])
+
+  //collecting all data
   const fetchData = async() => {
     const protocolCatalogue = fetchProtocolCatalogues(page, 10)
     const [protocolCatalogueData] = await Promise.all([protocolCatalogue])
-    if(protocolCatalogueData.data.length === 0){
+    const mediaCatalogue = fetchMedia(mediaPage, 10)
+    const [mediaCatalogueData] = await Promise.all([mediaCatalogue])
+    if(protocolCatalogueData.data.length === 0 && mediaCatalogueData.data.length === 0){
         setHasMore(false)
     } else {
-        //console.log(fireIceData)
+      if(protocolCatalogueData.data.length !== 0){
         setProtocolCatalogueData((prevData) => [...prevData, ...protocolCatalogueData.data])
         setPage((prevPage) => prevPage + 1)
+      }
+      if(mediaCatalogueData.data.length !== 0){
+        setMediaCatalogueData((prevData) => [...prevData, ...mediaCatalogueData.data])
+        setMediaPage((prevPage) => prevPage + 1)
+      }
     }
-    //console.log(fireIceData)
-    //setFireIceData(fireIceData)
-}
-
-
+  }
 
   return (
     <div>
@@ -169,7 +188,7 @@ export default function Home() {
                 <ProtocolFilter getFilterButtonClass={getFilterButtonClass} triggerBrowseFilter={triggerBrowseFilter}/>
             </div>}
           <div className='py-6'>
-            <FeaturedProtocols  protocolCatalogueData={protocolCatalogueData} fetchData={fetchData} hasMore={hasMore}  filter={filter}/>
+            <FeaturedProtocols  protocolCatalogueData={protocolCatalogueData} mediaCatalogueData={mediaCatalogueData} fetchData={fetchData} hasMore={hasMore}  filter={filter}/>
           </div>
         </div>
       }
@@ -225,6 +244,20 @@ export const fetchProtocolCatalogues = async (pageNumber = 1, itemsPerPage = 10)
   const protocolCatalogueData = await res.json()
 
   return  protocolCatalogueData;
+}
+
+export const fetchMedia = async (pageNumber = 1, itemsPerPage = 10) => {
+  let url;
+  if (process.env.NODE_ENV === 'development') {
+    url = `http://localhost:3000/api/mediaCatalogue/?page=${pageNumber}&itemsPerPage=${itemsPerPage}`
+  } else if (process.env.NODE_ENV === 'production') {
+    url = `https://www.theyouuproject.com/api/mediaCatalogue/?page=${pageNumber}&itemsPerPage=${itemsPerPage}`
+  }
+
+  const res = await fetch(url)
+  const mediaCatalogueData = await res.json()
+
+  return  mediaCatalogueData;
 }
 
 /*export async function getServerSideProps(context) {

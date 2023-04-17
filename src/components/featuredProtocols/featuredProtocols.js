@@ -7,9 +7,10 @@ import InfiniteScroll from "react-infinite-scroll-component"
 import MovingVideoCard from "../UI/Cards/movingVideoCard"
 import VideoComponent from "../mediaAssets/videoComponent"
 
-const FeaturedProtocols = ({protocolCatalogueData, fetchData, hasMore, filter}) => {
+const FeaturedProtocols = ({protocolCatalogueData, mediaCatalogueData, fetchData, hasMore, filter}) => {
     const isClient = useIsClient()
     const [ filteredProtocols, setFilteredProtocols ] = useState([])
+    const [ filteredMedia, setFilteredMedia ] = useState([])
     
     /*const [protocols] = useState([
         { id: 0, label: 'cold', video: 'Ice.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus']},
@@ -19,22 +20,26 @@ const FeaturedProtocols = ({protocolCatalogueData, fetchData, hasMore, filter}) 
     ])*/
     
     useEffect(() => {
-      if(protocolCatalogueData){
+      if(protocolCatalogueData || mediaCatalogueData){
         if(filter === 'All'){
-          console.log(protocolCatalogueData)
+          console.log('protocol data: ', protocolCatalogueData)
           setFilteredProtocols(protocolCatalogueData)
+          console.log('media data: ', mediaCatalogueData)
+          setFilteredMedia(mediaCatalogueData)
         }
         else{
           let protocols = protocolCatalogueData.filter((d) => !filter || (filter && d.attributes.includes(filter)))
           setFilteredProtocols(protocols)}
+          let media = mediaCatalogueData.filter((d) => !filter || (filter && d.attributes.includes(filter)))
+          setFilteredMedia(media)
         }          
-   }, [protocolCatalogueData, filter])
+   }, [protocolCatalogueData, mediaCatalogueData, filter])
 
     return (
       <div>
-        {filteredProtocols && filteredProtocols.length > 0 &&
+        {(filteredProtocols || filteredMedia) && (filteredProtocols.length > 0 || filteredMedia.length > 0) &&
           <InfiniteScroll
-                            dataLength={protocolCatalogueData.length}
+                            dataLength={protocolCatalogueData.length + mediaCatalogueData.length}
                             next={fetchData}
                             hasMore={hasMore}
                             loader={<h4 className="animate-pulse">Loading...</h4>}
@@ -59,6 +64,27 @@ const FeaturedProtocols = ({protocolCatalogueData, fetchData, hasMore, filter}) 
                                         </Link>
                                         <div className="flex bg-bito-grey">
                                             {p.totalSaves} {p.totalShares}
+                                        </div>
+                                    </div>
+                                  </div>
+                                )
+                        })
+                    }
+                    {
+                        mediaCatalogueData.map((m) => {
+                            return(                              
+                                  <div className="w-full max-w-md mx-auto" key={m._id}>
+                                    <div className="cursor-pointer">
+                                        <Link href={m.articleLink}>
+                                            <div className="rounded-lg">
+                                                {isClient && <VideoComponent videoKey={m.video} media={true} />}
+                                            </div>
+                                            <div className="bg-bito-grey">
+                                                {m.description}
+                                            </div>
+                                        </Link>
+                                        <div className="flex bg-bito-grey">
+                                            {m.totalSaves} {m.totalShares}
                                         </div>
                                     </div>
                                   </div>
