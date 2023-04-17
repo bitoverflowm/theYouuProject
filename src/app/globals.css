@@ -91,7 +91,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: #221D26;
+  /*background-color: #221D26;*/
 }
 
 a {

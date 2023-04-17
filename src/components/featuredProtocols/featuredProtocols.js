@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import useIsClient from "@/lib/useIsClient"
 import InfiniteScroll from "react-infinite-scroll-component"
+import { Transition } from "@headlessui/react"
 
 import MovingVideoCard from "../UI/Cards/movingVideoCard"
 import VideoComponent from "../mediaAssets/videoComponent"
@@ -11,13 +12,8 @@ const FeaturedProtocols = ({protocolCatalogueData, mediaCatalogueData, fetchData
     const isClient = useIsClient()
     const [ filteredProtocols, setFilteredProtocols ] = useState([])
     const [ filteredMedia, setFilteredMedia ] = useState([])
-    
-    /*const [protocols] = useState([
-        { id: 0, label: 'cold', video: 'Ice.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus']},
-        { id: 1, label: 'cold', video: 'Fire.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation']},
-        { id: 2, label: 'cold', video: 'NaturalFIre.m4v', desc: 'Find a Cold Plunge Near You', link: '/coldHotFinder', saves: 100, shareLink: '', shares: 15, tags: ['Focus', 'Motivation', 'Health', 'Anxiety', 'Prevent Burnout']}
-        //{ id: 'hot', video: '/videos/small/hot1.mp4'}
-    ])*/
+    const [ protocolDiscVisible, setProtocolDiscVisbile ] = useState(protocolCatalogueData.map(() => false))
+    const [ mediaDiscVisible, setMediaDiscVisbile ] = useState(mediaCatalogueData.map(() => false))
     
     useEffect(() => {
       if(protocolCatalogueData || mediaCatalogueData){
@@ -29,63 +25,103 @@ const FeaturedProtocols = ({protocolCatalogueData, mediaCatalogueData, fetchData
         }
         else{
           let protocols = protocolCatalogueData.filter((d) => !filter || (filter && d.attributes.includes(filter)))
-          setFilteredProtocols(protocols)}
+          setFilteredProtocols(protocols)
           let media = mediaCatalogueData.filter((d) => !filter || (filter && d.attributes.includes(filter)))
           setFilteredMedia(media)
+          }
         }          
    }, [protocolCatalogueData, mediaCatalogueData, filter])
+
+   const toggleProtocolDiscVisibility = (index) => {
+    setProtocolDiscVisbile((prevState) => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
+
+  const toggleMediaDiscVisibility = (index) => {
+    setMediaDiscVisbile((prevState) => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
 
     return (
       <div>
         {(filteredProtocols || filteredMedia) && (filteredProtocols.length > 0 || filteredMedia.length > 0) &&
           <InfiniteScroll
-                            dataLength={protocolCatalogueData.length + mediaCatalogueData.length}
-                            next={fetchData}
-                            hasMore={hasMore}
-                            loader={<h4 className="animate-pulse">Loading...</h4>}
-                            endMessage={
-                                <p>Yay! You have seen it all</p>
-                            }
-                            >
-                <div className="flex flex-wrap gap-6">
+              dataLength={protocolCatalogueData.length + mediaCatalogueData.length}
+              next={fetchData}
+              hasMore={hasMore}
+              loader={<h4 className="animate-pulse">Loading...</h4>}
+              endMessage={
+                  <p>Yay! You have seen it all</p>
+              }
+              >
+                <div className="grid grid-cols-5 gap-6">
                     {
-                        protocolCatalogueData.map((p) => {
-                            return(
-                              
-                                  <div className="w-full max-w-md mx-auto" key={p._id}>
+                        protocolCatalogueData.map((p, index) => {
+                            return(                              
+                                  <div className="w-full max-w-md mx-auto" key={p._id} onMouseEnter={() => toggleProtocolDiscVisibility(index)} onMouseLeave={() => toggleProtocolDiscVisibility(index)}>
                                     <div className="cursor-pointer">
                                         <Link href={p.protocolLink}>
-                                            <div className="rounded-lg">
+                                            <div className="">
                                                 {isClient && <VideoComponent videoKey={p.video} />}
                                             </div>
-                                            <div className="bg-bito-grey">
-                                                {p.description}
-                                            </div>
                                         </Link>
-                                        <div className="flex bg-bito-grey">
-                                            {p.totalSaves} {p.totalShares}
+                                        <div className="flex text-xs p-1">
+                                          🤍 {p.totalSaves} 🚀 ({p.totalShares})  · 👀 {p.totalViews}
                                         </div>
+                                        <div className="font-black text-sm px-1">
+                                          {p.title}
+                                        </div>
+                                        <Transition
+                                          show={protocolDiscVisible[index] ? protocolDiscVisible[index] : false}
+                                          enter="transition ease-out duration-300 transform"
+                                          enterFrom='-translate-y-full'
+                                          enterTo='translate-y-0'
+                                          leave='trantion ease-in duration-300 transform'
+                                          leaveFrom='translate-y-0'
+                                          leaveTo='-translate-y-full'>
+                                            <div className="text-xs">
+                                              {p.description}
+                                            </div>
+                                        </Transition>                                        
                                     </div>
                                   </div>
                                 )
                         })
                     }
                     {
-                        mediaCatalogueData.map((m) => {
+                        mediaCatalogueData.map((m, index) => {
                             return(                              
-                                  <div className="w-full max-w-md mx-auto" key={m._id}>
+                                  <div className="w-full max-w-md mx-auto" key={m._id} onMouseEnter={() => toggleMediaDiscVisibility(index)} onMouseLeave={() => toggleMediaDiscVisibility(index)}>
                                     <div className="cursor-pointer">
                                         <Link href={m.articleLink}>
-                                            <div className="rounded-lg">
+                                            <div className="">
                                                 {isClient && <VideoComponent videoKey={m.video} media={true} />}
                                             </div>
-                                            <div className="bg-bito-grey">
-                                                {m.description}
-                                            </div>
                                         </Link>
-                                        <div className="flex bg-bito-grey">
-                                            {m.totalSaves} {m.totalShares}
+                                        <div className="flex text-xs p-1">
+                                          🤍 {m.totalSaves} 🚀 ({m.totalShares})  · 👀 {m.totalViews}
                                         </div>
+                                        <div className="font-black text-sm px-1">
+                                          {m.title}
+                                        </div>
+                                        <Transition
+                                          show={mediaDiscVisible[index] ? mediaDiscVisible[index] : false}
+                                          enter="transition ease-out duration-300 transform"
+                                          enterFrom='-translate-y-full'
+                                          enterTo='translate-y-0'
+                                          leave='trantion ease-in duration-300 transform'
+                                          leaveFrom='translate-y-0'
+                                          leaveTo='-translate-y-full'>
+                                            <div className="text-xs">
+                                              {m.description}
+                                            </div>
+                                        </Transition>  
                                     </div>
                                   </div>
                                 )
