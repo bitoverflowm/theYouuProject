@@ -194,7 +194,7 @@ export default function Home() {
       }
       <div className='mb-6'>
         {/* Sub description */}
-        <div className='bg-white rounded-lg mx-10 mt-4 p-4 pt-8 sm:p-10 lg:px-32 bg-opacity-10 text-white' ref={aboutUs}>
+        <div className='bg-white rounded-lg mx-10 mt-4 p-4 pt-8 sm:p-10 lg:px-32 bg-opacity-10 text-black' ref={aboutUs}>
           <div className='text-2xl font-extrabold text-center'>
             Welcome to TheYouuProject
           </div>
