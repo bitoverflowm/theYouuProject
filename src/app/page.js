@@ -124,7 +124,7 @@ export default function Home() {
     <div>
       <div className="relative flex flex-row font-bold py-2 px-4 sm:px-24">
           <div className='ml-2 sm:ml-0 flex justify-start items-center w-1/2 cursor-pointer' onClick={()=> setVideoOn(true)}>
-              <Image src={logo} className="w-16 sm:w-12" alt='logo'/>     
+              <Link href='/blog'><Image src={logo} className="w-16 sm:w-12" alt='logo'/></Link>
           </div>             
           <div className='relative flex flex-wrap ml-auto sm:ml-auto text-white my-auto sm:w-auto'>
             <div className='text-center cursor-pointer px-6 p-1' onClick={()=> window.scrollTo({behavior: "smooth", top: aboutUs.current.offsetTop})}> About </div> 

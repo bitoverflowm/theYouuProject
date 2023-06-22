@@ -20,6 +20,7 @@
     "@stripe/react-stripe-js": "^1.16.5",
     "@stripe/stripe-js": "^1.47.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tryghost/content-api": "^1.11.13",
     "@vercel/analytics": "^0.1.11",
     "autoprefixer": "^10.4.13",
     "aws-sdk": "^2.1359.0",
