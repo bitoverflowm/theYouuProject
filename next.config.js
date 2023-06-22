@@ -3,6 +3,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    domains: ['bitoai-blog.ghost.io'],
+  },
 }
 
 module.exports = nextConfig
