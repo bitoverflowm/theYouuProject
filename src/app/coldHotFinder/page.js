@@ -164,74 +164,82 @@ const Page = () => {
                         </div>
                     </div>
                 </div>
-                <div className="hidden md:block">
-                    <div className="flex flex-wrap place-content-center text-center gap-5">
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('')}>🚀</div><div>View All</div>
-                        </div>
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Hot')}>🔥</div><div>All Hot</div>
-                        </div>
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Cold' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Cold')}>🧊</div><div>All Cold</div>
-                        </div>  
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Nature' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Nature')}>🌺</div><div>In Nature</div>
-                        </div>  
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Pro Spa' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Pro Spa')}>‍‍🧖🏻‍♀️</div><div>Pro. Spa</div>
-                        </div>
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Cryo' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Cryo')}>❄️</div><div>Cryo</div>
-                        </div>  
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Ice Bath' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Ice Bath')}>🛀🏿</div><div>Ice Bath</div>
-                        </div>  
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Steam' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Steam')}>💨</div><div>Steam</div>
-                        </div>  
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Sauna' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Sauna')}>🥵</div><div>Sauna</div>
-                        </div>  
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot Tub' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Hot Tub')}>⛲</div><div>Hot Tub</div>
-                        </div>
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot Spring' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Hot Spring')}>⛩️</div><div>Hot Springs</div>
-                        </div> 
-                        <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Other' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
-                            <div className="px-2" onClick={()=>handleFilterSelection('Other')}>👻</div><div>Other</div>
-                        </div>                         
+                <div className="p-10">
+                    <div className="text-3xl text-center font-black">
+                        Fire and Ice Finder
                     </div>
-                </div>
-                { filteredData && mapView ? 
-                    <div>
-                        <MapViewModal locations={filteredData}/>
-                    </div>
-                    :
-                    <InfiniteScroll
-                        dataLength={filteredData.length}
-                        next={fetchData}
-                        hasMore={hasMore}
-                        loader={<h4 className="animate-pulse">Loading...</h4>}
-                        endMessage={
-                            <p>Yay! You have seen it all</p>
-                        }
-                        >
-                            <div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
-                                {
-                                    filteredData && filteredData
-                                        .map((d) => {
-                                            return(
-                                                    d.nature 
-                                                        ? <NaturalHotColdCard key={d.id} data={d}/>
-                                                        : <NotNaturalHotColdCard key={d.id} data={d}/>   
-                                            )
-                                    })
-                                }
+                    <div className="hidden md:block">
+                        <div className="pl-60 pb-2 font-">
+                            Filter by Feature
+                        </div>
+                        <div className="flex flex-wrap place-content-center text-center gap-5">
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('')}>🚀</div><div>View All</div>
                             </div>
-                    </InfiniteScroll>
-                }                
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Hot')}>🔥</div><div>All Hot</div>
+                            </div>
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Cold' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Cold')}>🧊</div><div>All Cold</div>
+                            </div>  
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Nature' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Nature')}>🌺</div><div>In Nature</div>
+                            </div>  
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Pro Spa' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Pro Spa')}>‍‍🧖🏻‍♀️</div><div>Pro. Spa</div>
+                            </div>
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Cryo' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Cryo')}>❄️</div><div>Cryo</div>
+                            </div>  
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Ice Bath' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Ice Bath')}>🛀🏿</div><div>Ice Bath</div>
+                            </div>  
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Steam' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Steam')}>💨</div><div>Steam</div>
+                            </div>  
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Sauna' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Sauna')}>🥵</div><div>Sauna</div>
+                            </div>  
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot Tub' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Hot Tub')}>⛲</div><div>Hot Tub</div>
+                            </div>
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Hot Spring' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Hot Spring')}>⛩️</div><div>Hot Springs</div>
+                            </div> 
+                            <div className={`grid grid-cols-1 p-3 rounded-full cursor-pointer ${serviceTypeFilter==='Other' ? 'bg-black text-white hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}>
+                                <div className="px-2" onClick={()=>handleFilterSelection('Other')}>👻</div><div>Other</div>
+                            </div>                         
+                        </div>
+                    </div>
+                    { filteredData && mapView ? 
+                        <div>
+                            <MapViewModal locations={filteredData}/>
+                        </div>
+                        :
+                        <InfiniteScroll
+                            dataLength={filteredData.length}
+                            next={fetchData}
+                            hasMore={hasMore}
+                            loader={<h4 className="animate-pulse">Loading...</h4>}
+                            endMessage={
+                                <p>Yay! You have seen it all</p>
+                            }
+                            >
+                                <div className="p-8 mb-20 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
+                                    {
+                                        filteredData && filteredData
+                                            .map((d) => {
+                                                return(
+                                                        d.nature 
+                                                            ? <NaturalHotColdCard key={d.id} data={d}/>
+                                                            : <NotNaturalHotColdCard key={d.id} data={d}/>   
+                                                )
+                                        })
+                                    }
+                                </div>
+                        </InfiniteScroll>
+                    }
+                </div>          
                 <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-10 p-3 bg-black rounded-full text-white font-black cursor-pointer hover:bg-white hover:text-black" onClick={() => toggleMap()}>
                     { mapView ? <div className="flex">Show List <div className="p-1 pl-2"><AiOutlineUnorderedList/></div></div> : <div className="flex">Show Map <div className="p-1 pl-2"><BsPinMapFill/></div></div> }
                 </div>
