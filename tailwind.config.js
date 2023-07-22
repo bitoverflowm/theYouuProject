@@ -10,6 +10,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        '88': '22rem'
+      },
+      fontSize: {
+        'xxs': '0.600rem',
+      },
       aspectRatio: {
         '9/16': '56.25%',
       },
@@ -43,6 +49,7 @@ module.exports = {
         'hotAndColdcold': '#9E9CFF',
         'hotAndColdboth': '#F6BC55',
         'hotAndColdNature': '#5DD669',
+        'youu-red': '#D2232E',
       },
       keyframes: {
         shiver: {
