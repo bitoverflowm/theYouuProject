@@ -50,7 +50,7 @@ async function getPosts(){
                                         <div className='text-xs px-8 py-4'>{post.excerpt}</div>
                                     </div>
                                     <div className='flex pl-8 pr-4 py-2 pt-16 place-items-center'>
-                                        <div className='p-4 rounded-full bg-slate-200'></div>
+                                        <div className='p-4 rounded-full bg-youu-blueberry'></div>
                                         <div className='flex flex-col mx-2 text-xxs'><div>Source:</div><div>Huberman Lab</div></div>
                                         <div className='flex ml-auto mr-2 place-items-center gap-2'>
                                             {post.tags.map((tag, index) => (

@@ -50,6 +50,7 @@ module.exports = {
         'hotAndColdboth': '#F6BC55',
         'hotAndColdNature': '#5DD669',
         'youu-red': '#D2232E',
+        'yuuu-blueberry': '#6F2DDB',
       },
       keyframes: {
         shiver: {
