@@ -10,6 +10,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      width: {
+        '88': '22rem'
+      },
+      fontSize: {
+        'xxs': '0.600rem',
+      },
+      aspectRatio: {
+        '9/16': '56.25%',
+      },
       colors: {
         'youu-background': '#221D26',
         'youu-light-green': '#D4FC79',
@@ -35,7 +44,12 @@ module.exports = {
         'bito-white': '#EFF0F0',
         'bito-grey': '#ACAFAE',
         'onyx-black': '#1A1B1B',
-        'bito-blue': '#FDF5EB'
+        'bito-blue': '#FDF5EB',
+        'hotAndColdhot': '#EDA7FF',
+        'hotAndColdcold': '#9E9CFF',
+        'hotAndColdboth': '#F6BC55',
+        'hotAndColdNature': '#5DD669',
+        'youu-red': '#D2232E',
       },
       keyframes: {
         shiver: {
@@ -59,5 +73,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }

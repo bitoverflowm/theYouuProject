@@ -5,7 +5,7 @@ import { useState } from "react";
 import Timer from "../UI/timer";
 
 
-const ColdWater = ({ setSelectedId, randomizeProtocol}) => {
+const ColdWater = ({ setSelectedId}) => {
     //results:
     // > rapid increase in norepinephrine
     // > increases epinepherine which is adrenaline
@@ -45,27 +45,35 @@ const ColdWater = ({ setSelectedId, randomizeProtocol}) => {
     }
     
     return (
-      <div>
+      <div className='w-96 bg-white bg-opacity-10 px-6 py-4 rounded-xl'>
         <div className={`${(currentDiv === 1 && !(sessionComplete)) ? 'block' : 'hidden'}`}>
           <div className={`flex flex-col z-30 text-white`}>      
             <div className="font-bold text-center"> Let's Get Some Cold Exposure Today</div>
             <img src={`/images/icebathemoji.png`} alt={'icebath'} className="w-48 h-48 mt-4 rounded-lg mx-auto" />
             <div className="pt-2">
               <div className="text-xl font-extrabold p-2">What you can expect to happen:</div>
-              <ul className="list-disc text-white text-lg">
-                <li className="mb-1">Increase in dopamine by 200-250% above baseline</li>
-                <li className="mb-1">As opposed to other instantaneous sources of dopamine rises, cold water exposure results in a sustained increase in dopamine above baseline</li>
-                <li className="mb-1">Rapid increase in epinephrine (i.e. adrenaline)</li>
-                <li className="mb-1">Increase metabolism and fat loss</li>
-                <li className="mb-1">Improve wellbeing</li>
-                <li className="mb-1">Improve clarity of mind</li>
-                <li className="mb-1">Create a calm state of mind</li>
-              </ul>
+              <div className="list-disc text-white text-sm">
+                <div className="mb-1">😊 Increase in dopamine by 200-250%</div>
+                <div className="mb-1">📈 As opposed to other instantaneous sources of dopamine rises, cold water exposure results in a sustained increase in dopamine</div>
+                <div className="mb-1">💪 Rapid increase in epinephrine (i.e. adrenaline)</div>
+                <div className="mb-1">⬇️ Increase metabolism and fat loss</div>
+                <div className="mb-1">🍎 Improve wellbeing</div>
+                <div className="mb-1">🧘 Improve clarity of mind</div>
+                <div className="mb-1">🎯 Create a calm state of mind</div>
+              </div>
             </div>
           </div>
-          <div className="fixed w-full flex inset-x-0 bottom-5 place-content-center py-2">
-            <div className="hover:cursor-pointer hover:animate-bounce text-white font-bold p-6 bg-red-500 mr-4 rounded-lg" onClick={() => randomizeProtocol()}> Skip ⏭️</div>
-            <div className="hover:cursor-pointer hover:animate-bounce text-white font-bold p-6 bg-green-600 rounded-lg" onClick={handleClick}>✅ Lets Go!</div>
+          <div className="w-full flex flex-wrap inset-x-0 bottom-5 place-content-center py-2">
+            <div className='flex'>
+              Find the closest Cold Exposure to you: <div>Go!</div>
+            </div>
+            <div className='grid grid-col-1'>
+              <div>Already have your own?</div>
+              <div>Start!</div>
+              <div>Or want to make some $?</div>
+              <div>List for others to use</div>
+            </div>
+            <div className="hover:cursor-pointer hover:animate-bounce text-white font-bold p-6 bg-red-500 mr-4 rounded-lg" onClick={handleClick}> Use Your Own Cold Exposure ⏭️</div>
           </div>
         </div>
         <div className={`flex flex-col items-center text-white ${(currentDiv === 2 && !(sessionComplete)) ? 'block' : 'hidden'}`}>

@@ -23,7 +23,8 @@ export function useUser({ redirectTo, redirectIfFound } = {}) {
       // If redirectTo is set, redirect if the user was not found.
       (redirectTo && !redirectIfFound && !hasUser) ||
       // If redirectIfFound is also set, redirect if the user was found
-      (redirectIfFound && hasUser)
+      // If redirectTo is set and user is not found 
+      (redirectTo && redirectIfFound && hasUser)
     ) {
       router.push(redirectTo)
     }
