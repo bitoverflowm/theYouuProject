@@ -65,14 +65,14 @@ async function getPosts(){
                         )))}
             </div>
             <div className='flex-grow min-h-screen'>
-                <div className="min-h-screen overflow-auto grid gap-2 px-36 py-28 bg-white rounded-tl-lg">
+                <div className="overflow-auto grid gap-2 px-36 py-28 bg-white rounded-tl-lg">
                     { posts.length > 0
                         ? posts.map((post) => (
                             <Link href={`/blog/${post.slug}/`}>
                                 <div key={post.id} className="flex rounded-lg place-items-center gap-2 px-4 hover:bg-misterr-pink hover:bg-opacity-5 hover:text-bito-background-end cursor-pointer">
                                     <div className='w-1/12 text-slate-400 font-medium text-right pr-2'>{new Date(post.published_at).toLocaleDateString('en-US', {month: 'long', day: 'numeric'})}</div>
-                                    <div className="font-bold text-xl py-2 w-8/12 transition-color-shadow duration-slow hover:text-misterr-pink">{post.title}</div>
-                                    <div className='w-3/12 text-right'>
+                                    <div className="font-bold text-xl py-2 w-6/12 transition-color-shadow duration-slow hover:text-misterr-pink">{post.title}</div>
+                                    <div className='text-right flex'>
                                         {post.tags && post.tags.map((tag) => (
                                             <span key={tag.id} className='px-2 py-1 bg-misterr-pink rounded-lg mx-1'>{tag.name}</span>
                                         ))}
