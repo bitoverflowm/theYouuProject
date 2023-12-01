@@ -20,6 +20,9 @@ module.exports = {
         '9/16': '56.25%',
       },
       colors: {
+        'youu-green': '#86EA46',
+        'youu-red': '#F93943',
+        'youu-teal': '#86EA46',
         'youu-background': '#221D26',
         'youu-light-green': '#D4FC79',
         'youu-dark-green': '#96E6A1',
@@ -49,7 +52,6 @@ module.exports = {
         'hotAndColdcold': '#9E9CFF',
         'hotAndColdboth': '#F6BC55',
         'hotAndColdNature': '#5DD669',
-        'youu-red': '#D2232E',
         'yuuu-blueberry': '#6F2DDB',
       },
       keyframes: {
