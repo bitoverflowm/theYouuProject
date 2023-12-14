@@ -35,7 +35,8 @@ const ScrollTag = () => {
     useEffect(() => {
         scrollRef.current.autoScrollTimeout = setInterval(autoScroll, 20)
         return () => {
-            clearInterval(scrollRef.current.autoScrollTimeout)
+            scrollRef && scrollRef.current && scrollRef.current.autoScrollTimeout &&
+                clearInterval(scrollRef.current.autoScrollTimeout)
         };
     }, [isAutoScrolling, scrollDirection]);
 
@@ -45,13 +46,13 @@ const ScrollTag = () => {
             //onScroll={handleScroll}
             className='flex overflow-x-auto hide-scroll-bar text-sm gap-2 h-8 no-scrollbar text-youu-reseda-green font-regular font-body'
         >
-            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Huberman Lab Protocols</div>
-            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Tools For Mental Health</div>
-            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Micro Nutrients</div>
-            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Hormones</div>
-            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Sleep Health</div>
-            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Focus</div>
-            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Testosterone</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-2'>Huberman Lab Protocols</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-2'>Tools For Mental Health</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-2'>Micro Nutrients</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-2'>Hormones</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-2'>Sleep Health</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-2'>Focus</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-2'>Testosterone</div>
           </div>
     )
 }

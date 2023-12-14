@@ -3065,9 +3065,9 @@ export default async function Home() {
                   Achieve Peak Performance
                 </div>
               </div>
-              <div className='mt-40 mx-auto w-48 px-4 py-2 rounded-2xl text-center font-body bg-youu-green text-black font-bold hover:bg-white cursor-pointer'>Ready To Start?</div>
             </div>
-            <div className='z-10 w-screen -ml-10'>
+            <div className='mx-auto w-48 mb-20 py-2 rounded-2xl text-center font-body bg-youu-green text-black font-bold hover:bg-white cursor-pointer'>Ready To Start?</div>
+            <div className='z-10 w-screen -ml-10 mb-8'>
               <ScrollTag />
             </div>
         </div>      
