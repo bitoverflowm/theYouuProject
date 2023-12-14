@@ -43,13 +43,15 @@ const ScrollTag = () => {
         <div
             ref={scrollRef}
             //onScroll={handleScroll}
-            className='flex overflow-x-auto hide-scroll-bar text-sm gap-2 h-8 no-scrollbar'
+            className='flex overflow-x-auto hide-scroll-bar text-sm gap-2 h-8 no-scrollbar text-youu-reseda-green font-regular font-body'
         >
-            <div className='whitespace-nowrap bg-black text-white rounded-md px-2 py-1'>Huberman Lab Protocols</div>
-            <div className='whitespace-nowrap bg-black text-white rounded-md px-2 py-1'>Hormones</div>
-            <div className='whitespace-nowrap bg-black text-white rounded-md px-2 py-1'>Sleep Health</div>
-            <div className='whitespace-nowrap bg-black text-white rounded-md px-2 py-1'>Focus</div>
-            <div className='whitespace-nowrap bg-black text-white rounded-md px-2 py-1'>Testosterone</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Huberman Lab Protocols</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Tools For Mental Health</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Micro Nutrients</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Hormones</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Sleep Health</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Focus</div>
+            <div className='whitespace-nowrap bg-white rounded-md px-2 py-1'>Testosterone</div>
           </div>
     )
 }

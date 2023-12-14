@@ -12,51 +12,68 @@ import MagicButton from '@/components/UI/magicButton'
 import MainContentParent from '@/components/mainContentParent/mainContentParent';
 import ScrollTag from '@/components/UI/scrollTag';
 
+//import bgVideo from '/video/bgVideo.mp4'
+
 
 export default async function Home() {
 
   return (
     <div className='w-full bg-white'>
       <div className="h-screen p-3">
-        <div className='bg-youu-red h-full rounded-xl flex flex-col px-4 py-3'>
-          <div className='flex w-full bg-white px-4 py-3 rounded-lg place-items-end bg-opacity-80'>
-            <div className='w-1/5 text-center text-xl font-bold text-slate-600'>
-              Menu
-            </div>
-            <div className='w-3/5 text-center text-4xl font-black text-youu-red'>
-              0_o
-            </div>
-            <div className='w-1/5 text-center text-xl font-bold text-slate-600 hover-poiner'>
-              <Link href="/signup">
-                Join
-              </Link>
-            </div>
-          </div>
-          <div className='flex w-full font-medium bg-white px-4 py-2 rounded-lg bg-opacity-80 mt-2'>
-            <div className='text-xs text-slate-600 '>
-              Launching Dec 2023,
-              <Link href="/signup" className='hover-poiner underline'>
-                join now for early access
-              </Link>
-            </div>
-          </div>
-          <div className='my-auto'>
-            <div className='text-white font-black text-4xl'>Welcome to TheYouuProject</div>
-            <div className='p-2 text-black font-medium text-sm'>
-              <div>
-                Unleash Your Inner Beast
+        <div className='relative h-full rounded-xl  px-4 py-3 flex flex-col z-10 overflow-hidden'>
+            <video autoPlay loop muted style={{ 
+                position: "absolute",
+                width: "100%",
+                left: "50%",
+                top: "50%",
+                height: "100%",
+                objectFit: "cover",
+                transform: "translate(-50%, -50%)",
+                zIndex: "-1"
+            }}>
+                <source src={'/video/bgVideo.mp4'} type="video/mp4" />
+            </video>
+            <div className='flex w-full bg-white px-4 py-3 rounded-lg place-items-end bg-opacity-80 z-10'>
+              <div className='w-1/5 text-center text-xl font-bold'>
+                Menu
               </div>
-              <div className='-mt-1'>
-                Achieve Peak Performance
+              <div className='w-3/5 flex place-items-center place-content-center'>
+                <img src={"./logo.png"} className="h-9 w-9" />
+              </div>
+              <div className='w-1/5 text-center text-xl font-bold text-slate-600 hover-poiner'>
+                <Link href="/signup">
+                  Join
+                </Link>
               </div>
             </div>
-          </div>
-          <ScrollTag />          
+            <div className='flex w-full font-medium bg-white px-4 py-2 rounded-lg bg-opacity-80 mt-2 z-10'>
+              <div className='text-xs text-slate-600 '>
+                Launching Dec 2023,
+                <Link href="/signup" className='hover-poiner underline'>
+                  join now for early access
+                </Link>
+              </div>
+            </div>
+            <div className='my-auto z-10'>
+              <div className='text-white font-black text-5xl font-title'>Welcome to TheYouuProject</div>
+              <div className='p-2 text-white font-regular text-lg'>
+                <div className='font-body'>
+                  Unleash Your Inner Beast
+                </div>
+                <div className='-mt-1 font-body'>
+                  Achieve Peak Performance
+                </div>
+              </div>
+              <div className='mt-40 mx-auto w-48 px-4 py-2 rounded-2xl text-center font-body bg-youu-green text-black font-bold hover:bg-white cursor-pointer'>Ready To Start?</div>
+            </div>
+            <div className='z-10 w-screen -ml-10'>
+              <ScrollTag />
+            </div>
         </div>      
       </div>
       <div className='px-3 py-1'>
-        <div className='flex place-items-center place-content-center h-64 bg-no-repeat bg-cover bg-center rounded-xl p-3 text-white' style={{backgroundImage: "url('/aboutImage.png')"}}>
-          <div className='bg-white text-black px-4 py-3 rounded-lg bg-opacity-90 font-bold text-3xl'>About</div>
+        <div className='flex place-items-center place-content-center h-48 rounded-xl p-1 text-white bg-youu-dark-green'>
+          <div className='font-title text-youu-lavender px-4 py-1 rounded-lg font-bold text-3xl'>Your Life Starts Here.</div>
         </div>
       </div>
       {/*
@@ -67,29 +84,28 @@ export default async function Home() {
           </div>
         </div>*/
       }
-      <div className='text-4xl px-10 py-8 mt-10 font-black'>
-        Your Project Starts Here...
-      </div>
       <div className='px-3 py-1'>
-        <div className='bg-black text-white rounded-xl pt-3 pb-8 px-4'>
+        <div className='bg-youu-lavender text-white rounded-xl pt-3 pb-8 px-4'>
           <div className='flex gap-2 py-4 px-4 '>
-            <div className='text-4xl font-black'>1.</div>
-            <div className='font-bold'>Select what you want to work on with guided science backed protocols proposed by Dr Huberman, Dr Rhonda Partick, Dr Attia, etc. </div>
+            <div className='text-6xl font-black font-title text-youu-dark-green'>1.</div>
+            <div className='font-regular font-body text-xs pt-2 text-youu-dark-green'>Select what you want to work on with guided science backed protocols proposed by Dr Huberman, Dr Rhonda Partick, Dr Attia, etc.   </div>
           </div>
-          <div className='flex flex-wrap gap-3 pl-4 pt-4 text-sm font-bold'>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Mental Health</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Focus</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Energy</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Athletic Performance</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Optimize Testosterone</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Cultivate Discipline</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Combat ADHD</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Womens Hormone</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Language Learning</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Addiction</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Get Stronger</div>
-            <div className='bg-youu-red py-1 px-2 rounded-md'>Sleep Health </div>
-            <div className='bg-white text-youu-red py-1 px-2 rounded-md flex place-items-center place-content-center text-xl'><IoMdAddCircle /></div>
+          <div className='flex flex-wrap gap-1 pl-4 pt-4 text-xs font-thin font-body text-youu-lavender'>
+            <div className='border-2 border-youu-reseda-green bg-youu-reseda-green py-3 px-3 rounded-xl'>Mental Health</div>
+            <div className='border-2 border-youu-reseda-green bg-youu-reseda-green py-3 px-3 rounded-xl'>Focus</div>
+            <div className='border-2 border-youu-reseda-green bg-youu-reseda-green py-3 px-3 rounded-xl'>Athletic Performance</div>            
+            <div className='border-2 border-youu-english-violet bg-youu-lavender py-3 px-3 text-youu-english-violet rounded-xl'>Energy</div>
+            <div className='border-2 border-youu-english-violet bg-youu-english-violet py-3 px-3 rounded-xl'>Optimize Testosterone</div>
+            <div className='border-2 border-youu-english-violet bg-youu-lavender py-3 px-3 text-youu-english-violet rounded-xl'>Cultivate Discipline</div>
+            <div className='border-2 border-youu-english-violet bg-youu-lavender py-3 px-3 text-youu-english-violet rounded-xl'>Combat ADHD</div>
+            <div className='border-2 border-youu-english-violet bg-youu-english-violet py-3 px-3 rounded-xl'>Estrogen & Progesterone</div>
+            <div className='border-2 border-youu-english-violet bg-youu-lavender py-3 px-3 text-youu-english-violet rounded-xl'>Language Learning</div>
+            <div className='border-2 border-youu-english-violet bg-youu-lavender py-3 px-3 text-youu-english-violet rounded-xl'>Addiction</div>
+            <div className='border-2 border-youu-english-violet bg-youu-lavender py-3 px-3 text-youu-english-violet rounded-xl'>Get Stronger</div>
+            <div className='border-2 border-youu-english-violet bg-youu-lavender py-3 px-3 text-youu-english-violet rounded-xl'>Sleep Health</div>
+            <div className='border-2 border-youu-english-violet bg-youu-english-violet py-3 px-3 rounded-xl text-lg'><IoMdAddCircle /></div>
+            <div className='border-2 border-youu-reseda-green bg-youu-reseda-green text-youu-lavender py-1 px-2 rounded-xl text-xxs mt-1'>* Available to use now; click to try the protocol</div>
+            <div className='border-2 border-youu-english-violet bg-youu-english-violet text-youu-lavender py-1 px-2 rounded-xl text-xxs mt-1'>* Under Construction</div>
           </div>
         </div>
       </div>

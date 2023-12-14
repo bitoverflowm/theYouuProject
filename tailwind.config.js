@@ -9,6 +9,10 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      'title': ['Orelega One', 'serif'],
+      'body': ['Inter', 'sans-serif']
+    },
     extend: {
       width: {
         '88': '22rem'
@@ -20,12 +24,16 @@ module.exports = {
         '9/16': '56.25%',
       },
       colors: {
+        'youu-dark-green': "#0e2d28",
+        'youu-lavender': "#D6E3F8",
+        'youu-english-violet': '#5C415D',
+        'youu-reseda-green': '#6A8D73',
+        'youu-ucla-blue': '#427AA1',
         'youu-green': '#86EA46',
         'youu-red': '#F93943',
         'youu-teal': '#86EA46',
         'youu-background': '#221D26',
         'youu-light-green': '#D4FC79',
-        'youu-dark-green': '#96E6A1',
         'youu-sky-blue': '#A8EDEA',
         'youu-sky-pink': '#FED6E3',
         'youu-deep-red': '#FF0844',
