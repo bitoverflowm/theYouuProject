@@ -3050,7 +3050,7 @@ export default async function Home() {
             <div className='flex w-full font-medium bg-white px-4 py-2 rounded-lg bg-opacity-80 mt-2 z-10'>
               <div className='text-xs text-slate-600 '>
                 Launching Dec 2023,
-                <Link href="/signup" className='hover-poiner underline'>
+                <Link href="/toolkit" className='hover-poiner underline'>
                   join now for early access
                 </Link>
               </div>
@@ -3066,7 +3066,7 @@ export default async function Home() {
                 </div>
               </div>
             </div>
-            <div className='mx-auto w-48 mb-20 py-2 rounded-2xl text-center font-body bg-youu-green text-black font-bold hover:bg-white cursor-pointer'>Ready To Start?</div>
+            <div className='mx-auto w-48 mb-20 py-2 rounded-2xl text-center font-body bg-youu-green text-black font-bold hover:bg-white cursor-pointer'><Link href="/toolkit">Ready To Start?</Link></div>
             <div className='z-10 w-screen -ml-10 mb-8'>
               <ScrollTag />
             </div>
@@ -3120,7 +3120,7 @@ export default async function Home() {
             <div className='flex place-items-center'><div className='bg-youu-dark-green py-1 px-2 pr-4 rounded-md text-youu-ucla-blue'>Focus</div><div className='-ml-2 bg-youu-ucla-blue py-1 px-2 rounded-md text-youu-dark-green'>Spotlighting</div><div className='ml-2 text-xl flex gap-1'> <FaCircle className='text-youu-lavender' /><FaCircle className='text-youu-lavender'/><FaCircle className='text-youu-lavender'/><CgShapeRhombus className='animate-spin' key={'rhombus-3'}/><FaRegCircle className='opacity-50'/><FaRegCircle className='opacity-20'/><FaRegCircle className='opacity-10'/> </div></div>
             <div className='flex place-items-center'><div className='bg-youu-dark-green py-1 px-2 pr-4 rounded-md text-youu-ucla-blue'>Mental Health</div><div className='-ml-2 bg-youu-ucla-blue py-1 px-2 rounded-md text-youu-dark-green'>RSA</div> <div className='ml-2 text-xl flex gap-1'> <FaRegCircle /><FaCircle className='text-youu-lavender'/><FaCircle className='text-youu-lavender' /><CgShapeRhombus className='animate-spin' key={'rhombus-2'}/><FaRegCircle className='opacity-50'/><FaRegCircle className='opacity-20'/><FaRegCircle className='opacity-10'/> </div> </div>
             <div className='flex place-items-center'><div className='bg-youu-dark-green py-1 px-2 pr-4 rounded-md text-youu-ucla-blue'>Focus</div><div className='-ml-2 bg-youu-ucla-blue py-1 px-2 rounded-md text-youu-dark-green'>Spotlighting</div> <div className='ml-2 text-xl flex gap-1'> <FaRegCircle /><FaCircle className='text-youu-lavender'/><FaRegCircle/><CgShapeRhombus className='animate-spin' key={'rhombus-1'}/><FaRegCircle className='opacity-50'/><FaRegCircle className='opacity-20'/><FaRegCircle className='opacity-10'/> </div> </div>
-            <div className='text-xs pt-1 font-body text-youu-dark-green'>Track your stresks and compete with your friends! Or hold each other accountable</div>
+            <div className='text-xs pt-1 font-body text-youu-dark-green'>Track your streaks and compete with your friends! Or hold each other accountable</div>
           </div>
         </div>
       </div>
@@ -3190,20 +3190,34 @@ export default async function Home() {
         </div>
       </div>
       <div className='px-3 py-1'>
-        <div className='bg-youu-red text-white rounded-xl pt-3 pb-8 px-4'>
-          <div className='flex gap-2 py-4 px-4 '>
-            <div className='text-4xl font-black '>Join Now!</div>            
+        <div className='bg-youu-ucla-blue text-white rounded-xl pt-3 pb-8 px-4'>
+          <div className='text-4xl font-black font-title pl-4 pr-1 py-4'>Become A Founding Memeber</div>            
+          <div className='font-body'>Hi I am MisterrPink,</div>
+          <div className='font-body'>
+            <div>I am building theYouuProject (0_o) out my own selfish desired.</div>
+            <div>Maybe moreso need...</div>
+            <div>My journey to self improvement begain I suppose when I was in my super ealy 20s in College.</div>
+            <div>I loved Limitless, the idea of a pill that can make you the best version of you that can ever exist</div>
+            <div>Obviously the downsides aside and a few Nootropics reddit rabbit hole threads later</div>
+            <div>I am pretty certain a single pill that can make you the best version of you that can ever exist, simply does not exist</div>
+            <div>But I got into Tim Ferriss, Huberman, Rhonda Partick, all the greats.</div>
+            <div>I could retain a good amount of the info</div>
+            <div>But now, there is just so much info out there. All science backed, golden nuggets of wisdom that exist, within a shroud of sposored ads, pleasantries, dialogue, filler content ... time and attention I simply did not have to relisten to to remind myself of a valuable protocol </div>
+            <div>So I built this library. </div>
+            <div>TheYouuProject is all the tools, protocols, codified, to the most usable, useful tool, or packet of info</div>
+            <div>All we need to do now, is use the tool, validate the info, track, rinse and repeat.</div>
+            <div>I can actally make the protocols to living a healthier, happier, longer life, a seamless part of my life.</div>
+            <div> Overall I am trying to keep this tool free, forever. That is the goal. </div>
+            <div>But at certain point in time I can foresee needing to implement montly subs.</div>
+            <div>If you sign up now, you can choose to pay what you want. </div>
+            <div>But if you pay:</div>
+            <div>Not only will you be a supporting member of the early stages of 0_o journey.</div>
+            <div>I will personally be eternally greatfuyl for your support</div>
+            <div>You will never have to pay subscription payments even in the future if its ever implemented</div>
+            <div>You will key voting rights, in deciding the direction of the product. You can vote to decide on what feature I build next</div>
+            <div>I will place contributers to the Lifetime Membership on a tier list, and random winners, will be given cool prizes, and there will also be a tier list (anon or non-anon if you want to be non-anon) and ranking from highers contributor will be given cool prizes TBD as well!</div>
+            <div>Trust me they will be cool prizes</div>
           </div>
-          <div className='text-2xl font-bold pl-4'> Unlock Your Inner Beast.</div>
-          <div className='text-2xl font-bold pl-4'> Climb Your Peak.</div>
-          <div className='text-xl flex flex-wrap gap-3 pl-4 pt-4 text-sm font-bold place-items-center'><FaCircle /> Get Early Access</div>
-          <div className='text-xl flex flex-wrap gap-3 pl-4 pt-4 text-sm font-bold place-items-center'><FaCircle /> Get gifts, merch and exclusive releases</div>
-        </div>
-      </div>
-      <div className='px-3 py-1'>
-        <div className='bg-black text-white rounded-xl pt-3 pb-8 px-4'>
-          <div className='text-4xl font-black pl-4 pr-1 py-4'>Become A Founding Memeber</div>            
-          <div className='text-2xl font-bold pl-4'> Support Us and Win:</div>
           <div className='text-xl flex flex-wrap gap-3 pl-4 pt-4 text-sm font-bold place-items-center'><FaCircle /> Get Early Access</div>
           <div className='text-xl flex flex-wrap gap-3 pl-4 pt-4 text-sm font-bold place-items-center'><FaCircle /> Lifetime Discount On Product Purchases</div>
           <div className='text-xl flex flex-wrap gap-3 pl-4 pt-4 text-sm font-bold place-items-center'><FaCircle /> No monthly membership! </div>
