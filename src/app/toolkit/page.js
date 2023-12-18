@@ -96,10 +96,32 @@ const Toolkit = () => {
                     </div>
                     <div className='pt-4 pb-3 pl-5'>
                         <div className='py-4 text-youu-lavender font-thin text-sm font-body'>
-                            Popular among young adults
+                            New Additions
                         </div>
                         <div className="grid grid-cols-2 gap-1">
                             <div className="flex bg-youu-lavender text-youu-ucla-blue rounded-xl py-4 px-6">
+                                <Link href="/the_lab?protocol=light_dark_tracker">
+                                    <div className="text-xl font-light">LD Tracker</div>
+                                    <div className="my-auto"><img src="/figmaCons/fixYourBedTime.png"/></div>
+                                </Link>
+                            </div>
+                            <div className="gap-1 flex flex-col">
+                                <div className="flex place-items-center place-content-center bg-youu-english-violet text-youu-lavender rounded-xl py-4 px-6">
+                                    <div className="text-xs font-light">Sleep Consistency Challenge</div>
+                                    <div className="my-auto ml-3"><img src="/figmaCons/sleepConsistency.png"/></div>
+                                </div>
+                                <div className="flex bg-youu-reseda-green text-youu-dark-green rounded-xl py-4 px-6">
+                                    <div className="text-xl font-light">Pre-Study Supplements</div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div className='pt-4 pb-3 pl-5'>
+                        <div className='py-4 text-youu-lavender font-thin text-sm font-body'>
+                            Popular among young adults
+                        </div>
+                        <div className="grid grid-cols-2 gap-1">
+                            <div className="flex bg-youu-lavender text-youu-ucla-blue rounded-xl py-4 px-6">                                
                                 <div className="text-xl font-light">Fix Your Bedtime</div>
                                 <div className="my-auto"><img src="/figmaCons/fixYourBedTime.png"/></div>
                             </div>
