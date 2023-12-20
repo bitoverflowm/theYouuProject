@@ -9,6 +9,8 @@ import { useUser } from "@/lib/hooks"
 import LightDarkTracker from './lightDarkTracker';
 import SleepHabit from './sleepHabit';
 import WorkoutHabit from './workoutHabit';
+import WorkoutBuilder from './workoutBuilder';
+import NutritionTracker from './nutritionTracker';
 
 /*
  * Parent component for Protocols
@@ -35,6 +37,10 @@ const TheLab = () => {
                 setProtocol(<SleepHabit streak={streak} />)
             }else if(searchParams.get("protocol") === "workout_habit"){
                 setProtocol(<WorkoutHabit streak={streak} />)
+            }else if(searchParams.get("protocol") === "build_a_workout"){
+                setProtocol(<WorkoutBuilder streak={streak} />)
+            }else if(searchParams.get("protocol") === "nutrition_tracker"){
+                setProtocol(<NutritionTracker streak={streak} />)
             }
         }else{
             setProtocolCall()
@@ -92,6 +98,25 @@ const TheLab = () => {
                                     <div className="flex bg-youu-reseda-green text-youu-dark-green rounded-xl py-4 px-6">
                                         <div className="text-xl font-light">Workout Habit</div>
                                     </div>
+                                </Link>
+                            </div>
+                            <div className="gap-1 flex flex-col">
+                                <Link href="/the_lab?protocol=nutrition_tracker">
+                                    <div className="flex place-items-center place-content-center bg-youu-english-violet text-youu-lavender rounded-xl py-4 px-6">
+                                        <div className="text-xs font-light">Super Simple Nutrition Tracker</div>
+                                        <div className="my-auto ml-3"><img src="/figmaCons/sleepConsistency.png"/></div>
+                                    </div>
+                                </Link>
+                                <Link href="/the_lab?protocol=social_battery">
+                                    <div className="flex bg-youu-reseda-green text-youu-dark-green rounded-xl py-4 px-6">
+                                        <div className="text-xl font-light">Social Battery</div>
+                                    </div>
+                                </Link>
+                            </div>
+                            <div className="flex bg-youu-lavender text-youu-ucla-blue rounded-xl py-4 px-6">
+                                <Link href="/the_lab?protocol=build_a_workout">
+                                    <div className="text-xl font-light">Build a Workout </div>
+                                    <div className="my-auto"><img src="/figmaCons/fixYourBedTime.png"/></div>
                                 </Link>
                             </div>                            
                         </div>                    
