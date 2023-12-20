@@ -12,7 +12,6 @@ const LightDarkTracker = ({streak}) => {
 
     useEffect(() => {
         if(streak){
-            console.log(streak)
             let divs = Array.from({length: streak}).map((_, index) => {
                 return <div key={index} className='bg-white rounded-sm h-3 w-3'/>
             })

@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import { useUser } from "@/lib/hooks"
 
 import LightDarkTracker from './lightDarkTracker';
+import SleepHabit from './sleepHabit';
+import WorkoutHabit from './workoutHabit';
 
 /*
  * Parent component for Protocols
@@ -22,12 +24,21 @@ const TheLab = () => {
     const [protocolCall, setProtocolCall] = useState()
     const [protocol, setProtocol] = useState()
 
+    const [streak, setStreak] = useState(20)
+
     useEffect(() => {
         if(searchParams.has('protocol')){
             setProtocolCall(searchParams.get("protocol"))
             if(searchParams.get("protocol") === "light_dark_tracker"){
-                setProtocol(<LightDarkTracker streak={0} />)
+                setProtocol(<LightDarkTracker streak={streak} />)
+            }else if(searchParams.get("protocol") === "sleep_habit"){
+                setProtocol(<SleepHabit streak={streak} />)
+            }else if(searchParams.get("protocol") === "workout_habit"){
+                setProtocol(<WorkoutHabit streak={streak} />)
             }
+        }else{
+            setProtocolCall()
+            setProtocol()
         }
     }, [searchParams])
 
@@ -54,13 +65,16 @@ const TheLab = () => {
                            </Link>
                        </div>
                    </div>
+                   {
+                    protocolCall && <div className='text-white font-thin pt-4 text-xs pl-4'><Link href="/the_lab"> - Go Back to theLab</Link></div>
+                   }
                    <div className=''>
                     {   protocolCall ?
                         <div className='py-4 text-youu-lavender font-thin text-sm font-body'>
                             {protocol}
                         </div>
                         :
-                        <div className="grid grid-cols-2 gap-1">
+                        <div className="grid grid-cols-2 gap-1 pt-10">
                             <div className="flex bg-youu-lavender text-youu-ucla-blue rounded-xl py-4 px-6">
                                 <Link href="/the_lab?protocol=light_dark_tracker">
                                     <div className="text-xl font-light">LD Tracker</div>
@@ -68,13 +82,17 @@ const TheLab = () => {
                                 </Link>
                             </div>
                             <div className="gap-1 flex flex-col">
-                                <div className="flex place-items-center place-content-center bg-youu-english-violet text-youu-lavender rounded-xl py-4 px-6">
-                                    <div className="text-xs font-light">Sleep Consistency Challenge</div>
-                                    <div className="my-auto ml-3"><img src="/figmaCons/sleepConsistency.png"/></div>
-                                </div>
-                                <div className="flex bg-youu-reseda-green text-youu-dark-green rounded-xl py-4 px-6">
-                                    <div className="text-xl font-light">Pre-Study Supplements</div>
-                                </div>
+                                <Link href="/the_lab?protocol=sleep_habit">
+                                    <div className="flex place-items-center place-content-center bg-youu-english-violet text-youu-lavender rounded-xl py-4 px-6">
+                                        <div className="text-xs font-light">Sleep Habit</div>
+                                        <div className="my-auto ml-3"><img src="/figmaCons/sleepConsistency.png"/></div>
+                                    </div>
+                                </Link>
+                                <Link href="/the_lab?protocol=workout_habit">
+                                    <div className="flex bg-youu-reseda-green text-youu-dark-green rounded-xl py-4 px-6">
+                                        <div className="text-xl font-light">Workout Habit</div>
+                                    </div>
+                                </Link>
                             </div>                            
                         </div>                    
                     }

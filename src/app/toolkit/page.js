@@ -106,10 +106,12 @@ const Toolkit = () => {
                                 </Link>
                             </div>
                             <div className="gap-1 flex flex-col">
-                                <div className="flex place-items-center place-content-center bg-youu-english-violet text-youu-lavender rounded-xl py-4 px-6">
-                                    <div className="text-xs font-light">Sleep Consistency Challenge</div>
-                                    <div className="my-auto ml-3"><img src="/figmaCons/sleepConsistency.png"/></div>
-                                </div>
+                                <Link href="/the_lab?protocol=sleep_habit">
+                                    <div className="flex place-items-center place-content-center bg-youu-english-violet text-youu-lavender rounded-xl py-4 px-6">
+                                            <div className="text-xs font-light">Sleep Habit</div>
+                                            <div className="my-auto ml-3"><img src="/figmaCons/sleepConsistency.png"/></div>
+                                    </div>
+                                </Link>
                                 <div className="flex bg-youu-reseda-green text-youu-dark-green rounded-xl py-4 px-6">
                                     <div className="text-xl font-light">Pre-Study Supplements</div>
                                 </div>
