@@ -31,9 +31,18 @@ const Toolkit = () => {
                             <img src={"./logo.png"} className="h-9 w-9" />
                         </div>
                         <div className='w-1/5 text-center text-xl font-bold text-slate-600 hover-poiner'>
-                            <Link href="/sub">
-                            Join
-                            </Link>
+                            {
+                                user ?
+                                    <Link href="/api/logout">
+                                        {console.log(user)}
+                                        Logout
+                                    </Link>
+                                    :
+                                    <Link href="/sub">
+                                    Join
+                                </Link>
+
+                            }
                         </div>
                     </div>
                     <div className='h-16 flex flex-wrap w-full font-medium bg-youu-lavender px-4 py-3 rounded-lg mt-2 z-10 '>
